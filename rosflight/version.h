@@ -1,5 +1,5 @@
 /** @file
- *	@brief MAVLink comm protocol built from ualberta.xml
+ *	@brief MAVLink comm protocol built from rosflight.xml
  *	@see http://mavlink.org
  */
 #ifndef MAVLINK_VERSION_H
