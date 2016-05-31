@@ -9,24 +9,26 @@ typedef struct __mavlink_offboard_control_t
  int16_t value3; /*< Third value, interpreted according to mode*/
  int16_t value4; /*< Fourth value, interpreted according to mode*/
  uint8_t mode; /*< Offboard control mode, see OFFBOARD_CONTROL_MODE*/
+ uint8_t ignore; /*< Bitfield specifying which fields should be ignored, see OFFBOARD_CONTROL_IGNORE*/
 } mavlink_offboard_control_t;
 
-#define MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN 9
-#define MAVLINK_MSG_ID_180_LEN 9
+#define MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN 10
+#define MAVLINK_MSG_ID_180_LEN 10
 
-#define MAVLINK_MSG_ID_OFFBOARD_CONTROL_CRC 139
-#define MAVLINK_MSG_ID_180_CRC 139
+#define MAVLINK_MSG_ID_OFFBOARD_CONTROL_CRC 148
+#define MAVLINK_MSG_ID_180_CRC 148
 
 
 
 #define MAVLINK_MESSAGE_INFO_OFFBOARD_CONTROL { \
 	"OFFBOARD_CONTROL", \
-	5, \
+	6, \
 	{  { "value1", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_offboard_control_t, value1) }, \
          { "value2", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_offboard_control_t, value2) }, \
          { "value3", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_offboard_control_t, value3) }, \
          { "value4", NULL, MAVLINK_TYPE_INT16_T, 0, 6, offsetof(mavlink_offboard_control_t, value4) }, \
          { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_offboard_control_t, mode) }, \
+         { "ignore", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_offboard_control_t, ignore) }, \
          } \
 }
 
@@ -38,6 +40,7 @@ typedef struct __mavlink_offboard_control_t
  * @param msg The MAVLink message to compress the data into
  *
  * @param mode Offboard control mode, see OFFBOARD_CONTROL_MODE
+ * @param ignore Bitfield specifying which fields should be ignored, see OFFBOARD_CONTROL_IGNORE
  * @param value1 First value, interpreted according to mode
  * @param value2 Second value, interpreted according to mode
  * @param value3 Third value, interpreted according to mode
@@ -45,7 +48,7 @@ typedef struct __mavlink_offboard_control_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_offboard_control_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t mode, int16_t value1, int16_t value2, int16_t value3, int16_t value4)
+						       uint8_t mode, uint8_t ignore, int16_t value1, int16_t value2, int16_t value3, int16_t value4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN];
@@ -54,6 +57,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack(uint8_t system_id, uint
 	_mav_put_int16_t(buf, 4, value3);
 	_mav_put_int16_t(buf, 6, value4);
 	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, ignore);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN);
 #else
@@ -63,6 +67,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack(uint8_t system_id, uint
 	packet.value3 = value3;
 	packet.value4 = value4;
 	packet.mode = mode;
+	packet.ignore = ignore;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN);
 #endif
@@ -82,6 +87,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack(uint8_t system_id, uint
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
  * @param mode Offboard control mode, see OFFBOARD_CONTROL_MODE
+ * @param ignore Bitfield specifying which fields should be ignored, see OFFBOARD_CONTROL_IGNORE
  * @param value1 First value, interpreted according to mode
  * @param value2 Second value, interpreted according to mode
  * @param value3 Third value, interpreted according to mode
@@ -90,7 +96,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack(uint8_t system_id, uint
  */
 static inline uint16_t mavlink_msg_offboard_control_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t mode,int16_t value1,int16_t value2,int16_t value3,int16_t value4)
+						           uint8_t mode,uint8_t ignore,int16_t value1,int16_t value2,int16_t value3,int16_t value4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN];
@@ -99,6 +105,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack_chan(uint8_t system_id,
 	_mav_put_int16_t(buf, 4, value3);
 	_mav_put_int16_t(buf, 6, value4);
 	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, ignore);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN);
 #else
@@ -108,6 +115,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack_chan(uint8_t system_id,
 	packet.value3 = value3;
 	packet.value4 = value4;
 	packet.mode = mode;
+	packet.ignore = ignore;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN);
 #endif
@@ -130,7 +138,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack_chan(uint8_t system_id,
  */
 static inline uint16_t mavlink_msg_offboard_control_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_offboard_control_t* offboard_control)
 {
-	return mavlink_msg_offboard_control_pack(system_id, component_id, msg, offboard_control->mode, offboard_control->value1, offboard_control->value2, offboard_control->value3, offboard_control->value4);
+	return mavlink_msg_offboard_control_pack(system_id, component_id, msg, offboard_control->mode, offboard_control->ignore, offboard_control->value1, offboard_control->value2, offboard_control->value3, offboard_control->value4);
 }
 
 /**
@@ -144,7 +152,7 @@ static inline uint16_t mavlink_msg_offboard_control_encode(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_offboard_control_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_offboard_control_t* offboard_control)
 {
-	return mavlink_msg_offboard_control_pack_chan(system_id, component_id, chan, msg, offboard_control->mode, offboard_control->value1, offboard_control->value2, offboard_control->value3, offboard_control->value4);
+	return mavlink_msg_offboard_control_pack_chan(system_id, component_id, chan, msg, offboard_control->mode, offboard_control->ignore, offboard_control->value1, offboard_control->value2, offboard_control->value3, offboard_control->value4);
 }
 
 /**
@@ -152,6 +160,7 @@ static inline uint16_t mavlink_msg_offboard_control_encode_chan(uint8_t system_i
  * @param chan MAVLink channel to send the message
  *
  * @param mode Offboard control mode, see OFFBOARD_CONTROL_MODE
+ * @param ignore Bitfield specifying which fields should be ignored, see OFFBOARD_CONTROL_IGNORE
  * @param value1 First value, interpreted according to mode
  * @param value2 Second value, interpreted according to mode
  * @param value3 Third value, interpreted according to mode
@@ -159,7 +168,7 @@ static inline uint16_t mavlink_msg_offboard_control_encode_chan(uint8_t system_i
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_offboard_control_send(mavlink_channel_t chan, uint8_t mode, int16_t value1, int16_t value2, int16_t value3, int16_t value4)
+static inline void mavlink_msg_offboard_control_send(mavlink_channel_t chan, uint8_t mode, uint8_t ignore, int16_t value1, int16_t value2, int16_t value3, int16_t value4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN];
@@ -168,6 +177,7 @@ static inline void mavlink_msg_offboard_control_send(mavlink_channel_t chan, uin
 	_mav_put_int16_t(buf, 4, value3);
 	_mav_put_int16_t(buf, 6, value4);
 	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, ignore);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_OFFBOARD_CONTROL, buf, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN, MAVLINK_MSG_ID_OFFBOARD_CONTROL_CRC);
@@ -181,6 +191,7 @@ static inline void mavlink_msg_offboard_control_send(mavlink_channel_t chan, uin
 	packet.value3 = value3;
 	packet.value4 = value4;
 	packet.mode = mode;
+	packet.ignore = ignore;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_OFFBOARD_CONTROL, (const char *)&packet, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN, MAVLINK_MSG_ID_OFFBOARD_CONTROL_CRC);
@@ -198,7 +209,7 @@ static inline void mavlink_msg_offboard_control_send(mavlink_channel_t chan, uin
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_offboard_control_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t mode, int16_t value1, int16_t value2, int16_t value3, int16_t value4)
+static inline void mavlink_msg_offboard_control_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t mode, uint8_t ignore, int16_t value1, int16_t value2, int16_t value3, int16_t value4)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -207,6 +218,7 @@ static inline void mavlink_msg_offboard_control_send_buf(mavlink_message_t *msgb
 	_mav_put_int16_t(buf, 4, value3);
 	_mav_put_int16_t(buf, 6, value4);
 	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, ignore);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_OFFBOARD_CONTROL, buf, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN, MAVLINK_MSG_ID_OFFBOARD_CONTROL_CRC);
@@ -220,6 +232,7 @@ static inline void mavlink_msg_offboard_control_send_buf(mavlink_message_t *msgb
 	packet->value3 = value3;
 	packet->value4 = value4;
 	packet->mode = mode;
+	packet->ignore = ignore;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_OFFBOARD_CONTROL, (const char *)packet, MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN, MAVLINK_MSG_ID_OFFBOARD_CONTROL_CRC);
@@ -243,6 +256,16 @@ static inline void mavlink_msg_offboard_control_send_buf(mavlink_message_t *msgb
 static inline uint8_t mavlink_msg_offboard_control_get_mode(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_uint8_t(msg,  8);
+}
+
+/**
+ * @brief Get field ignore from offboard_control message
+ *
+ * @return Bitfield specifying which fields should be ignored, see OFFBOARD_CONTROL_IGNORE
+ */
+static inline uint8_t mavlink_msg_offboard_control_get_ignore(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  9);
 }
 
 /**
@@ -299,6 +322,7 @@ static inline void mavlink_msg_offboard_control_decode(const mavlink_message_t* 
 	offboard_control->value3 = mavlink_msg_offboard_control_get_value3(msg);
 	offboard_control->value4 = mavlink_msg_offboard_control_get_value4(msg);
 	offboard_control->mode = mavlink_msg_offboard_control_get_mode(msg);
+	offboard_control->ignore = mavlink_msg_offboard_control_get_ignore(msg);
 #else
 	memcpy(offboard_control, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_OFFBOARD_CONTROL_LEN);
 #endif
