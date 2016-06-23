@@ -1,6 +1,6 @@
 // MESSAGE DIFF_PRESSURE PACKING
 
-#define MAVLINK_MSG_ID_DIFF_PRESSURE 183
+#define MAVLINK_MSG_ID_DIFF_PRESSURE 184
 
 typedef struct __mavlink_diff_pressure_t
 {
@@ -9,10 +9,10 @@ typedef struct __mavlink_diff_pressure_t
 } mavlink_diff_pressure_t;
 
 #define MAVLINK_MSG_ID_DIFF_PRESSURE_LEN 4
-#define MAVLINK_MSG_ID_183_LEN 4
+#define MAVLINK_MSG_ID_184_LEN 4
 
 #define MAVLINK_MSG_ID_DIFF_PRESSURE_CRC 254
-#define MAVLINK_MSG_ID_183_CRC 254
+#define MAVLINK_MSG_ID_184_CRC 254
 
 
 
