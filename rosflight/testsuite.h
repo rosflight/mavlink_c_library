@@ -78,7 +78,7 @@ static void mavlink_test_small_imu(uint8_t system_id, uint8_t component_id, mavl
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_small_imu_t packet_in = {
-		17235,17339,17443,17547,17651,17755,17859,17963
+		963497464,17443,17547,17651,17755,17859,17963,18067
     };
 	mavlink_small_imu_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));

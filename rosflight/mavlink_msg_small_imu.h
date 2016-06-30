@@ -4,7 +4,7 @@
 
 typedef struct __mavlink_small_imu_t
 {
- int16_t stamp; /*< Time in us since last IMU message*/
+ uint32_t stamp; /*< Time of IMU message*/
  int16_t temp; /*< Temperature of IMU*/
  int16_t xacc; /*< Acceleration along X axis*/
  int16_t yacc; /*< Acceleration along Y axis*/
@@ -14,25 +14,25 @@ typedef struct __mavlink_small_imu_t
  int16_t zgyro; /*< Angular speed around Z axis*/
 } mavlink_small_imu_t;
 
-#define MAVLINK_MSG_ID_SMALL_IMU_LEN 16
-#define MAVLINK_MSG_ID_181_LEN 16
+#define MAVLINK_MSG_ID_SMALL_IMU_LEN 18
+#define MAVLINK_MSG_ID_181_LEN 18
 
-#define MAVLINK_MSG_ID_SMALL_IMU_CRC 173
-#define MAVLINK_MSG_ID_181_CRC 173
+#define MAVLINK_MSG_ID_SMALL_IMU_CRC 159
+#define MAVLINK_MSG_ID_181_CRC 159
 
 
 
 #define MAVLINK_MESSAGE_INFO_SMALL_IMU { \
 	"SMALL_IMU", \
 	8, \
-	{  { "stamp", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_small_imu_t, stamp) }, \
-         { "temp", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_small_imu_t, temp) }, \
-         { "xacc", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_small_imu_t, xacc) }, \
-         { "yacc", NULL, MAVLINK_TYPE_INT16_T, 0, 6, offsetof(mavlink_small_imu_t, yacc) }, \
-         { "zacc", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_small_imu_t, zacc) }, \
-         { "xgyro", NULL, MAVLINK_TYPE_INT16_T, 0, 10, offsetof(mavlink_small_imu_t, xgyro) }, \
-         { "ygyro", NULL, MAVLINK_TYPE_INT16_T, 0, 12, offsetof(mavlink_small_imu_t, ygyro) }, \
-         { "zgyro", NULL, MAVLINK_TYPE_INT16_T, 0, 14, offsetof(mavlink_small_imu_t, zgyro) }, \
+	{  { "stamp", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_small_imu_t, stamp) }, \
+         { "temp", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_small_imu_t, temp) }, \
+         { "xacc", NULL, MAVLINK_TYPE_INT16_T, 0, 6, offsetof(mavlink_small_imu_t, xacc) }, \
+         { "yacc", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_small_imu_t, yacc) }, \
+         { "zacc", NULL, MAVLINK_TYPE_INT16_T, 0, 10, offsetof(mavlink_small_imu_t, zacc) }, \
+         { "xgyro", NULL, MAVLINK_TYPE_INT16_T, 0, 12, offsetof(mavlink_small_imu_t, xgyro) }, \
+         { "ygyro", NULL, MAVLINK_TYPE_INT16_T, 0, 14, offsetof(mavlink_small_imu_t, ygyro) }, \
+         { "zgyro", NULL, MAVLINK_TYPE_INT16_T, 0, 16, offsetof(mavlink_small_imu_t, zgyro) }, \
          } \
 }
 
@@ -43,7 +43,7 @@ typedef struct __mavlink_small_imu_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param stamp Time in us since last IMU message
+ * @param stamp Time of IMU message
  * @param temp Temperature of IMU
  * @param xacc Acceleration along X axis
  * @param yacc Acceleration along Y axis
@@ -54,18 +54,18 @@ typedef struct __mavlink_small_imu_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_small_imu_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       int16_t stamp, int16_t temp, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro)
+						       uint32_t stamp, int16_t temp, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_IMU_LEN];
-	_mav_put_int16_t(buf, 0, stamp);
-	_mav_put_int16_t(buf, 2, temp);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
+	_mav_put_uint32_t(buf, 0, stamp);
+	_mav_put_int16_t(buf, 4, temp);
+	_mav_put_int16_t(buf, 6, xacc);
+	_mav_put_int16_t(buf, 8, yacc);
+	_mav_put_int16_t(buf, 10, zacc);
+	_mav_put_int16_t(buf, 12, xgyro);
+	_mav_put_int16_t(buf, 14, ygyro);
+	_mav_put_int16_t(buf, 16, zgyro);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_IMU_LEN);
 #else
@@ -96,7 +96,7 @@ static inline uint16_t mavlink_msg_small_imu_pack(uint8_t system_id, uint8_t com
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param stamp Time in us since last IMU message
+ * @param stamp Time of IMU message
  * @param temp Temperature of IMU
  * @param xacc Acceleration along X axis
  * @param yacc Acceleration along Y axis
@@ -108,18 +108,18 @@ static inline uint16_t mavlink_msg_small_imu_pack(uint8_t system_id, uint8_t com
  */
 static inline uint16_t mavlink_msg_small_imu_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           int16_t stamp,int16_t temp,int16_t xacc,int16_t yacc,int16_t zacc,int16_t xgyro,int16_t ygyro,int16_t zgyro)
+						           uint32_t stamp,int16_t temp,int16_t xacc,int16_t yacc,int16_t zacc,int16_t xgyro,int16_t ygyro,int16_t zgyro)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_IMU_LEN];
-	_mav_put_int16_t(buf, 0, stamp);
-	_mav_put_int16_t(buf, 2, temp);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
+	_mav_put_uint32_t(buf, 0, stamp);
+	_mav_put_int16_t(buf, 4, temp);
+	_mav_put_int16_t(buf, 6, xacc);
+	_mav_put_int16_t(buf, 8, yacc);
+	_mav_put_int16_t(buf, 10, zacc);
+	_mav_put_int16_t(buf, 12, xgyro);
+	_mav_put_int16_t(buf, 14, ygyro);
+	_mav_put_int16_t(buf, 16, zgyro);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_IMU_LEN);
 #else
@@ -175,7 +175,7 @@ static inline uint16_t mavlink_msg_small_imu_encode_chan(uint8_t system_id, uint
  * @brief Send a small_imu message
  * @param chan MAVLink channel to send the message
  *
- * @param stamp Time in us since last IMU message
+ * @param stamp Time of IMU message
  * @param temp Temperature of IMU
  * @param xacc Acceleration along X axis
  * @param yacc Acceleration along Y axis
@@ -186,18 +186,18 @@ static inline uint16_t mavlink_msg_small_imu_encode_chan(uint8_t system_id, uint
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_small_imu_send(mavlink_channel_t chan, int16_t stamp, int16_t temp, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro)
+static inline void mavlink_msg_small_imu_send(mavlink_channel_t chan, uint32_t stamp, int16_t temp, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_IMU_LEN];
-	_mav_put_int16_t(buf, 0, stamp);
-	_mav_put_int16_t(buf, 2, temp);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
+	_mav_put_uint32_t(buf, 0, stamp);
+	_mav_put_int16_t(buf, 4, temp);
+	_mav_put_int16_t(buf, 6, xacc);
+	_mav_put_int16_t(buf, 8, yacc);
+	_mav_put_int16_t(buf, 10, zacc);
+	_mav_put_int16_t(buf, 12, xgyro);
+	_mav_put_int16_t(buf, 14, ygyro);
+	_mav_put_int16_t(buf, 16, zgyro);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_IMU, buf, MAVLINK_MSG_ID_SMALL_IMU_LEN, MAVLINK_MSG_ID_SMALL_IMU_CRC);
@@ -231,18 +231,18 @@ static inline void mavlink_msg_small_imu_send(mavlink_channel_t chan, int16_t st
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_small_imu_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  int16_t stamp, int16_t temp, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro)
+static inline void mavlink_msg_small_imu_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t stamp, int16_t temp, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_int16_t(buf, 0, stamp);
-	_mav_put_int16_t(buf, 2, temp);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
+	_mav_put_uint32_t(buf, 0, stamp);
+	_mav_put_int16_t(buf, 4, temp);
+	_mav_put_int16_t(buf, 6, xacc);
+	_mav_put_int16_t(buf, 8, yacc);
+	_mav_put_int16_t(buf, 10, zacc);
+	_mav_put_int16_t(buf, 12, xgyro);
+	_mav_put_int16_t(buf, 14, ygyro);
+	_mav_put_int16_t(buf, 16, zgyro);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_IMU, buf, MAVLINK_MSG_ID_SMALL_IMU_LEN, MAVLINK_MSG_ID_SMALL_IMU_CRC);
@@ -277,11 +277,11 @@ static inline void mavlink_msg_small_imu_send_buf(mavlink_message_t *msgbuf, mav
 /**
  * @brief Get field stamp from small_imu message
  *
- * @return Time in us since last IMU message
+ * @return Time of IMU message
  */
-static inline int16_t mavlink_msg_small_imu_get_stamp(const mavlink_message_t* msg)
+static inline uint32_t mavlink_msg_small_imu_get_stamp(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  0);
+	return _MAV_RETURN_uint32_t(msg,  0);
 }
 
 /**
@@ -291,7 +291,7 @@ static inline int16_t mavlink_msg_small_imu_get_stamp(const mavlink_message_t* m
  */
 static inline int16_t mavlink_msg_small_imu_get_temp(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  2);
+	return _MAV_RETURN_int16_t(msg,  4);
 }
 
 /**
@@ -301,7 +301,7 @@ static inline int16_t mavlink_msg_small_imu_get_temp(const mavlink_message_t* ms
  */
 static inline int16_t mavlink_msg_small_imu_get_xacc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  4);
+	return _MAV_RETURN_int16_t(msg,  6);
 }
 
 /**
@@ -311,7 +311,7 @@ static inline int16_t mavlink_msg_small_imu_get_xacc(const mavlink_message_t* ms
  */
 static inline int16_t mavlink_msg_small_imu_get_yacc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  6);
+	return _MAV_RETURN_int16_t(msg,  8);
 }
 
 /**
@@ -321,7 +321,7 @@ static inline int16_t mavlink_msg_small_imu_get_yacc(const mavlink_message_t* ms
  */
 static inline int16_t mavlink_msg_small_imu_get_zacc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  8);
+	return _MAV_RETURN_int16_t(msg,  10);
 }
 
 /**
@@ -331,7 +331,7 @@ static inline int16_t mavlink_msg_small_imu_get_zacc(const mavlink_message_t* ms
  */
 static inline int16_t mavlink_msg_small_imu_get_xgyro(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  10);
+	return _MAV_RETURN_int16_t(msg,  12);
 }
 
 /**
@@ -341,7 +341,7 @@ static inline int16_t mavlink_msg_small_imu_get_xgyro(const mavlink_message_t* m
  */
 static inline int16_t mavlink_msg_small_imu_get_ygyro(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  12);
+	return _MAV_RETURN_int16_t(msg,  14);
 }
 
 /**
@@ -351,7 +351,7 @@ static inline int16_t mavlink_msg_small_imu_get_ygyro(const mavlink_message_t* m
  */
 static inline int16_t mavlink_msg_small_imu_get_zgyro(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  14);
+	return _MAV_RETURN_int16_t(msg,  16);
 }
 
 /**
