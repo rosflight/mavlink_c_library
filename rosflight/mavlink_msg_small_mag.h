@@ -1,6 +1,6 @@
 // MESSAGE SMALL_MAG PACKING
 
-#define MAVLINK_MSG_ID_SMALL_MAG 182
+#define MAVLINK_MSG_ID_SMALL_MAG 183
 
 typedef struct __mavlink_small_mag_t
 {
@@ -10,10 +10,10 @@ typedef struct __mavlink_small_mag_t
 } mavlink_small_mag_t;
 
 #define MAVLINK_MSG_ID_SMALL_MAG_LEN 6
-#define MAVLINK_MSG_ID_182_LEN 6
+#define MAVLINK_MSG_ID_183_LEN 6
 
 #define MAVLINK_MSG_ID_SMALL_MAG_CRC 235
-#define MAVLINK_MSG_ID_182_CRC 235
+#define MAVLINK_MSG_ID_183_CRC 235
 
 
 

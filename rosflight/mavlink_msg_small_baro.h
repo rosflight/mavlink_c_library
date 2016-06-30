@@ -1,6 +1,6 @@
 // MESSAGE SMALL_BARO PACKING
 
-#define MAVLINK_MSG_ID_SMALL_BARO 183
+#define MAVLINK_MSG_ID_SMALL_BARO 184
 
 typedef struct __mavlink_small_baro_t
 {
@@ -9,10 +9,10 @@ typedef struct __mavlink_small_baro_t
 } mavlink_small_baro_t;
 
 #define MAVLINK_MSG_ID_SMALL_BARO_LEN 4
-#define MAVLINK_MSG_ID_183_LEN 4
+#define MAVLINK_MSG_ID_184_LEN 4
 
 #define MAVLINK_MSG_ID_SMALL_BARO_CRC 124
-#define MAVLINK_MSG_ID_183_CRC 124
+#define MAVLINK_MSG_ID_184_CRC 124
 
 
 
