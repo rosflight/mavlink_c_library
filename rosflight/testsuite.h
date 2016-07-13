@@ -306,6 +306,55 @@ static void mavlink_test_camera_stamped_small_imu(uint8_t system_id, uint8_t com
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
+static void mavlink_test_small_imu_hil(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+	mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+	mavlink_small_imu_hil_t packet_in = {
+		963497464,45.0,73.0,101.0,129.0,157.0,185.0
+    };
+	mavlink_small_imu_hil_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        	packet1.time_boot_us = packet_in.time_boot_us;
+        	packet1.xacc = packet_in.xacc;
+        	packet1.yacc = packet_in.yacc;
+        	packet1.zacc = packet_in.zacc;
+        	packet1.xgyro = packet_in.xgyro;
+        	packet1.ygyro = packet_in.ygyro;
+        	packet1.zgyro = packet_in.zgyro;
+        
+        
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_imu_hil_encode(system_id, component_id, &msg, &packet1);
+	mavlink_msg_small_imu_hil_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_imu_hil_pack(system_id, component_id, &msg , packet1.time_boot_us , packet1.xacc , packet1.yacc , packet1.zacc , packet1.xgyro , packet1.ygyro , packet1.zgyro );
+	mavlink_msg_small_imu_hil_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_imu_hil_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.time_boot_us , packet1.xacc , packet1.yacc , packet1.zacc , packet1.xgyro , packet1.ygyro , packet1.zgyro );
+	mavlink_msg_small_imu_hil_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+        	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+	mavlink_msg_small_imu_hil_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_imu_hil_send(MAVLINK_COMM_1 , packet1.time_boot_us , packet1.xacc , packet1.yacc , packet1.zacc , packet1.xgyro , packet1.ygyro , packet1.zgyro );
+	mavlink_msg_small_imu_hil_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+}
+
 static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 	mavlink_test_offboard_control(system_id, component_id, last_msg);
@@ -314,6 +363,7 @@ static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavl
 	mavlink_test_small_baro(system_id, component_id, last_msg);
 	mavlink_test_diff_pressure(system_id, component_id, last_msg);
 	mavlink_test_camera_stamped_small_imu(system_id, component_id, last_msg);
+	mavlink_test_small_imu_hil(system_id, component_id, last_msg);
 }
 
 #ifdef __cplusplus

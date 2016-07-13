@@ -77,5 +77,14 @@
             <field type="int16_t" name="temperature">Internal temperature measurement</field>
             <field type="uint8_t" name="image">True if there is an image associated with this measurement</field>
         </message>
+        <message id="186" name="SMALL_IMU_HIL">
+            <field type="uint32_t" name="time_boot_us">Measurement timestamp as microseconds since boot</field>
+            <field type="float" name="xacc">Acceleration along X axis</field>
+            <field type="float" name="yacc">Acceleration along Y axis</field>
+            <field type="float" name="zacc">Acceleration along Z axis</field>
+            <field type="float" name="xgyro">Angular speed around X axis</field>
+            <field type="float" name="ygyro">Angular speed around Y axis</field>
+            <field type="float" name="zgyro">Angular speed around Z axis</field>
+        </message>
     </messages>
 </mavlink>
