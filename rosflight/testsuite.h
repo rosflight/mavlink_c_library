@@ -30,14 +30,14 @@ static void mavlink_test_offboard_control(uint8_t system_id, uint8_t component_i
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_offboard_control_t packet_in = {
-		17235,17339,17443,17547,29,96
+		17.0,45.0,73.0,101.0,53,120
     };
 	mavlink_offboard_control_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        	packet1.value1 = packet_in.value1;
-        	packet1.value2 = packet_in.value2;
-        	packet1.value3 = packet_in.value3;
-        	packet1.value4 = packet_in.value4;
+        	packet1.x = packet_in.x;
+        	packet1.y = packet_in.y;
+        	packet1.z = packet_in.z;
+        	packet1.F = packet_in.F;
         	packet1.mode = packet_in.mode;
         	packet1.ignore = packet_in.ignore;
         
@@ -49,12 +49,12 @@ static void mavlink_test_offboard_control(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_offboard_control_pack(system_id, component_id, &msg , packet1.mode , packet1.ignore , packet1.value1 , packet1.value2 , packet1.value3 , packet1.value4 );
+	mavlink_msg_offboard_control_pack(system_id, component_id, &msg , packet1.mode , packet1.ignore , packet1.x , packet1.y , packet1.z , packet1.F );
 	mavlink_msg_offboard_control_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_offboard_control_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.mode , packet1.ignore , packet1.value1 , packet1.value2 , packet1.value3 , packet1.value4 );
+	mavlink_msg_offboard_control_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.mode , packet1.ignore , packet1.x , packet1.y , packet1.z , packet1.F );
 	mavlink_msg_offboard_control_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -67,7 +67,7 @@ static void mavlink_test_offboard_control(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_offboard_control_send(MAVLINK_COMM_1 , packet1.mode , packet1.ignore , packet1.value1 , packet1.value2 , packet1.value3 , packet1.value4 );
+	mavlink_msg_offboard_control_send(MAVLINK_COMM_1 , packet1.mode , packet1.ignore , packet1.x , packet1.y , packet1.z , packet1.F );
 	mavlink_msg_offboard_control_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
