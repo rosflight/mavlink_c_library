@@ -261,7 +261,7 @@ static void mavlink_test_camera_stamped_small_imu(uint8_t system_id, uint8_t com
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_camera_stamped_small_imu_t packet_in = {
-		963497464,17443,17547,17651,17755,17859,17963,18067,187
+		963497464,45.0,73.0,101.0,129.0,157.0,185.0,213.0,101
     };
 	mavlink_camera_stamped_small_imu_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));

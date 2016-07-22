@@ -5,21 +5,21 @@
 typedef struct __mavlink_camera_stamped_small_imu_t
 {
  uint32_t time_boot_us; /*< Measurement timestamp as microseconds since boot*/
- int16_t xacc; /*< Acceleration along X axis*/
- int16_t yacc; /*< Acceleration along Y axis*/
- int16_t zacc; /*< Acceleration along Z axis*/
- int16_t xgyro; /*< Angular speed around X axis*/
- int16_t ygyro; /*< Angular speed around Y axis*/
- int16_t zgyro; /*< Angular speed around Z axis*/
- int16_t temperature; /*< Internal temperature measurement*/
+ float xacc; /*< Acceleration along X axis*/
+ float yacc; /*< Acceleration along Y axis*/
+ float zacc; /*< Acceleration along Z axis*/
+ float xgyro; /*< Angular speed around X axis*/
+ float ygyro; /*< Angular speed around Y axis*/
+ float zgyro; /*< Angular speed around Z axis*/
+ float temperature; /*< Internal temperature measurement*/
  uint8_t image; /*< True if there is an image associated with this measurement*/
 } mavlink_camera_stamped_small_imu_t;
 
-#define MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN 19
-#define MAVLINK_MSG_ID_185_LEN 19
+#define MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN 33
+#define MAVLINK_MSG_ID_185_LEN 33
 
-#define MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_CRC 214
-#define MAVLINK_MSG_ID_185_CRC 214
+#define MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_CRC 77
+#define MAVLINK_MSG_ID_185_CRC 77
 
 
 
@@ -27,14 +27,14 @@ typedef struct __mavlink_camera_stamped_small_imu_t
 	"CAMERA_STAMPED_SMALL_IMU", \
 	9, \
 	{  { "time_boot_us", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_camera_stamped_small_imu_t, time_boot_us) }, \
-         { "xacc", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_camera_stamped_small_imu_t, xacc) }, \
-         { "yacc", NULL, MAVLINK_TYPE_INT16_T, 0, 6, offsetof(mavlink_camera_stamped_small_imu_t, yacc) }, \
-         { "zacc", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_camera_stamped_small_imu_t, zacc) }, \
-         { "xgyro", NULL, MAVLINK_TYPE_INT16_T, 0, 10, offsetof(mavlink_camera_stamped_small_imu_t, xgyro) }, \
-         { "ygyro", NULL, MAVLINK_TYPE_INT16_T, 0, 12, offsetof(mavlink_camera_stamped_small_imu_t, ygyro) }, \
-         { "zgyro", NULL, MAVLINK_TYPE_INT16_T, 0, 14, offsetof(mavlink_camera_stamped_small_imu_t, zgyro) }, \
-         { "temperature", NULL, MAVLINK_TYPE_INT16_T, 0, 16, offsetof(mavlink_camera_stamped_small_imu_t, temperature) }, \
-         { "image", NULL, MAVLINK_TYPE_UINT8_T, 0, 18, offsetof(mavlink_camera_stamped_small_imu_t, image) }, \
+         { "xacc", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_camera_stamped_small_imu_t, xacc) }, \
+         { "yacc", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_camera_stamped_small_imu_t, yacc) }, \
+         { "zacc", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_camera_stamped_small_imu_t, zacc) }, \
+         { "xgyro", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_camera_stamped_small_imu_t, xgyro) }, \
+         { "ygyro", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_camera_stamped_small_imu_t, ygyro) }, \
+         { "zgyro", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_camera_stamped_small_imu_t, zgyro) }, \
+         { "temperature", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_camera_stamped_small_imu_t, temperature) }, \
+         { "image", NULL, MAVLINK_TYPE_UINT8_T, 0, 32, offsetof(mavlink_camera_stamped_small_imu_t, image) }, \
          } \
 }
 
@@ -57,19 +57,19 @@ typedef struct __mavlink_camera_stamped_small_imu_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_camera_stamped_small_imu_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint32_t time_boot_us, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro, int16_t temperature, uint8_t image)
+						       uint32_t time_boot_us, float xacc, float yacc, float zacc, float xgyro, float ygyro, float zgyro, float temperature, uint8_t image)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN];
 	_mav_put_uint32_t(buf, 0, time_boot_us);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
-	_mav_put_int16_t(buf, 16, temperature);
-	_mav_put_uint8_t(buf, 18, image);
+	_mav_put_float(buf, 4, xacc);
+	_mav_put_float(buf, 8, yacc);
+	_mav_put_float(buf, 12, zacc);
+	_mav_put_float(buf, 16, xgyro);
+	_mav_put_float(buf, 20, ygyro);
+	_mav_put_float(buf, 24, zgyro);
+	_mav_put_float(buf, 28, temperature);
+	_mav_put_uint8_t(buf, 32, image);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN);
 #else
@@ -114,19 +114,19 @@ static inline uint16_t mavlink_msg_camera_stamped_small_imu_pack(uint8_t system_
  */
 static inline uint16_t mavlink_msg_camera_stamped_small_imu_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint32_t time_boot_us,int16_t xacc,int16_t yacc,int16_t zacc,int16_t xgyro,int16_t ygyro,int16_t zgyro,int16_t temperature,uint8_t image)
+						           uint32_t time_boot_us,float xacc,float yacc,float zacc,float xgyro,float ygyro,float zgyro,float temperature,uint8_t image)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN];
 	_mav_put_uint32_t(buf, 0, time_boot_us);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
-	_mav_put_int16_t(buf, 16, temperature);
-	_mav_put_uint8_t(buf, 18, image);
+	_mav_put_float(buf, 4, xacc);
+	_mav_put_float(buf, 8, yacc);
+	_mav_put_float(buf, 12, zacc);
+	_mav_put_float(buf, 16, xgyro);
+	_mav_put_float(buf, 20, ygyro);
+	_mav_put_float(buf, 24, zgyro);
+	_mav_put_float(buf, 28, temperature);
+	_mav_put_uint8_t(buf, 32, image);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN);
 #else
@@ -195,19 +195,19 @@ static inline uint16_t mavlink_msg_camera_stamped_small_imu_encode_chan(uint8_t 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_camera_stamped_small_imu_send(mavlink_channel_t chan, uint32_t time_boot_us, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro, int16_t temperature, uint8_t image)
+static inline void mavlink_msg_camera_stamped_small_imu_send(mavlink_channel_t chan, uint32_t time_boot_us, float xacc, float yacc, float zacc, float xgyro, float ygyro, float zgyro, float temperature, uint8_t image)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN];
 	_mav_put_uint32_t(buf, 0, time_boot_us);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
-	_mav_put_int16_t(buf, 16, temperature);
-	_mav_put_uint8_t(buf, 18, image);
+	_mav_put_float(buf, 4, xacc);
+	_mav_put_float(buf, 8, yacc);
+	_mav_put_float(buf, 12, zacc);
+	_mav_put_float(buf, 16, xgyro);
+	_mav_put_float(buf, 20, ygyro);
+	_mav_put_float(buf, 24, zgyro);
+	_mav_put_float(buf, 28, temperature);
+	_mav_put_uint8_t(buf, 32, image);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU, buf, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_CRC);
@@ -242,19 +242,19 @@ static inline void mavlink_msg_camera_stamped_small_imu_send(mavlink_channel_t c
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_camera_stamped_small_imu_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_us, int16_t xacc, int16_t yacc, int16_t zacc, int16_t xgyro, int16_t ygyro, int16_t zgyro, int16_t temperature, uint8_t image)
+static inline void mavlink_msg_camera_stamped_small_imu_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t time_boot_us, float xacc, float yacc, float zacc, float xgyro, float ygyro, float zgyro, float temperature, uint8_t image)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
 	_mav_put_uint32_t(buf, 0, time_boot_us);
-	_mav_put_int16_t(buf, 4, xacc);
-	_mav_put_int16_t(buf, 6, yacc);
-	_mav_put_int16_t(buf, 8, zacc);
-	_mav_put_int16_t(buf, 10, xgyro);
-	_mav_put_int16_t(buf, 12, ygyro);
-	_mav_put_int16_t(buf, 14, zgyro);
-	_mav_put_int16_t(buf, 16, temperature);
-	_mav_put_uint8_t(buf, 18, image);
+	_mav_put_float(buf, 4, xacc);
+	_mav_put_float(buf, 8, yacc);
+	_mav_put_float(buf, 12, zacc);
+	_mav_put_float(buf, 16, xgyro);
+	_mav_put_float(buf, 20, ygyro);
+	_mav_put_float(buf, 24, zgyro);
+	_mav_put_float(buf, 28, temperature);
+	_mav_put_uint8_t(buf, 32, image);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU, buf, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_LEN, MAVLINK_MSG_ID_CAMERA_STAMPED_SMALL_IMU_CRC);
@@ -302,9 +302,9 @@ static inline uint32_t mavlink_msg_camera_stamped_small_imu_get_time_boot_us(con
  *
  * @return Acceleration along X axis
  */
-static inline int16_t mavlink_msg_camera_stamped_small_imu_get_xacc(const mavlink_message_t* msg)
+static inline float mavlink_msg_camera_stamped_small_imu_get_xacc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  4);
+	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
@@ -312,9 +312,9 @@ static inline int16_t mavlink_msg_camera_stamped_small_imu_get_xacc(const mavlin
  *
  * @return Acceleration along Y axis
  */
-static inline int16_t mavlink_msg_camera_stamped_small_imu_get_yacc(const mavlink_message_t* msg)
+static inline float mavlink_msg_camera_stamped_small_imu_get_yacc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  6);
+	return _MAV_RETURN_float(msg,  8);
 }
 
 /**
@@ -322,9 +322,9 @@ static inline int16_t mavlink_msg_camera_stamped_small_imu_get_yacc(const mavlin
  *
  * @return Acceleration along Z axis
  */
-static inline int16_t mavlink_msg_camera_stamped_small_imu_get_zacc(const mavlink_message_t* msg)
+static inline float mavlink_msg_camera_stamped_small_imu_get_zacc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  8);
+	return _MAV_RETURN_float(msg,  12);
 }
 
 /**
@@ -332,9 +332,9 @@ static inline int16_t mavlink_msg_camera_stamped_small_imu_get_zacc(const mavlin
  *
  * @return Angular speed around X axis
  */
-static inline int16_t mavlink_msg_camera_stamped_small_imu_get_xgyro(const mavlink_message_t* msg)
+static inline float mavlink_msg_camera_stamped_small_imu_get_xgyro(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  10);
+	return _MAV_RETURN_float(msg,  16);
 }
 
 /**
@@ -342,9 +342,9 @@ static inline int16_t mavlink_msg_camera_stamped_small_imu_get_xgyro(const mavli
  *
  * @return Angular speed around Y axis
  */
-static inline int16_t mavlink_msg_camera_stamped_small_imu_get_ygyro(const mavlink_message_t* msg)
+static inline float mavlink_msg_camera_stamped_small_imu_get_ygyro(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  12);
+	return _MAV_RETURN_float(msg,  20);
 }
 
 /**
@@ -352,9 +352,9 @@ static inline int16_t mavlink_msg_camera_stamped_small_imu_get_ygyro(const mavli
  *
  * @return Angular speed around Z axis
  */
-static inline int16_t mavlink_msg_camera_stamped_small_imu_get_zgyro(const mavlink_message_t* msg)
+static inline float mavlink_msg_camera_stamped_small_imu_get_zgyro(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  14);
+	return _MAV_RETURN_float(msg,  24);
 }
 
 /**
@@ -362,9 +362,9 @@ static inline int16_t mavlink_msg_camera_stamped_small_imu_get_zgyro(const mavli
  *
  * @return Internal temperature measurement
  */
-static inline int16_t mavlink_msg_camera_stamped_small_imu_get_temperature(const mavlink_message_t* msg)
+static inline float mavlink_msg_camera_stamped_small_imu_get_temperature(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  16);
+	return _MAV_RETURN_float(msg,  28);
 }
 
 /**
@@ -374,7 +374,7 @@ static inline int16_t mavlink_msg_camera_stamped_small_imu_get_temperature(const
  */
 static inline uint8_t mavlink_msg_camera_stamped_small_imu_get_image(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  18);
+	return _MAV_RETURN_uint8_t(msg,  32);
 }
 
 /**
