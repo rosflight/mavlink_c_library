@@ -312,7 +312,7 @@ static void mavlink_test_named_command_struct(uint8_t system_id, uint8_t compone
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_named_command_struct_t packet_in = {
-		17.0,45.0,73.0,101.0,"QRSTUVWXY",211
+		17.0,45.0,73.0,101.0,"QRSTUVWXY",211,22
     };
 	mavlink_named_command_struct_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -321,6 +321,7 @@ static void mavlink_test_named_command_struct(uint8_t system_id, uint8_t compone
         	packet1.z = packet_in.z;
         	packet1.F = packet_in.F;
         	packet1.type = packet_in.type;
+        	packet1.ignore = packet_in.ignore;
         
         	mav_array_memcpy(packet1.name, packet_in.name, sizeof(char)*10);
         
@@ -331,12 +332,12 @@ static void mavlink_test_named_command_struct(uint8_t system_id, uint8_t compone
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_named_command_struct_pack(system_id, component_id, &msg , packet1.name , packet1.type , packet1.x , packet1.y , packet1.z , packet1.F );
+	mavlink_msg_named_command_struct_pack(system_id, component_id, &msg , packet1.name , packet1.type , packet1.ignore , packet1.x , packet1.y , packet1.z , packet1.F );
 	mavlink_msg_named_command_struct_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_named_command_struct_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.name , packet1.type , packet1.x , packet1.y , packet1.z , packet1.F );
+	mavlink_msg_named_command_struct_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.name , packet1.type , packet1.ignore , packet1.x , packet1.y , packet1.z , packet1.F );
 	mavlink_msg_named_command_struct_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -349,7 +350,7 @@ static void mavlink_test_named_command_struct(uint8_t system_id, uint8_t compone
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_named_command_struct_send(MAVLINK_COMM_1 , packet1.name , packet1.type , packet1.x , packet1.y , packet1.z , packet1.F );
+	mavlink_msg_named_command_struct_send(MAVLINK_COMM_1 , packet1.name , packet1.type , packet1.ignore , packet1.x , packet1.y , packet1.z , packet1.F );
 	mavlink_msg_named_command_struct_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
