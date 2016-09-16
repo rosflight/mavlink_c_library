@@ -4,23 +4,23 @@
 
 typedef struct __mavlink_small_baro_t
 {
- int16_t pressure; /*< Measured Differential Pressure*/
- int16_t temperature; /*< Measured Temperature*/
+ int32_t pressure; /*< Measured Differential Pressure*/
+ int32_t temperature; /*< Measured Temperature*/
 } mavlink_small_baro_t;
 
-#define MAVLINK_MSG_ID_SMALL_BARO_LEN 4
-#define MAVLINK_MSG_ID_183_LEN 4
+#define MAVLINK_MSG_ID_SMALL_BARO_LEN 8
+#define MAVLINK_MSG_ID_183_LEN 8
 
-#define MAVLINK_MSG_ID_SMALL_BARO_CRC 124
-#define MAVLINK_MSG_ID_183_CRC 124
+#define MAVLINK_MSG_ID_SMALL_BARO_CRC 133
+#define MAVLINK_MSG_ID_183_CRC 133
 
 
 
 #define MAVLINK_MESSAGE_INFO_SMALL_BARO { \
 	"SMALL_BARO", \
 	2, \
-	{  { "pressure", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_small_baro_t, pressure) }, \
-         { "temperature", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_small_baro_t, temperature) }, \
+	{  { "pressure", NULL, MAVLINK_TYPE_INT32_T, 0, 0, offsetof(mavlink_small_baro_t, pressure) }, \
+         { "temperature", NULL, MAVLINK_TYPE_INT32_T, 0, 4, offsetof(mavlink_small_baro_t, temperature) }, \
          } \
 }
 
@@ -36,12 +36,12 @@ typedef struct __mavlink_small_baro_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_small_baro_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       int16_t pressure, int16_t temperature)
+						       int32_t pressure, int32_t temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_BARO_LEN];
-	_mav_put_int16_t(buf, 0, pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_int32_t(buf, 0, pressure);
+	_mav_put_int32_t(buf, 4, temperature);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_BARO_LEN);
 #else
@@ -72,12 +72,12 @@ static inline uint16_t mavlink_msg_small_baro_pack(uint8_t system_id, uint8_t co
  */
 static inline uint16_t mavlink_msg_small_baro_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           int16_t pressure,int16_t temperature)
+						           int32_t pressure,int32_t temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_BARO_LEN];
-	_mav_put_int16_t(buf, 0, pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_int32_t(buf, 0, pressure);
+	_mav_put_int32_t(buf, 4, temperature);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_BARO_LEN);
 #else
@@ -132,12 +132,12 @@ static inline uint16_t mavlink_msg_small_baro_encode_chan(uint8_t system_id, uin
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_small_baro_send(mavlink_channel_t chan, int16_t pressure, int16_t temperature)
+static inline void mavlink_msg_small_baro_send(mavlink_channel_t chan, int32_t pressure, int32_t temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_BARO_LEN];
-	_mav_put_int16_t(buf, 0, pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_int32_t(buf, 0, pressure);
+	_mav_put_int32_t(buf, 4, temperature);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_BARO, buf, MAVLINK_MSG_ID_SMALL_BARO_LEN, MAVLINK_MSG_ID_SMALL_BARO_CRC);
@@ -165,12 +165,12 @@ static inline void mavlink_msg_small_baro_send(mavlink_channel_t chan, int16_t p
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_small_baro_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  int16_t pressure, int16_t temperature)
+static inline void mavlink_msg_small_baro_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  int32_t pressure, int32_t temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_int16_t(buf, 0, pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_int32_t(buf, 0, pressure);
+	_mav_put_int32_t(buf, 4, temperature);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_BARO, buf, MAVLINK_MSG_ID_SMALL_BARO_LEN, MAVLINK_MSG_ID_SMALL_BARO_CRC);
@@ -201,9 +201,9 @@ static inline void mavlink_msg_small_baro_send_buf(mavlink_message_t *msgbuf, ma
  *
  * @return Measured Differential Pressure
  */
-static inline int16_t mavlink_msg_small_baro_get_pressure(const mavlink_message_t* msg)
+static inline int32_t mavlink_msg_small_baro_get_pressure(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  0);
+	return _MAV_RETURN_int32_t(msg,  0);
 }
 
 /**
@@ -211,9 +211,9 @@ static inline int16_t mavlink_msg_small_baro_get_pressure(const mavlink_message_
  *
  * @return Measured Temperature
  */
-static inline int16_t mavlink_msg_small_baro_get_temperature(const mavlink_message_t* msg)
+static inline int32_t mavlink_msg_small_baro_get_temperature(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  2);
+	return _MAV_RETURN_int32_t(msg,  4);
 }
 
 /**

@@ -128,7 +128,7 @@ static void mavlink_test_small_mag(uint8_t system_id, uint8_t component_id, mavl
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_small_mag_t packet_in = {
-		17235,17339,17443
+		17.0,45.0,73.0
     };
 	mavlink_small_mag_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -173,7 +173,7 @@ static void mavlink_test_small_baro(uint8_t system_id, uint8_t component_id, mav
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_small_baro_t packet_in = {
-		17235,17339
+		963497464,963497672
     };
 	mavlink_small_baro_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));

@@ -10,7 +10,7 @@ typedef struct __mavlink_named_command_struct_t
  float F; /*< F value in the command struct*/
  char name[10]; /*< Name of the command struct*/
  uint8_t type; /*< Type of command struct*/
- uint8_t ignore; /*< Ignore field*/
+ uint8_t ignore; /*< Type of command struct*/
 } mavlink_named_command_struct_t;
 
 #define MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN 28
@@ -43,7 +43,7 @@ typedef struct __mavlink_named_command_struct_t
  *
  * @param name Name of the command struct
  * @param type Type of command struct
- * @param ignore Ignore field
+ * @param ignore Type of command struct
  * @param x x value in the command struct
  * @param y y value in the command struct
  * @param z z value in the command struct
@@ -91,7 +91,7 @@ static inline uint16_t mavlink_msg_named_command_struct_pack(uint8_t system_id, 
  * @param msg The MAVLink message to compress the data into
  * @param name Name of the command struct
  * @param type Type of command struct
- * @param ignore Ignore field
+ * @param ignore Type of command struct
  * @param x x value in the command struct
  * @param y y value in the command struct
  * @param z z value in the command struct
@@ -165,7 +165,7 @@ static inline uint16_t mavlink_msg_named_command_struct_encode_chan(uint8_t syst
  *
  * @param name Name of the command struct
  * @param type Type of command struct
- * @param ignore Ignore field
+ * @param ignore Type of command struct
  * @param x x value in the command struct
  * @param y y value in the command struct
  * @param z z value in the command struct
@@ -276,7 +276,7 @@ static inline uint8_t mavlink_msg_named_command_struct_get_type(const mavlink_me
 /**
  * @brief Get field ignore from named_command_struct message
  *
- * @return Ignore field
+ * @return Type of command struct
  */
 static inline uint8_t mavlink_msg_named_command_struct_get_ignore(const mavlink_message_t* msg)
 {
