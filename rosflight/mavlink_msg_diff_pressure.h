@@ -4,23 +4,25 @@
 
 typedef struct __mavlink_diff_pressure_t
 {
- int16_t diff_pressure; /*< Measured Differential Pressure*/
- int16_t temperature; /*< Measured Temperature*/
+ float velocity; /*< Measured Velocity*/
+ float diff_pressure; /*< Measured Differential Pressure (Pa)*/
+ float temperature; /*< Measured Temperature (K)*/
 } mavlink_diff_pressure_t;
 
-#define MAVLINK_MSG_ID_DIFF_PRESSURE_LEN 4
-#define MAVLINK_MSG_ID_184_LEN 4
+#define MAVLINK_MSG_ID_DIFF_PRESSURE_LEN 12
+#define MAVLINK_MSG_ID_184_LEN 12
 
-#define MAVLINK_MSG_ID_DIFF_PRESSURE_CRC 254
-#define MAVLINK_MSG_ID_184_CRC 254
+#define MAVLINK_MSG_ID_DIFF_PRESSURE_CRC 169
+#define MAVLINK_MSG_ID_184_CRC 169
 
 
 
 #define MAVLINK_MESSAGE_INFO_DIFF_PRESSURE { \
 	"DIFF_PRESSURE", \
-	2, \
-	{  { "diff_pressure", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_diff_pressure_t, diff_pressure) }, \
-         { "temperature", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_diff_pressure_t, temperature) }, \
+	3, \
+	{  { "velocity", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_diff_pressure_t, velocity) }, \
+         { "diff_pressure", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_diff_pressure_t, diff_pressure) }, \
+         { "temperature", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_diff_pressure_t, temperature) }, \
          } \
 }
 
@@ -31,21 +33,24 @@ typedef struct __mavlink_diff_pressure_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param diff_pressure Measured Differential Pressure
- * @param temperature Measured Temperature
+ * @param velocity Measured Velocity
+ * @param diff_pressure Measured Differential Pressure (Pa)
+ * @param temperature Measured Temperature (K)
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_diff_pressure_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       int16_t diff_pressure, int16_t temperature)
+						       float velocity, float diff_pressure, float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_DIFF_PRESSURE_LEN];
-	_mav_put_int16_t(buf, 0, diff_pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_float(buf, 0, velocity);
+	_mav_put_float(buf, 4, diff_pressure);
+	_mav_put_float(buf, 8, temperature);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_DIFF_PRESSURE_LEN);
 #else
 	mavlink_diff_pressure_t packet;
+	packet.velocity = velocity;
 	packet.diff_pressure = diff_pressure;
 	packet.temperature = temperature;
 
@@ -66,22 +71,25 @@ static inline uint16_t mavlink_msg_diff_pressure_pack(uint8_t system_id, uint8_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param diff_pressure Measured Differential Pressure
- * @param temperature Measured Temperature
+ * @param velocity Measured Velocity
+ * @param diff_pressure Measured Differential Pressure (Pa)
+ * @param temperature Measured Temperature (K)
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_diff_pressure_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           int16_t diff_pressure,int16_t temperature)
+						           float velocity,float diff_pressure,float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_DIFF_PRESSURE_LEN];
-	_mav_put_int16_t(buf, 0, diff_pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_float(buf, 0, velocity);
+	_mav_put_float(buf, 4, diff_pressure);
+	_mav_put_float(buf, 8, temperature);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_DIFF_PRESSURE_LEN);
 #else
 	mavlink_diff_pressure_t packet;
+	packet.velocity = velocity;
 	packet.diff_pressure = diff_pressure;
 	packet.temperature = temperature;
 
@@ -106,7 +114,7 @@ static inline uint16_t mavlink_msg_diff_pressure_pack_chan(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_diff_pressure_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_diff_pressure_t* diff_pressure)
 {
-	return mavlink_msg_diff_pressure_pack(system_id, component_id, msg, diff_pressure->diff_pressure, diff_pressure->temperature);
+	return mavlink_msg_diff_pressure_pack(system_id, component_id, msg, diff_pressure->velocity, diff_pressure->diff_pressure, diff_pressure->temperature);
 }
 
 /**
@@ -120,24 +128,26 @@ static inline uint16_t mavlink_msg_diff_pressure_encode(uint8_t system_id, uint8
  */
 static inline uint16_t mavlink_msg_diff_pressure_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_diff_pressure_t* diff_pressure)
 {
-	return mavlink_msg_diff_pressure_pack_chan(system_id, component_id, chan, msg, diff_pressure->diff_pressure, diff_pressure->temperature);
+	return mavlink_msg_diff_pressure_pack_chan(system_id, component_id, chan, msg, diff_pressure->velocity, diff_pressure->diff_pressure, diff_pressure->temperature);
 }
 
 /**
  * @brief Send a diff_pressure message
  * @param chan MAVLink channel to send the message
  *
- * @param diff_pressure Measured Differential Pressure
- * @param temperature Measured Temperature
+ * @param velocity Measured Velocity
+ * @param diff_pressure Measured Differential Pressure (Pa)
+ * @param temperature Measured Temperature (K)
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_diff_pressure_send(mavlink_channel_t chan, int16_t diff_pressure, int16_t temperature)
+static inline void mavlink_msg_diff_pressure_send(mavlink_channel_t chan, float velocity, float diff_pressure, float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_DIFF_PRESSURE_LEN];
-	_mav_put_int16_t(buf, 0, diff_pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_float(buf, 0, velocity);
+	_mav_put_float(buf, 4, diff_pressure);
+	_mav_put_float(buf, 8, temperature);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_DIFF_PRESSURE, buf, MAVLINK_MSG_ID_DIFF_PRESSURE_LEN, MAVLINK_MSG_ID_DIFF_PRESSURE_CRC);
@@ -146,6 +156,7 @@ static inline void mavlink_msg_diff_pressure_send(mavlink_channel_t chan, int16_
 #endif
 #else
 	mavlink_diff_pressure_t packet;
+	packet.velocity = velocity;
 	packet.diff_pressure = diff_pressure;
 	packet.temperature = temperature;
 
@@ -165,12 +176,13 @@ static inline void mavlink_msg_diff_pressure_send(mavlink_channel_t chan, int16_
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_diff_pressure_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  int16_t diff_pressure, int16_t temperature)
+static inline void mavlink_msg_diff_pressure_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float velocity, float diff_pressure, float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_int16_t(buf, 0, diff_pressure);
-	_mav_put_int16_t(buf, 2, temperature);
+	_mav_put_float(buf, 0, velocity);
+	_mav_put_float(buf, 4, diff_pressure);
+	_mav_put_float(buf, 8, temperature);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_DIFF_PRESSURE, buf, MAVLINK_MSG_ID_DIFF_PRESSURE_LEN, MAVLINK_MSG_ID_DIFF_PRESSURE_CRC);
@@ -179,6 +191,7 @@ static inline void mavlink_msg_diff_pressure_send_buf(mavlink_message_t *msgbuf,
 #endif
 #else
 	mavlink_diff_pressure_t *packet = (mavlink_diff_pressure_t *)msgbuf;
+	packet->velocity = velocity;
 	packet->diff_pressure = diff_pressure;
 	packet->temperature = temperature;
 
@@ -197,23 +210,33 @@ static inline void mavlink_msg_diff_pressure_send_buf(mavlink_message_t *msgbuf,
 
 
 /**
+ * @brief Get field velocity from diff_pressure message
+ *
+ * @return Measured Velocity
+ */
+static inline float mavlink_msg_diff_pressure_get_velocity(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_float(msg,  0);
+}
+
+/**
  * @brief Get field diff_pressure from diff_pressure message
  *
- * @return Measured Differential Pressure
+ * @return Measured Differential Pressure (Pa)
  */
-static inline int16_t mavlink_msg_diff_pressure_get_diff_pressure(const mavlink_message_t* msg)
+static inline float mavlink_msg_diff_pressure_get_diff_pressure(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  0);
+	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
  * @brief Get field temperature from diff_pressure message
  *
- * @return Measured Temperature
+ * @return Measured Temperature (K)
  */
-static inline int16_t mavlink_msg_diff_pressure_get_temperature(const mavlink_message_t* msg)
+static inline float mavlink_msg_diff_pressure_get_temperature(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int16_t(msg,  2);
+	return _MAV_RETURN_float(msg,  8);
 }
 
 /**
@@ -225,6 +248,7 @@ static inline int16_t mavlink_msg_diff_pressure_get_temperature(const mavlink_me
 static inline void mavlink_msg_diff_pressure_decode(const mavlink_message_t* msg, mavlink_diff_pressure_t* diff_pressure)
 {
 #if MAVLINK_NEED_BYTE_SWAP
+	diff_pressure->velocity = mavlink_msg_diff_pressure_get_velocity(msg);
 	diff_pressure->diff_pressure = mavlink_msg_diff_pressure_get_diff_pressure(msg);
 	diff_pressure->temperature = mavlink_msg_diff_pressure_get_temperature(msg);
 #else

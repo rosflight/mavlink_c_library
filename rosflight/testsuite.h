@@ -78,7 +78,7 @@ static void mavlink_test_small_imu(uint8_t system_id, uint8_t component_id, mavl
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_small_imu_t packet_in = {
-		963497464,45.0,73.0,101.0,129.0,157.0,185.0,213.0
+		93372036854775807ULL,73.0,101.0,129.0,157.0,185.0,213.0,241.0
     };
 	mavlink_small_imu_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -173,10 +173,11 @@ static void mavlink_test_small_baro(uint8_t system_id, uint8_t component_id, mav
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_small_baro_t packet_in = {
-		963497464,963497672
+		17.0,45.0,73.0
     };
 	mavlink_small_baro_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        	packet1.altitude = packet_in.altitude;
         	packet1.pressure = packet_in.pressure;
         	packet1.temperature = packet_in.temperature;
         
@@ -188,12 +189,12 @@ static void mavlink_test_small_baro(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_small_baro_pack(system_id, component_id, &msg , packet1.pressure , packet1.temperature );
+	mavlink_msg_small_baro_pack(system_id, component_id, &msg , packet1.altitude , packet1.pressure , packet1.temperature );
 	mavlink_msg_small_baro_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_small_baro_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.pressure , packet1.temperature );
+	mavlink_msg_small_baro_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.altitude , packet1.pressure , packet1.temperature );
 	mavlink_msg_small_baro_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -206,7 +207,7 @@ static void mavlink_test_small_baro(uint8_t system_id, uint8_t component_id, mav
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_small_baro_send(MAVLINK_COMM_1 , packet1.pressure , packet1.temperature );
+	mavlink_msg_small_baro_send(MAVLINK_COMM_1 , packet1.altitude , packet1.pressure , packet1.temperature );
 	mavlink_msg_small_baro_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
@@ -217,10 +218,11 @@ static void mavlink_test_diff_pressure(uint8_t system_id, uint8_t component_id, 
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_diff_pressure_t packet_in = {
-		17235,17339
+		17.0,45.0,73.0
     };
 	mavlink_diff_pressure_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        	packet1.velocity = packet_in.velocity;
         	packet1.diff_pressure = packet_in.diff_pressure;
         	packet1.temperature = packet_in.temperature;
         
@@ -232,12 +234,12 @@ static void mavlink_test_diff_pressure(uint8_t system_id, uint8_t component_id, 
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_diff_pressure_pack(system_id, component_id, &msg , packet1.diff_pressure , packet1.temperature );
+	mavlink_msg_diff_pressure_pack(system_id, component_id, &msg , packet1.velocity , packet1.diff_pressure , packet1.temperature );
 	mavlink_msg_diff_pressure_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_diff_pressure_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.diff_pressure , packet1.temperature );
+	mavlink_msg_diff_pressure_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.velocity , packet1.diff_pressure , packet1.temperature );
 	mavlink_msg_diff_pressure_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -250,7 +252,7 @@ static void mavlink_test_diff_pressure(uint8_t system_id, uint8_t component_id, 
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_diff_pressure_send(MAVLINK_COMM_1 , packet1.diff_pressure , packet1.temperature );
+	mavlink_msg_diff_pressure_send(MAVLINK_COMM_1 , packet1.velocity , packet1.diff_pressure , packet1.temperature );
 	mavlink_msg_diff_pressure_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
@@ -261,7 +263,7 @@ static void mavlink_test_camera_stamped_small_imu(uint8_t system_id, uint8_t com
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_camera_stamped_small_imu_t packet_in = {
-		963497464,45.0,73.0,101.0,129.0,157.0,185.0,213.0,101
+		93372036854775807ULL,73.0,101.0,129.0,157.0,185.0,213.0,241.0,113
     };
 	mavlink_camera_stamped_small_imu_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -355,6 +357,51 @@ static void mavlink_test_named_command_struct(uint8_t system_id, uint8_t compone
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
+static void mavlink_test_small_sonar(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+	mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+	mavlink_small_sonar_t packet_in = {
+		17.0,45.0,73.0
+    };
+	mavlink_small_sonar_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        	packet1.range = packet_in.range;
+        	packet1.max_range = packet_in.max_range;
+        	packet1.min_range = packet_in.min_range;
+        
+        
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_sonar_encode(system_id, component_id, &msg, &packet1);
+	mavlink_msg_small_sonar_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_sonar_pack(system_id, component_id, &msg , packet1.range , packet1.max_range , packet1.min_range );
+	mavlink_msg_small_sonar_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_sonar_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.range , packet1.max_range , packet1.min_range );
+	mavlink_msg_small_sonar_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+        	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+	mavlink_msg_small_sonar_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_small_sonar_send(MAVLINK_COMM_1 , packet1.range , packet1.max_range , packet1.min_range );
+	mavlink_msg_small_sonar_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+}
+
 static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 	mavlink_test_offboard_control(system_id, component_id, last_msg);
@@ -364,6 +411,7 @@ static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavl
 	mavlink_test_diff_pressure(system_id, component_id, last_msg);
 	mavlink_test_camera_stamped_small_imu(system_id, component_id, last_msg);
 	mavlink_test_named_command_struct(system_id, component_id, last_msg);
+	mavlink_test_small_sonar(system_id, component_id, last_msg);
 }
 
 #ifdef __cplusplus

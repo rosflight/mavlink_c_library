@@ -4,23 +4,25 @@
 
 typedef struct __mavlink_small_baro_t
 {
- int32_t pressure; /*< Measured Differential Pressure*/
- int32_t temperature; /*< Measured Temperature*/
+ float altitude; /*< Calculated Altitude (m)*/
+ float pressure; /*< Measured Differential Pressure (Pa)*/
+ float temperature; /*< Measured Temperature (K)*/
 } mavlink_small_baro_t;
 
-#define MAVLINK_MSG_ID_SMALL_BARO_LEN 8
-#define MAVLINK_MSG_ID_183_LEN 8
+#define MAVLINK_MSG_ID_SMALL_BARO_LEN 12
+#define MAVLINK_MSG_ID_183_LEN 12
 
-#define MAVLINK_MSG_ID_SMALL_BARO_CRC 133
-#define MAVLINK_MSG_ID_183_CRC 133
+#define MAVLINK_MSG_ID_SMALL_BARO_CRC 206
+#define MAVLINK_MSG_ID_183_CRC 206
 
 
 
 #define MAVLINK_MESSAGE_INFO_SMALL_BARO { \
 	"SMALL_BARO", \
-	2, \
-	{  { "pressure", NULL, MAVLINK_TYPE_INT32_T, 0, 0, offsetof(mavlink_small_baro_t, pressure) }, \
-         { "temperature", NULL, MAVLINK_TYPE_INT32_T, 0, 4, offsetof(mavlink_small_baro_t, temperature) }, \
+	3, \
+	{  { "altitude", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_small_baro_t, altitude) }, \
+         { "pressure", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_small_baro_t, pressure) }, \
+         { "temperature", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_small_baro_t, temperature) }, \
          } \
 }
 
@@ -31,21 +33,24 @@ typedef struct __mavlink_small_baro_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param pressure Measured Differential Pressure
- * @param temperature Measured Temperature
+ * @param altitude Calculated Altitude (m)
+ * @param pressure Measured Differential Pressure (Pa)
+ * @param temperature Measured Temperature (K)
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_small_baro_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       int32_t pressure, int32_t temperature)
+						       float altitude, float pressure, float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_BARO_LEN];
-	_mav_put_int32_t(buf, 0, pressure);
-	_mav_put_int32_t(buf, 4, temperature);
+	_mav_put_float(buf, 0, altitude);
+	_mav_put_float(buf, 4, pressure);
+	_mav_put_float(buf, 8, temperature);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_BARO_LEN);
 #else
 	mavlink_small_baro_t packet;
+	packet.altitude = altitude;
 	packet.pressure = pressure;
 	packet.temperature = temperature;
 
@@ -66,22 +71,25 @@ static inline uint16_t mavlink_msg_small_baro_pack(uint8_t system_id, uint8_t co
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param pressure Measured Differential Pressure
- * @param temperature Measured Temperature
+ * @param altitude Calculated Altitude (m)
+ * @param pressure Measured Differential Pressure (Pa)
+ * @param temperature Measured Temperature (K)
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_small_baro_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           int32_t pressure,int32_t temperature)
+						           float altitude,float pressure,float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_BARO_LEN];
-	_mav_put_int32_t(buf, 0, pressure);
-	_mav_put_int32_t(buf, 4, temperature);
+	_mav_put_float(buf, 0, altitude);
+	_mav_put_float(buf, 4, pressure);
+	_mav_put_float(buf, 8, temperature);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_BARO_LEN);
 #else
 	mavlink_small_baro_t packet;
+	packet.altitude = altitude;
 	packet.pressure = pressure;
 	packet.temperature = temperature;
 
@@ -106,7 +114,7 @@ static inline uint16_t mavlink_msg_small_baro_pack_chan(uint8_t system_id, uint8
  */
 static inline uint16_t mavlink_msg_small_baro_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_small_baro_t* small_baro)
 {
-	return mavlink_msg_small_baro_pack(system_id, component_id, msg, small_baro->pressure, small_baro->temperature);
+	return mavlink_msg_small_baro_pack(system_id, component_id, msg, small_baro->altitude, small_baro->pressure, small_baro->temperature);
 }
 
 /**
@@ -120,24 +128,26 @@ static inline uint16_t mavlink_msg_small_baro_encode(uint8_t system_id, uint8_t 
  */
 static inline uint16_t mavlink_msg_small_baro_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_small_baro_t* small_baro)
 {
-	return mavlink_msg_small_baro_pack_chan(system_id, component_id, chan, msg, small_baro->pressure, small_baro->temperature);
+	return mavlink_msg_small_baro_pack_chan(system_id, component_id, chan, msg, small_baro->altitude, small_baro->pressure, small_baro->temperature);
 }
 
 /**
  * @brief Send a small_baro message
  * @param chan MAVLink channel to send the message
  *
- * @param pressure Measured Differential Pressure
- * @param temperature Measured Temperature
+ * @param altitude Calculated Altitude (m)
+ * @param pressure Measured Differential Pressure (Pa)
+ * @param temperature Measured Temperature (K)
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_small_baro_send(mavlink_channel_t chan, int32_t pressure, int32_t temperature)
+static inline void mavlink_msg_small_baro_send(mavlink_channel_t chan, float altitude, float pressure, float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_BARO_LEN];
-	_mav_put_int32_t(buf, 0, pressure);
-	_mav_put_int32_t(buf, 4, temperature);
+	_mav_put_float(buf, 0, altitude);
+	_mav_put_float(buf, 4, pressure);
+	_mav_put_float(buf, 8, temperature);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_BARO, buf, MAVLINK_MSG_ID_SMALL_BARO_LEN, MAVLINK_MSG_ID_SMALL_BARO_CRC);
@@ -146,6 +156,7 @@ static inline void mavlink_msg_small_baro_send(mavlink_channel_t chan, int32_t p
 #endif
 #else
 	mavlink_small_baro_t packet;
+	packet.altitude = altitude;
 	packet.pressure = pressure;
 	packet.temperature = temperature;
 
@@ -165,12 +176,13 @@ static inline void mavlink_msg_small_baro_send(mavlink_channel_t chan, int32_t p
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_small_baro_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  int32_t pressure, int32_t temperature)
+static inline void mavlink_msg_small_baro_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float altitude, float pressure, float temperature)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_int32_t(buf, 0, pressure);
-	_mav_put_int32_t(buf, 4, temperature);
+	_mav_put_float(buf, 0, altitude);
+	_mav_put_float(buf, 4, pressure);
+	_mav_put_float(buf, 8, temperature);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_BARO, buf, MAVLINK_MSG_ID_SMALL_BARO_LEN, MAVLINK_MSG_ID_SMALL_BARO_CRC);
@@ -179,6 +191,7 @@ static inline void mavlink_msg_small_baro_send_buf(mavlink_message_t *msgbuf, ma
 #endif
 #else
 	mavlink_small_baro_t *packet = (mavlink_small_baro_t *)msgbuf;
+	packet->altitude = altitude;
 	packet->pressure = pressure;
 	packet->temperature = temperature;
 
@@ -197,23 +210,33 @@ static inline void mavlink_msg_small_baro_send_buf(mavlink_message_t *msgbuf, ma
 
 
 /**
+ * @brief Get field altitude from small_baro message
+ *
+ * @return Calculated Altitude (m)
+ */
+static inline float mavlink_msg_small_baro_get_altitude(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_float(msg,  0);
+}
+
+/**
  * @brief Get field pressure from small_baro message
  *
- * @return Measured Differential Pressure
+ * @return Measured Differential Pressure (Pa)
  */
-static inline int32_t mavlink_msg_small_baro_get_pressure(const mavlink_message_t* msg)
+static inline float mavlink_msg_small_baro_get_pressure(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  0);
+	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
  * @brief Get field temperature from small_baro message
  *
- * @return Measured Temperature
+ * @return Measured Temperature (K)
  */
-static inline int32_t mavlink_msg_small_baro_get_temperature(const mavlink_message_t* msg)
+static inline float mavlink_msg_small_baro_get_temperature(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  4);
+	return _MAV_RETURN_float(msg,  8);
 }
 
 /**
@@ -225,6 +248,7 @@ static inline int32_t mavlink_msg_small_baro_get_temperature(const mavlink_messa
 static inline void mavlink_msg_small_baro_decode(const mavlink_message_t* msg, mavlink_small_baro_t* small_baro)
 {
 #if MAVLINK_NEED_BYTE_SWAP
+	small_baro->altitude = mavlink_msg_small_baro_get_altitude(msg);
 	small_baro->pressure = mavlink_msg_small_baro_get_pressure(msg);
 	small_baro->temperature = mavlink_msg_small_baro_get_temperature(msg);
 #else
