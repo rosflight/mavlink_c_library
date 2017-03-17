@@ -495,13 +495,13 @@ static void mavlink_test_rosflight_output_raw(uint8_t system_id, uint8_t compone
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_output_raw_t packet_in = {
-		93372036854775807ULL,{ 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0 }
+		93372036854775807ULL,{ 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0 }
     };
 	mavlink_rosflight_output_raw_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         	packet1.stamp = packet_in.stamp;
         
-        	mav_array_memcpy(packet1.channels, packet_in.channels, sizeof(float)*10);
+        	mav_array_memcpy(packet1.values, packet_in.values, sizeof(float)*8);
         
 
         memset(&packet2, 0, sizeof(packet2));
@@ -510,12 +510,12 @@ static void mavlink_test_rosflight_output_raw(uint8_t system_id, uint8_t compone
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_output_raw_pack(system_id, component_id, &msg , packet1.stamp , packet1.channels );
+	mavlink_msg_rosflight_output_raw_pack(system_id, component_id, &msg , packet1.stamp , packet1.values );
 	mavlink_msg_rosflight_output_raw_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_output_raw_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.stamp , packet1.channels );
+	mavlink_msg_rosflight_output_raw_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.stamp , packet1.values );
 	mavlink_msg_rosflight_output_raw_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -528,7 +528,7 @@ static void mavlink_test_rosflight_output_raw(uint8_t system_id, uint8_t compone
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_output_raw_send(MAVLINK_COMM_1 , packet1.stamp , packet1.channels );
+	mavlink_msg_rosflight_output_raw_send(MAVLINK_COMM_1 , packet1.stamp , packet1.values );
 	mavlink_msg_rosflight_output_raw_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
