@@ -5,7 +5,7 @@
 typedef struct __mavlink_rosflight_status_t
 {
  uint32_t loop_time_us; /*< */
- uint16_t i2c_errors; /*< */
+ uint16_t num_errors; /*< */
  uint8_t status; /*< */
  uint8_t error_code; /*< */
  uint8_t control_mode; /*< */
@@ -14,8 +14,8 @@ typedef struct __mavlink_rosflight_status_t
 #define MAVLINK_MSG_ID_ROSFLIGHT_STATUS_LEN 9
 #define MAVLINK_MSG_ID_191_LEN 9
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_STATUS_CRC 86
-#define MAVLINK_MSG_ID_191_CRC 86
+#define MAVLINK_MSG_ID_ROSFLIGHT_STATUS_CRC 219
+#define MAVLINK_MSG_ID_191_CRC 219
 
 
 
@@ -23,7 +23,7 @@ typedef struct __mavlink_rosflight_status_t
 	"ROSFLIGHT_STATUS", \
 	5, \
 	{  { "loop_time_us", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_rosflight_status_t, loop_time_us) }, \
-         { "i2c_errors", NULL, MAVLINK_TYPE_UINT16_T, 0, 4, offsetof(mavlink_rosflight_status_t, i2c_errors) }, \
+         { "num_errors", NULL, MAVLINK_TYPE_UINT16_T, 0, 4, offsetof(mavlink_rosflight_status_t, num_errors) }, \
          { "status", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_rosflight_status_t, status) }, \
          { "error_code", NULL, MAVLINK_TYPE_UINT8_T, 0, 7, offsetof(mavlink_rosflight_status_t, error_code) }, \
          { "control_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_rosflight_status_t, control_mode) }, \
@@ -40,17 +40,17 @@ typedef struct __mavlink_rosflight_status_t
  * @param status 
  * @param error_code 
  * @param control_mode 
- * @param i2c_errors 
+ * @param num_errors 
  * @param loop_time_us 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t status, uint8_t error_code, uint8_t control_mode, uint16_t i2c_errors, uint32_t loop_time_us)
+						       uint8_t status, uint8_t error_code, uint8_t control_mode, uint16_t num_errors, uint32_t loop_time_us)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_STATUS_LEN];
 	_mav_put_uint32_t(buf, 0, loop_time_us);
-	_mav_put_uint16_t(buf, 4, i2c_errors);
+	_mav_put_uint16_t(buf, 4, num_errors);
 	_mav_put_uint8_t(buf, 6, status);
 	_mav_put_uint8_t(buf, 7, error_code);
 	_mav_put_uint8_t(buf, 8, control_mode);
@@ -59,7 +59,7 @@ static inline uint16_t mavlink_msg_rosflight_status_pack(uint8_t system_id, uint
 #else
 	mavlink_rosflight_status_t packet;
 	packet.loop_time_us = loop_time_us;
-	packet.i2c_errors = i2c_errors;
+	packet.num_errors = num_errors;
 	packet.status = status;
 	packet.error_code = error_code;
 	packet.control_mode = control_mode;
@@ -84,18 +84,18 @@ static inline uint16_t mavlink_msg_rosflight_status_pack(uint8_t system_id, uint
  * @param status 
  * @param error_code 
  * @param control_mode 
- * @param i2c_errors 
+ * @param num_errors 
  * @param loop_time_us 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_status_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t status,uint8_t error_code,uint8_t control_mode,uint16_t i2c_errors,uint32_t loop_time_us)
+						           uint8_t status,uint8_t error_code,uint8_t control_mode,uint16_t num_errors,uint32_t loop_time_us)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_STATUS_LEN];
 	_mav_put_uint32_t(buf, 0, loop_time_us);
-	_mav_put_uint16_t(buf, 4, i2c_errors);
+	_mav_put_uint16_t(buf, 4, num_errors);
 	_mav_put_uint8_t(buf, 6, status);
 	_mav_put_uint8_t(buf, 7, error_code);
 	_mav_put_uint8_t(buf, 8, control_mode);
@@ -104,7 +104,7 @@ static inline uint16_t mavlink_msg_rosflight_status_pack_chan(uint8_t system_id,
 #else
 	mavlink_rosflight_status_t packet;
 	packet.loop_time_us = loop_time_us;
-	packet.i2c_errors = i2c_errors;
+	packet.num_errors = num_errors;
 	packet.status = status;
 	packet.error_code = error_code;
 	packet.control_mode = control_mode;
@@ -130,7 +130,7 @@ static inline uint16_t mavlink_msg_rosflight_status_pack_chan(uint8_t system_id,
  */
 static inline uint16_t mavlink_msg_rosflight_status_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rosflight_status_t* rosflight_status)
 {
-	return mavlink_msg_rosflight_status_pack(system_id, component_id, msg, rosflight_status->status, rosflight_status->error_code, rosflight_status->control_mode, rosflight_status->i2c_errors, rosflight_status->loop_time_us);
+	return mavlink_msg_rosflight_status_pack(system_id, component_id, msg, rosflight_status->status, rosflight_status->error_code, rosflight_status->control_mode, rosflight_status->num_errors, rosflight_status->loop_time_us);
 }
 
 /**
@@ -144,7 +144,7 @@ static inline uint16_t mavlink_msg_rosflight_status_encode(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_rosflight_status_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rosflight_status_t* rosflight_status)
 {
-	return mavlink_msg_rosflight_status_pack_chan(system_id, component_id, chan, msg, rosflight_status->status, rosflight_status->error_code, rosflight_status->control_mode, rosflight_status->i2c_errors, rosflight_status->loop_time_us);
+	return mavlink_msg_rosflight_status_pack_chan(system_id, component_id, chan, msg, rosflight_status->status, rosflight_status->error_code, rosflight_status->control_mode, rosflight_status->num_errors, rosflight_status->loop_time_us);
 }
 
 /**
@@ -154,17 +154,17 @@ static inline uint16_t mavlink_msg_rosflight_status_encode_chan(uint8_t system_i
  * @param status 
  * @param error_code 
  * @param control_mode 
- * @param i2c_errors 
+ * @param num_errors 
  * @param loop_time_us 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rosflight_status_send(mavlink_channel_t chan, uint8_t status, uint8_t error_code, uint8_t control_mode, uint16_t i2c_errors, uint32_t loop_time_us)
+static inline void mavlink_msg_rosflight_status_send(mavlink_channel_t chan, uint8_t status, uint8_t error_code, uint8_t control_mode, uint16_t num_errors, uint32_t loop_time_us)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_STATUS_LEN];
 	_mav_put_uint32_t(buf, 0, loop_time_us);
-	_mav_put_uint16_t(buf, 4, i2c_errors);
+	_mav_put_uint16_t(buf, 4, num_errors);
 	_mav_put_uint8_t(buf, 6, status);
 	_mav_put_uint8_t(buf, 7, error_code);
 	_mav_put_uint8_t(buf, 8, control_mode);
@@ -177,7 +177,7 @@ static inline void mavlink_msg_rosflight_status_send(mavlink_channel_t chan, uin
 #else
 	mavlink_rosflight_status_t packet;
 	packet.loop_time_us = loop_time_us;
-	packet.i2c_errors = i2c_errors;
+	packet.num_errors = num_errors;
 	packet.status = status;
 	packet.error_code = error_code;
 	packet.control_mode = control_mode;
@@ -198,12 +198,12 @@ static inline void mavlink_msg_rosflight_status_send(mavlink_channel_t chan, uin
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rosflight_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t status, uint8_t error_code, uint8_t control_mode, uint16_t i2c_errors, uint32_t loop_time_us)
+static inline void mavlink_msg_rosflight_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t status, uint8_t error_code, uint8_t control_mode, uint16_t num_errors, uint32_t loop_time_us)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
 	_mav_put_uint32_t(buf, 0, loop_time_us);
-	_mav_put_uint16_t(buf, 4, i2c_errors);
+	_mav_put_uint16_t(buf, 4, num_errors);
 	_mav_put_uint8_t(buf, 6, status);
 	_mav_put_uint8_t(buf, 7, error_code);
 	_mav_put_uint8_t(buf, 8, control_mode);
@@ -216,7 +216,7 @@ static inline void mavlink_msg_rosflight_status_send_buf(mavlink_message_t *msgb
 #else
 	mavlink_rosflight_status_t *packet = (mavlink_rosflight_status_t *)msgbuf;
 	packet->loop_time_us = loop_time_us;
-	packet->i2c_errors = i2c_errors;
+	packet->num_errors = num_errors;
 	packet->status = status;
 	packet->error_code = error_code;
 	packet->control_mode = control_mode;
@@ -266,11 +266,11 @@ static inline uint8_t mavlink_msg_rosflight_status_get_control_mode(const mavlin
 }
 
 /**
- * @brief Get field i2c_errors from rosflight_status message
+ * @brief Get field num_errors from rosflight_status message
  *
  * @return 
  */
-static inline uint16_t mavlink_msg_rosflight_status_get_i2c_errors(const mavlink_message_t* msg)
+static inline uint16_t mavlink_msg_rosflight_status_get_num_errors(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_uint16_t(msg,  4);
 }
@@ -295,7 +295,7 @@ static inline void mavlink_msg_rosflight_status_decode(const mavlink_message_t* 
 {
 #if MAVLINK_NEED_BYTE_SWAP
 	rosflight_status->loop_time_us = mavlink_msg_rosflight_status_get_loop_time_us(msg);
-	rosflight_status->i2c_errors = mavlink_msg_rosflight_status_get_i2c_errors(msg);
+	rosflight_status->num_errors = mavlink_msg_rosflight_status_get_num_errors(msg);
 	rosflight_status->status = mavlink_msg_rosflight_status_get_status(msg);
 	rosflight_status->error_code = mavlink_msg_rosflight_status_get_error_code(msg);
 	rosflight_status->control_mode = mavlink_msg_rosflight_status_get_control_mode(msg);
