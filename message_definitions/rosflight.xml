@@ -16,6 +16,11 @@
             <entry value="9" name="ROSFLIGHT_CMD_REBOOT_TO_BOOTLOADER"/>
             <entry value="10" name="ROSFLIGHT_CMD_SEND_VERSION"/>
         </enum>
+        <enum name="ROSFLIGHT_AUX_CMD_TYPE">
+          <entry value="0" name="DISABLED"/>
+          <entry value="1" name="SERVO"/>
+          <entry value="2" name="MOTOR"/>
+        </enum>
         <enum name="ROSFLIGHT_CMD_RESPONSE">
             <entry value="0" name="ROSFLIGHT_CMD_FAILED"/>
             <entry value="1" name="ROSFLIGHT_CMD_SUCCESS"/>
@@ -144,6 +149,10 @@
       </message>
       <message id="192" name="ROSFLIGHT_VERSION">
         <field type="char[50]" name="version"/>
+      </message>
+      <message id="193" name="ROSFLIGHT_AUX_CMD">
+        <field type="uint8_t" name="type_array" enum="ROSFLIGHT_AUX_CMD_TYPE"/>
+        <field type="float[8]" name="aux_cmd_array"/>
       </message>
     </messages>
 </mavlink>
