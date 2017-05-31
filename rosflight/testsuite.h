@@ -629,13 +629,13 @@ static void mavlink_test_rosflight_aux_cmd(uint8_t system_id, uint8_t component_
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_aux_cmd_t packet_in = {
-		{ 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0 },101
+		{ 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0 },{ 101, 102, 103, 104, 105, 106, 107, 108 }
     };
 	mavlink_rosflight_aux_cmd_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        	packet1.type_array = packet_in.type_array;
         
         	mav_array_memcpy(packet1.aux_cmd_array, packet_in.aux_cmd_array, sizeof(float)*8);
+        	mav_array_memcpy(packet1.type_array, packet_in.type_array, sizeof(uint8_t)*8);
         
 
         memset(&packet2, 0, sizeof(packet2));

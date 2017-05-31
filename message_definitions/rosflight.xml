@@ -151,7 +151,7 @@
         <field type="char[50]" name="version"/>
       </message>
       <message id="193" name="ROSFLIGHT_AUX_CMD">
-        <field type="uint8_t" name="type_array" enum="ROSFLIGHT_AUX_CMD_TYPE"/>
+        <field type="uint8_t[8]" name="type_array" enum="ROSFLIGHT_AUX_CMD_TYPE"/>
         <field type="float[8]" name="aux_cmd_array"/>
       </message>
     </messages>
