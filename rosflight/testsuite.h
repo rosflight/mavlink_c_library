@@ -357,16 +357,17 @@ static void mavlink_test_named_command_struct(uint8_t system_id, uint8_t compone
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
-static void mavlink_test_small_sonar(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+static void mavlink_test_small_range(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 	mavlink_message_t msg;
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
-	mavlink_small_sonar_t packet_in = {
-		17.0,45.0,73.0
+	mavlink_small_range_t packet_in = {
+		17.0,45.0,73.0,101.0
     };
-	mavlink_small_sonar_t packet1, packet2;
+	mavlink_small_range_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        	packet1.type = packet_in.type;
         	packet1.range = packet_in.range;
         	packet1.max_range = packet_in.max_range;
         	packet1.min_range = packet_in.min_range;
@@ -374,18 +375,18 @@ static void mavlink_test_small_sonar(uint8_t system_id, uint8_t component_id, ma
         
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_small_sonar_encode(system_id, component_id, &msg, &packet1);
-	mavlink_msg_small_sonar_decode(&msg, &packet2);
+	mavlink_msg_small_range_encode(system_id, component_id, &msg, &packet1);
+	mavlink_msg_small_range_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_small_sonar_pack(system_id, component_id, &msg , packet1.range , packet1.max_range , packet1.min_range );
-	mavlink_msg_small_sonar_decode(&msg, &packet2);
+	mavlink_msg_small_range_pack(system_id, component_id, &msg , packet1.type , packet1.range , packet1.max_range , packet1.min_range );
+	mavlink_msg_small_range_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_small_sonar_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.range , packet1.max_range , packet1.min_range );
-	mavlink_msg_small_sonar_decode(&msg, &packet2);
+	mavlink_msg_small_range_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.type , packet1.range , packet1.max_range , packet1.min_range );
+	mavlink_msg_small_range_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
@@ -393,12 +394,12 @@ static void mavlink_test_small_sonar(uint8_t system_id, uint8_t component_id, ma
         for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
         	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
         }
-	mavlink_msg_small_sonar_decode(last_msg, &packet2);
+	mavlink_msg_small_range_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_small_sonar_send(MAVLINK_COMM_1 , packet1.range , packet1.max_range , packet1.min_range );
-	mavlink_msg_small_sonar_decode(last_msg, &packet2);
+	mavlink_msg_small_range_send(MAVLINK_COMM_1 , packet1.type , packet1.range , packet1.max_range , packet1.min_range );
+	mavlink_msg_small_range_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
@@ -623,49 +624,6 @@ static void mavlink_test_rosflight_version(uint8_t system_id, uint8_t component_
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
-static void mavlink_test_lidar(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
-{
-	mavlink_message_t msg;
-        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-        uint16_t i;
-	mavlink_lidar_t packet_in = {
-		17.0
-    };
-	mavlink_lidar_t packet1, packet2;
-        memset(&packet1, 0, sizeof(packet1));
-        	packet1.altitude = packet_in.altitude;
-        
-        
-
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_lidar_encode(system_id, component_id, &msg, &packet1);
-	mavlink_msg_lidar_decode(&msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_lidar_pack(system_id, component_id, &msg , packet1.altitude );
-	mavlink_msg_lidar_decode(&msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_lidar_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.altitude );
-	mavlink_msg_lidar_decode(&msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-
-        memset(&packet2, 0, sizeof(packet2));
-        mavlink_msg_to_send_buffer(buffer, &msg);
-        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
-        	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
-        }
-	mavlink_msg_lidar_decode(last_msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-        
-        memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_lidar_send(MAVLINK_COMM_1 , packet1.altitude );
-	mavlink_msg_lidar_decode(last_msg, &packet2);
-        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
-}
-
 static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 	mavlink_test_offboard_control(system_id, component_id, last_msg);
@@ -675,13 +633,12 @@ static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavl
 	mavlink_test_diff_pressure(system_id, component_id, last_msg);
 	mavlink_test_camera_stamped_small_imu(system_id, component_id, last_msg);
 	mavlink_test_named_command_struct(system_id, component_id, last_msg);
-	mavlink_test_small_sonar(system_id, component_id, last_msg);
+	mavlink_test_small_range(system_id, component_id, last_msg);
 	mavlink_test_rosflight_cmd(system_id, component_id, last_msg);
 	mavlink_test_rosflight_cmd_ack(system_id, component_id, last_msg);
 	mavlink_test_rosflight_output_raw(system_id, component_id, last_msg);
 	mavlink_test_rosflight_status(system_id, component_id, last_msg);
 	mavlink_test_rosflight_version(system_id, component_id, last_msg);
-	mavlink_test_lidar(system_id, component_id, last_msg);
 }
 
 #ifdef __cplusplus
