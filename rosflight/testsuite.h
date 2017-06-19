@@ -363,14 +363,14 @@ static void mavlink_test_small_range(uint8_t system_id, uint8_t component_id, ma
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_small_range_t packet_in = {
-		17.0,45.0,73.0,101.0
+		17.0,45.0,73.0,41
     };
 	mavlink_small_range_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        	packet1.type = packet_in.type;
         	packet1.range = packet_in.range;
         	packet1.max_range = packet_in.max_range;
         	packet1.min_range = packet_in.min_range;
+        	packet1.type = packet_in.type;
         
         
 

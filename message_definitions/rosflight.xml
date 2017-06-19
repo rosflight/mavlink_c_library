@@ -65,8 +65,8 @@
           <entry value="0x08" name="ROSFLIGHT_ERROR_UNHEALTHY_ESTIMATOR"/>
         </enum>
         <enum name="ROSFLIGHT_RANGE_TYPE">
-          <entry value="0x00" name="ROSFLIGHT_RANGE_SONAR"/>
-          <entry value="0x01" name="ROSFLIGHT_RANGE_LIDAR"/>
+          <entry value="0" name="ROSFLIGHT_RANGE_SONAR"/>
+          <entry value="1" name="ROSFLIGHT_RANGE_LIDAR"/>
         </enum>
     </enums>
     <messages>
@@ -124,7 +124,7 @@
           <field type="float" name="F">F value in the command struct</field>
         </message>
        <message id="187" name="SMALL_RANGE">
-          <field type="float" name="type" enum="ROSFLIGHT_RANGE_TYPE">Sensor type</field>
+          <field type="uint8_t" name="type" enum="ROSFLIGHT_RANGE_TYPE">Sensor type</field>
           <field type="float" name="range">Range Measurement (m)</field>
           <field type="float" name="max_range">Max Range (m)</field>
           <field type="float" name="min_range">Min Range (m)</field>

@@ -4,27 +4,27 @@
 
 typedef struct __mavlink_small_range_t
 {
- float type; /*< Sensor type*/
  float range; /*< Range Measurement (m)*/
  float max_range; /*< Max Range (m)*/
  float min_range; /*< Min Range (m)*/
+ uint8_t type; /*< Sensor type*/
 } mavlink_small_range_t;
 
-#define MAVLINK_MSG_ID_SMALL_RANGE_LEN 16
-#define MAVLINK_MSG_ID_187_LEN 16
+#define MAVLINK_MSG_ID_SMALL_RANGE_LEN 13
+#define MAVLINK_MSG_ID_187_LEN 13
 
-#define MAVLINK_MSG_ID_SMALL_RANGE_CRC 66
-#define MAVLINK_MSG_ID_187_CRC 66
+#define MAVLINK_MSG_ID_SMALL_RANGE_CRC 60
+#define MAVLINK_MSG_ID_187_CRC 60
 
 
 
 #define MAVLINK_MESSAGE_INFO_SMALL_RANGE { \
 	"SMALL_RANGE", \
 	4, \
-	{  { "type", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_small_range_t, type) }, \
-         { "range", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_small_range_t, range) }, \
-         { "max_range", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_small_range_t, max_range) }, \
-         { "min_range", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_small_range_t, min_range) }, \
+	{  { "range", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_small_range_t, range) }, \
+         { "max_range", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_small_range_t, max_range) }, \
+         { "min_range", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_small_range_t, min_range) }, \
+         { "type", NULL, MAVLINK_TYPE_UINT8_T, 0, 12, offsetof(mavlink_small_range_t, type) }, \
          } \
 }
 
@@ -42,22 +42,22 @@ typedef struct __mavlink_small_range_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_small_range_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       float type, float range, float max_range, float min_range)
+						       uint8_t type, float range, float max_range, float min_range)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_RANGE_LEN];
-	_mav_put_float(buf, 0, type);
-	_mav_put_float(buf, 4, range);
-	_mav_put_float(buf, 8, max_range);
-	_mav_put_float(buf, 12, min_range);
+	_mav_put_float(buf, 0, range);
+	_mav_put_float(buf, 4, max_range);
+	_mav_put_float(buf, 8, min_range);
+	_mav_put_uint8_t(buf, 12, type);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_RANGE_LEN);
 #else
 	mavlink_small_range_t packet;
-	packet.type = type;
 	packet.range = range;
 	packet.max_range = max_range;
 	packet.min_range = min_range;
+	packet.type = type;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SMALL_RANGE_LEN);
 #endif
@@ -84,22 +84,22 @@ static inline uint16_t mavlink_msg_small_range_pack(uint8_t system_id, uint8_t c
  */
 static inline uint16_t mavlink_msg_small_range_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           float type,float range,float max_range,float min_range)
+						           uint8_t type,float range,float max_range,float min_range)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_RANGE_LEN];
-	_mav_put_float(buf, 0, type);
-	_mav_put_float(buf, 4, range);
-	_mav_put_float(buf, 8, max_range);
-	_mav_put_float(buf, 12, min_range);
+	_mav_put_float(buf, 0, range);
+	_mav_put_float(buf, 4, max_range);
+	_mav_put_float(buf, 8, min_range);
+	_mav_put_uint8_t(buf, 12, type);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SMALL_RANGE_LEN);
 #else
 	mavlink_small_range_t packet;
-	packet.type = type;
 	packet.range = range;
 	packet.max_range = max_range;
 	packet.min_range = min_range;
+	packet.type = type;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SMALL_RANGE_LEN);
 #endif
@@ -150,14 +150,14 @@ static inline uint16_t mavlink_msg_small_range_encode_chan(uint8_t system_id, ui
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_small_range_send(mavlink_channel_t chan, float type, float range, float max_range, float min_range)
+static inline void mavlink_msg_small_range_send(mavlink_channel_t chan, uint8_t type, float range, float max_range, float min_range)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SMALL_RANGE_LEN];
-	_mav_put_float(buf, 0, type);
-	_mav_put_float(buf, 4, range);
-	_mav_put_float(buf, 8, max_range);
-	_mav_put_float(buf, 12, min_range);
+	_mav_put_float(buf, 0, range);
+	_mav_put_float(buf, 4, max_range);
+	_mav_put_float(buf, 8, min_range);
+	_mav_put_uint8_t(buf, 12, type);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_RANGE, buf, MAVLINK_MSG_ID_SMALL_RANGE_LEN, MAVLINK_MSG_ID_SMALL_RANGE_CRC);
@@ -166,10 +166,10 @@ static inline void mavlink_msg_small_range_send(mavlink_channel_t chan, float ty
 #endif
 #else
 	mavlink_small_range_t packet;
-	packet.type = type;
 	packet.range = range;
 	packet.max_range = max_range;
 	packet.min_range = min_range;
+	packet.type = type;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_RANGE, (const char *)&packet, MAVLINK_MSG_ID_SMALL_RANGE_LEN, MAVLINK_MSG_ID_SMALL_RANGE_CRC);
@@ -187,14 +187,14 @@ static inline void mavlink_msg_small_range_send(mavlink_channel_t chan, float ty
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_small_range_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float type, float range, float max_range, float min_range)
+static inline void mavlink_msg_small_range_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t type, float range, float max_range, float min_range)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_float(buf, 0, type);
-	_mav_put_float(buf, 4, range);
-	_mav_put_float(buf, 8, max_range);
-	_mav_put_float(buf, 12, min_range);
+	_mav_put_float(buf, 0, range);
+	_mav_put_float(buf, 4, max_range);
+	_mav_put_float(buf, 8, min_range);
+	_mav_put_uint8_t(buf, 12, type);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_RANGE, buf, MAVLINK_MSG_ID_SMALL_RANGE_LEN, MAVLINK_MSG_ID_SMALL_RANGE_CRC);
@@ -203,10 +203,10 @@ static inline void mavlink_msg_small_range_send_buf(mavlink_message_t *msgbuf, m
 #endif
 #else
 	mavlink_small_range_t *packet = (mavlink_small_range_t *)msgbuf;
-	packet->type = type;
 	packet->range = range;
 	packet->max_range = max_range;
 	packet->min_range = min_range;
+	packet->type = type;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SMALL_RANGE, (const char *)packet, MAVLINK_MSG_ID_SMALL_RANGE_LEN, MAVLINK_MSG_ID_SMALL_RANGE_CRC);
@@ -227,9 +227,9 @@ static inline void mavlink_msg_small_range_send_buf(mavlink_message_t *msgbuf, m
  *
  * @return Sensor type
  */
-static inline float mavlink_msg_small_range_get_type(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_small_range_get_type(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  0);
+	return _MAV_RETURN_uint8_t(msg,  12);
 }
 
 /**
@@ -239,7 +239,7 @@ static inline float mavlink_msg_small_range_get_type(const mavlink_message_t* ms
  */
 static inline float mavlink_msg_small_range_get_range(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  4);
+	return _MAV_RETURN_float(msg,  0);
 }
 
 /**
@@ -249,7 +249,7 @@ static inline float mavlink_msg_small_range_get_range(const mavlink_message_t* m
  */
 static inline float mavlink_msg_small_range_get_max_range(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  8);
+	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
@@ -259,7 +259,7 @@ static inline float mavlink_msg_small_range_get_max_range(const mavlink_message_
  */
 static inline float mavlink_msg_small_range_get_min_range(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  12);
+	return _MAV_RETURN_float(msg,  8);
 }
 
 /**
@@ -271,10 +271,10 @@ static inline float mavlink_msg_small_range_get_min_range(const mavlink_message_
 static inline void mavlink_msg_small_range_decode(const mavlink_message_t* msg, mavlink_small_range_t* small_range)
 {
 #if MAVLINK_NEED_BYTE_SWAP
-	small_range->type = mavlink_msg_small_range_get_type(msg);
 	small_range->range = mavlink_msg_small_range_get_range(msg);
 	small_range->max_range = mavlink_msg_small_range_get_max_range(msg);
 	small_range->min_range = mavlink_msg_small_range_get_min_range(msg);
+	small_range->type = mavlink_msg_small_range_get_type(msg);
 #else
 	memcpy(small_range, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_SMALL_RANGE_LEN);
 #endif
