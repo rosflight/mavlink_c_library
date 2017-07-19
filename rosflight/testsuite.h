@@ -540,7 +540,7 @@ static void mavlink_test_rosflight_status(uint8_t system_id, uint8_t component_i
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_status_t packet_in = {
-		17235,17339,17,84,151,218,29
+		17235,17339,17,84,151,218,29,96
     };
 	mavlink_rosflight_status_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
@@ -549,6 +549,7 @@ static void mavlink_test_rosflight_status(uint8_t system_id, uint8_t component_i
         	packet1.armed = packet_in.armed;
         	packet1.failsafe = packet_in.failsafe;
         	packet1.rc_override = packet_in.rc_override;
+        	packet1.offboard = packet_in.offboard;
         	packet1.error_code = packet_in.error_code;
         	packet1.control_mode = packet_in.control_mode;
         
@@ -560,12 +561,12 @@ static void mavlink_test_rosflight_status(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_status_pack(system_id, component_id, &msg , packet1.armed , packet1.failsafe , packet1.rc_override , packet1.error_code , packet1.control_mode , packet1.num_errors , packet1.loop_time_us );
+	mavlink_msg_rosflight_status_pack(system_id, component_id, &msg , packet1.armed , packet1.failsafe , packet1.rc_override , packet1.offboard , packet1.error_code , packet1.control_mode , packet1.num_errors , packet1.loop_time_us );
 	mavlink_msg_rosflight_status_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_status_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.armed , packet1.failsafe , packet1.rc_override , packet1.error_code , packet1.control_mode , packet1.num_errors , packet1.loop_time_us );
+	mavlink_msg_rosflight_status_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.armed , packet1.failsafe , packet1.rc_override , packet1.offboard , packet1.error_code , packet1.control_mode , packet1.num_errors , packet1.loop_time_us );
 	mavlink_msg_rosflight_status_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -578,7 +579,7 @@ static void mavlink_test_rosflight_status(uint8_t system_id, uint8_t component_i
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_status_send(MAVLINK_COMM_1 , packet1.armed , packet1.failsafe , packet1.rc_override , packet1.error_code , packet1.control_mode , packet1.num_errors , packet1.loop_time_us );
+	mavlink_msg_rosflight_status_send(MAVLINK_COMM_1 , packet1.armed , packet1.failsafe , packet1.rc_override , packet1.offboard , packet1.error_code , packet1.control_mode , packet1.num_errors , packet1.loop_time_us );
 	mavlink_msg_rosflight_status_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
