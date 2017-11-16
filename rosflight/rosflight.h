@@ -124,7 +124,7 @@ typedef enum ROSFLIGHT_RANGE_TYPE
 #define HAVE_ENUM_AUX_CMD_CHANNEL_MODE
 typedef enum AUX_CMD_CHANNEL_MODE
 {
-	MODE_DISABLE=0, /* Channel is disabled | */
+	MODE_DISABLE=0, /* Channel is controlled by the mixer | */
 	MODE_SERVO=1, /* Channel value floats should be mapped to servo postion between -1 and 1 | */
 	MODE_MOTOR=2, /* Channel value floats should be mapped to motor speed between 0 and 1 | */
 	AUX_CMD_CHANNEL_MODE_ENUM_END=3, /*  | */
