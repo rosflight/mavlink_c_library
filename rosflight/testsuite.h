@@ -671,6 +671,61 @@ static void mavlink_test_rosflight_aux_cmd(uint8_t system_id, uint8_t component_
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
+static void mavlink_test_rosflight_ins(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+	mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+	mavlink_rosflight_ins_t packet_in = {
+		17.0,45.0,73.0,101.0,129.0,157.0,185.0,213.0,241.0,269.0,297.0,325.0,353.0
+    };
+	mavlink_rosflight_ins_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        	packet1.pos_north = packet_in.pos_north;
+        	packet1.pos_east = packet_in.pos_east;
+        	packet1.pos_down = packet_in.pos_down;
+        	packet1.qw = packet_in.qw;
+        	packet1.qx = packet_in.qx;
+        	packet1.qy = packet_in.qy;
+        	packet1.qz = packet_in.qz;
+        	packet1.u = packet_in.u;
+        	packet1.v = packet_in.v;
+        	packet1.w = packet_in.w;
+        	packet1.p = packet_in.p;
+        	packet1.q = packet_in.q;
+        	packet1.r = packet_in.r;
+        
+        
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_ins_encode(system_id, component_id, &msg, &packet1);
+	mavlink_msg_rosflight_ins_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_ins_pack(system_id, component_id, &msg , packet1.pos_north , packet1.pos_east , packet1.pos_down , packet1.qw , packet1.qx , packet1.qy , packet1.qz , packet1.u , packet1.v , packet1.w , packet1.p , packet1.q , packet1.r );
+	mavlink_msg_rosflight_ins_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_ins_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.pos_north , packet1.pos_east , packet1.pos_down , packet1.qw , packet1.qx , packet1.qy , packet1.qz , packet1.u , packet1.v , packet1.w , packet1.p , packet1.q , packet1.r );
+	mavlink_msg_rosflight_ins_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+        	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+	mavlink_msg_rosflight_ins_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_ins_send(MAVLINK_COMM_1 , packet1.pos_north , packet1.pos_east , packet1.pos_down , packet1.qw , packet1.qx , packet1.qy , packet1.qz , packet1.u , packet1.v , packet1.w , packet1.p , packet1.q , packet1.r );
+	mavlink_msg_rosflight_ins_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+}
+
 static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 	mavlink_test_offboard_control(system_id, component_id, last_msg);
@@ -687,6 +742,7 @@ static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavl
 	mavlink_test_rosflight_status(system_id, component_id, last_msg);
 	mavlink_test_rosflight_version(system_id, component_id, last_msg);
 	mavlink_test_rosflight_aux_cmd(system_id, component_id, last_msg);
+	mavlink_test_rosflight_ins(system_id, component_id, last_msg);
 }
 
 #ifdef __cplusplus
