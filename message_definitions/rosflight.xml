@@ -166,6 +166,7 @@
             <field type="float[14]" name="aux_cmd_array"/>
         </message>      
         <message id="194" name="ROSFLIGHT_INS">
+            <field type="uint64_t" name="stamp_us"/>
             <field type="float" name="pos_north"/>
             <field type="float" name="pos_east"/>
             <field type="float" name="pos_down"/>
