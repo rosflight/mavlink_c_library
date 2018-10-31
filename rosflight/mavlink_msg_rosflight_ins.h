@@ -4,7 +4,6 @@
 
 typedef struct __mavlink_rosflight_ins_t
 {
- uint64_t stamp_us; /*< */
  float pos_north; /*< */
  float pos_east; /*< */
  float pos_down; /*< */
@@ -20,31 +19,30 @@ typedef struct __mavlink_rosflight_ins_t
  float r; /*< */
 } mavlink_rosflight_ins_t;
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN 60
-#define MAVLINK_MSG_ID_194_LEN 60
+#define MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN 52
+#define MAVLINK_MSG_ID_194_LEN 52
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_INS_CRC 73
-#define MAVLINK_MSG_ID_194_CRC 73
+#define MAVLINK_MSG_ID_ROSFLIGHT_INS_CRC 125
+#define MAVLINK_MSG_ID_194_CRC 125
 
 
 
 #define MAVLINK_MESSAGE_INFO_ROSFLIGHT_INS { \
 	"ROSFLIGHT_INS", \
-	14, \
-	{  { "stamp_us", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_rosflight_ins_t, stamp_us) }, \
-         { "pos_north", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_rosflight_ins_t, pos_north) }, \
-         { "pos_east", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_rosflight_ins_t, pos_east) }, \
-         { "pos_down", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_rosflight_ins_t, pos_down) }, \
-         { "qw", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_rosflight_ins_t, qw) }, \
-         { "qx", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_rosflight_ins_t, qx) }, \
-         { "qy", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_rosflight_ins_t, qy) }, \
-         { "qz", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_rosflight_ins_t, qz) }, \
-         { "u", NULL, MAVLINK_TYPE_FLOAT, 0, 36, offsetof(mavlink_rosflight_ins_t, u) }, \
-         { "v", NULL, MAVLINK_TYPE_FLOAT, 0, 40, offsetof(mavlink_rosflight_ins_t, v) }, \
-         { "w", NULL, MAVLINK_TYPE_FLOAT, 0, 44, offsetof(mavlink_rosflight_ins_t, w) }, \
-         { "p", NULL, MAVLINK_TYPE_FLOAT, 0, 48, offsetof(mavlink_rosflight_ins_t, p) }, \
-         { "q", NULL, MAVLINK_TYPE_FLOAT, 0, 52, offsetof(mavlink_rosflight_ins_t, q) }, \
-         { "r", NULL, MAVLINK_TYPE_FLOAT, 0, 56, offsetof(mavlink_rosflight_ins_t, r) }, \
+	13, \
+	{  { "pos_north", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_rosflight_ins_t, pos_north) }, \
+         { "pos_east", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_rosflight_ins_t, pos_east) }, \
+         { "pos_down", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_rosflight_ins_t, pos_down) }, \
+         { "qw", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_rosflight_ins_t, qw) }, \
+         { "qx", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_rosflight_ins_t, qx) }, \
+         { "qy", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_rosflight_ins_t, qy) }, \
+         { "qz", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_rosflight_ins_t, qz) }, \
+         { "u", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_rosflight_ins_t, u) }, \
+         { "v", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_rosflight_ins_t, v) }, \
+         { "w", NULL, MAVLINK_TYPE_FLOAT, 0, 36, offsetof(mavlink_rosflight_ins_t, w) }, \
+         { "p", NULL, MAVLINK_TYPE_FLOAT, 0, 40, offsetof(mavlink_rosflight_ins_t, p) }, \
+         { "q", NULL, MAVLINK_TYPE_FLOAT, 0, 44, offsetof(mavlink_rosflight_ins_t, q) }, \
+         { "r", NULL, MAVLINK_TYPE_FLOAT, 0, 48, offsetof(mavlink_rosflight_ins_t, r) }, \
          } \
 }
 
@@ -55,7 +53,6 @@ typedef struct __mavlink_rosflight_ins_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param stamp_us 
  * @param pos_north 
  * @param pos_east 
  * @param pos_down 
@@ -72,29 +69,27 @@ typedef struct __mavlink_rosflight_ins_t
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_ins_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint64_t stamp_us, float pos_north, float pos_east, float pos_down, float qw, float qx, float qy, float qz, float u, float v, float w, float p, float q, float r)
+						       float pos_north, float pos_east, float pos_down, float qw, float qx, float qy, float qz, float u, float v, float w, float p, float q, float r)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN];
-	_mav_put_uint64_t(buf, 0, stamp_us);
-	_mav_put_float(buf, 8, pos_north);
-	_mav_put_float(buf, 12, pos_east);
-	_mav_put_float(buf, 16, pos_down);
-	_mav_put_float(buf, 20, qw);
-	_mav_put_float(buf, 24, qx);
-	_mav_put_float(buf, 28, qy);
-	_mav_put_float(buf, 32, qz);
-	_mav_put_float(buf, 36, u);
-	_mav_put_float(buf, 40, v);
-	_mav_put_float(buf, 44, w);
-	_mav_put_float(buf, 48, p);
-	_mav_put_float(buf, 52, q);
-	_mav_put_float(buf, 56, r);
+	_mav_put_float(buf, 0, pos_north);
+	_mav_put_float(buf, 4, pos_east);
+	_mav_put_float(buf, 8, pos_down);
+	_mav_put_float(buf, 12, qw);
+	_mav_put_float(buf, 16, qx);
+	_mav_put_float(buf, 20, qy);
+	_mav_put_float(buf, 24, qz);
+	_mav_put_float(buf, 28, u);
+	_mav_put_float(buf, 32, v);
+	_mav_put_float(buf, 36, w);
+	_mav_put_float(buf, 40, p);
+	_mav_put_float(buf, 44, q);
+	_mav_put_float(buf, 48, r);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN);
 #else
 	mavlink_rosflight_ins_t packet;
-	packet.stamp_us = stamp_us;
 	packet.pos_north = pos_north;
 	packet.pos_east = pos_east;
 	packet.pos_down = pos_down;
@@ -126,7 +121,6 @@ static inline uint16_t mavlink_msg_rosflight_ins_pack(uint8_t system_id, uint8_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param stamp_us 
  * @param pos_north 
  * @param pos_east 
  * @param pos_down 
@@ -144,29 +138,27 @@ static inline uint16_t mavlink_msg_rosflight_ins_pack(uint8_t system_id, uint8_t
  */
 static inline uint16_t mavlink_msg_rosflight_ins_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint64_t stamp_us,float pos_north,float pos_east,float pos_down,float qw,float qx,float qy,float qz,float u,float v,float w,float p,float q,float r)
+						           float pos_north,float pos_east,float pos_down,float qw,float qx,float qy,float qz,float u,float v,float w,float p,float q,float r)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN];
-	_mav_put_uint64_t(buf, 0, stamp_us);
-	_mav_put_float(buf, 8, pos_north);
-	_mav_put_float(buf, 12, pos_east);
-	_mav_put_float(buf, 16, pos_down);
-	_mav_put_float(buf, 20, qw);
-	_mav_put_float(buf, 24, qx);
-	_mav_put_float(buf, 28, qy);
-	_mav_put_float(buf, 32, qz);
-	_mav_put_float(buf, 36, u);
-	_mav_put_float(buf, 40, v);
-	_mav_put_float(buf, 44, w);
-	_mav_put_float(buf, 48, p);
-	_mav_put_float(buf, 52, q);
-	_mav_put_float(buf, 56, r);
+	_mav_put_float(buf, 0, pos_north);
+	_mav_put_float(buf, 4, pos_east);
+	_mav_put_float(buf, 8, pos_down);
+	_mav_put_float(buf, 12, qw);
+	_mav_put_float(buf, 16, qx);
+	_mav_put_float(buf, 20, qy);
+	_mav_put_float(buf, 24, qz);
+	_mav_put_float(buf, 28, u);
+	_mav_put_float(buf, 32, v);
+	_mav_put_float(buf, 36, w);
+	_mav_put_float(buf, 40, p);
+	_mav_put_float(buf, 44, q);
+	_mav_put_float(buf, 48, r);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN);
 #else
 	mavlink_rosflight_ins_t packet;
-	packet.stamp_us = stamp_us;
 	packet.pos_north = pos_north;
 	packet.pos_east = pos_east;
 	packet.pos_down = pos_down;
@@ -202,7 +194,7 @@ static inline uint16_t mavlink_msg_rosflight_ins_pack_chan(uint8_t system_id, ui
  */
 static inline uint16_t mavlink_msg_rosflight_ins_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rosflight_ins_t* rosflight_ins)
 {
-	return mavlink_msg_rosflight_ins_pack(system_id, component_id, msg, rosflight_ins->stamp_us, rosflight_ins->pos_north, rosflight_ins->pos_east, rosflight_ins->pos_down, rosflight_ins->qw, rosflight_ins->qx, rosflight_ins->qy, rosflight_ins->qz, rosflight_ins->u, rosflight_ins->v, rosflight_ins->w, rosflight_ins->p, rosflight_ins->q, rosflight_ins->r);
+	return mavlink_msg_rosflight_ins_pack(system_id, component_id, msg, rosflight_ins->pos_north, rosflight_ins->pos_east, rosflight_ins->pos_down, rosflight_ins->qw, rosflight_ins->qx, rosflight_ins->qy, rosflight_ins->qz, rosflight_ins->u, rosflight_ins->v, rosflight_ins->w, rosflight_ins->p, rosflight_ins->q, rosflight_ins->r);
 }
 
 /**
@@ -216,14 +208,13 @@ static inline uint16_t mavlink_msg_rosflight_ins_encode(uint8_t system_id, uint8
  */
 static inline uint16_t mavlink_msg_rosflight_ins_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rosflight_ins_t* rosflight_ins)
 {
-	return mavlink_msg_rosflight_ins_pack_chan(system_id, component_id, chan, msg, rosflight_ins->stamp_us, rosflight_ins->pos_north, rosflight_ins->pos_east, rosflight_ins->pos_down, rosflight_ins->qw, rosflight_ins->qx, rosflight_ins->qy, rosflight_ins->qz, rosflight_ins->u, rosflight_ins->v, rosflight_ins->w, rosflight_ins->p, rosflight_ins->q, rosflight_ins->r);
+	return mavlink_msg_rosflight_ins_pack_chan(system_id, component_id, chan, msg, rosflight_ins->pos_north, rosflight_ins->pos_east, rosflight_ins->pos_down, rosflight_ins->qw, rosflight_ins->qx, rosflight_ins->qy, rosflight_ins->qz, rosflight_ins->u, rosflight_ins->v, rosflight_ins->w, rosflight_ins->p, rosflight_ins->q, rosflight_ins->r);
 }
 
 /**
  * @brief Send a rosflight_ins message
  * @param chan MAVLink channel to send the message
  *
- * @param stamp_us 
  * @param pos_north 
  * @param pos_east 
  * @param pos_down 
@@ -240,24 +231,23 @@ static inline uint16_t mavlink_msg_rosflight_ins_encode_chan(uint8_t system_id, 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rosflight_ins_send(mavlink_channel_t chan, uint64_t stamp_us, float pos_north, float pos_east, float pos_down, float qw, float qx, float qy, float qz, float u, float v, float w, float p, float q, float r)
+static inline void mavlink_msg_rosflight_ins_send(mavlink_channel_t chan, float pos_north, float pos_east, float pos_down, float qw, float qx, float qy, float qz, float u, float v, float w, float p, float q, float r)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN];
-	_mav_put_uint64_t(buf, 0, stamp_us);
-	_mav_put_float(buf, 8, pos_north);
-	_mav_put_float(buf, 12, pos_east);
-	_mav_put_float(buf, 16, pos_down);
-	_mav_put_float(buf, 20, qw);
-	_mav_put_float(buf, 24, qx);
-	_mav_put_float(buf, 28, qy);
-	_mav_put_float(buf, 32, qz);
-	_mav_put_float(buf, 36, u);
-	_mav_put_float(buf, 40, v);
-	_mav_put_float(buf, 44, w);
-	_mav_put_float(buf, 48, p);
-	_mav_put_float(buf, 52, q);
-	_mav_put_float(buf, 56, r);
+	_mav_put_float(buf, 0, pos_north);
+	_mav_put_float(buf, 4, pos_east);
+	_mav_put_float(buf, 8, pos_down);
+	_mav_put_float(buf, 12, qw);
+	_mav_put_float(buf, 16, qx);
+	_mav_put_float(buf, 20, qy);
+	_mav_put_float(buf, 24, qz);
+	_mav_put_float(buf, 28, u);
+	_mav_put_float(buf, 32, v);
+	_mav_put_float(buf, 36, w);
+	_mav_put_float(buf, 40, p);
+	_mav_put_float(buf, 44, q);
+	_mav_put_float(buf, 48, r);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_INS, buf, MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_INS_CRC);
@@ -266,7 +256,6 @@ static inline void mavlink_msg_rosflight_ins_send(mavlink_channel_t chan, uint64
 #endif
 #else
 	mavlink_rosflight_ins_t packet;
-	packet.stamp_us = stamp_us;
 	packet.pos_north = pos_north;
 	packet.pos_east = pos_east;
 	packet.pos_down = pos_down;
@@ -297,24 +286,23 @@ static inline void mavlink_msg_rosflight_ins_send(mavlink_channel_t chan, uint64
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rosflight_ins_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t stamp_us, float pos_north, float pos_east, float pos_down, float qw, float qx, float qy, float qz, float u, float v, float w, float p, float q, float r)
+static inline void mavlink_msg_rosflight_ins_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float pos_north, float pos_east, float pos_down, float qw, float qx, float qy, float qz, float u, float v, float w, float p, float q, float r)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_uint64_t(buf, 0, stamp_us);
-	_mav_put_float(buf, 8, pos_north);
-	_mav_put_float(buf, 12, pos_east);
-	_mav_put_float(buf, 16, pos_down);
-	_mav_put_float(buf, 20, qw);
-	_mav_put_float(buf, 24, qx);
-	_mav_put_float(buf, 28, qy);
-	_mav_put_float(buf, 32, qz);
-	_mav_put_float(buf, 36, u);
-	_mav_put_float(buf, 40, v);
-	_mav_put_float(buf, 44, w);
-	_mav_put_float(buf, 48, p);
-	_mav_put_float(buf, 52, q);
-	_mav_put_float(buf, 56, r);
+	_mav_put_float(buf, 0, pos_north);
+	_mav_put_float(buf, 4, pos_east);
+	_mav_put_float(buf, 8, pos_down);
+	_mav_put_float(buf, 12, qw);
+	_mav_put_float(buf, 16, qx);
+	_mav_put_float(buf, 20, qy);
+	_mav_put_float(buf, 24, qz);
+	_mav_put_float(buf, 28, u);
+	_mav_put_float(buf, 32, v);
+	_mav_put_float(buf, 36, w);
+	_mav_put_float(buf, 40, p);
+	_mav_put_float(buf, 44, q);
+	_mav_put_float(buf, 48, r);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_INS, buf, MAVLINK_MSG_ID_ROSFLIGHT_INS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_INS_CRC);
@@ -323,7 +311,6 @@ static inline void mavlink_msg_rosflight_ins_send_buf(mavlink_message_t *msgbuf,
 #endif
 #else
 	mavlink_rosflight_ins_t *packet = (mavlink_rosflight_ins_t *)msgbuf;
-	packet->stamp_us = stamp_us;
 	packet->pos_north = pos_north;
 	packet->pos_east = pos_east;
 	packet->pos_down = pos_down;
@@ -353,23 +340,13 @@ static inline void mavlink_msg_rosflight_ins_send_buf(mavlink_message_t *msgbuf,
 
 
 /**
- * @brief Get field stamp_us from rosflight_ins message
- *
- * @return 
- */
-static inline uint64_t mavlink_msg_rosflight_ins_get_stamp_us(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint64_t(msg,  0);
-}
-
-/**
  * @brief Get field pos_north from rosflight_ins message
  *
  * @return 
  */
 static inline float mavlink_msg_rosflight_ins_get_pos_north(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  8);
+	return _MAV_RETURN_float(msg,  0);
 }
 
 /**
@@ -379,7 +356,7 @@ static inline float mavlink_msg_rosflight_ins_get_pos_north(const mavlink_messag
  */
 static inline float mavlink_msg_rosflight_ins_get_pos_east(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  12);
+	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
@@ -389,7 +366,7 @@ static inline float mavlink_msg_rosflight_ins_get_pos_east(const mavlink_message
  */
 static inline float mavlink_msg_rosflight_ins_get_pos_down(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  16);
+	return _MAV_RETURN_float(msg,  8);
 }
 
 /**
@@ -399,7 +376,7 @@ static inline float mavlink_msg_rosflight_ins_get_pos_down(const mavlink_message
  */
 static inline float mavlink_msg_rosflight_ins_get_qw(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  20);
+	return _MAV_RETURN_float(msg,  12);
 }
 
 /**
@@ -409,7 +386,7 @@ static inline float mavlink_msg_rosflight_ins_get_qw(const mavlink_message_t* ms
  */
 static inline float mavlink_msg_rosflight_ins_get_qx(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  24);
+	return _MAV_RETURN_float(msg,  16);
 }
 
 /**
@@ -419,7 +396,7 @@ static inline float mavlink_msg_rosflight_ins_get_qx(const mavlink_message_t* ms
  */
 static inline float mavlink_msg_rosflight_ins_get_qy(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  28);
+	return _MAV_RETURN_float(msg,  20);
 }
 
 /**
@@ -429,7 +406,7 @@ static inline float mavlink_msg_rosflight_ins_get_qy(const mavlink_message_t* ms
  */
 static inline float mavlink_msg_rosflight_ins_get_qz(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  32);
+	return _MAV_RETURN_float(msg,  24);
 }
 
 /**
@@ -439,7 +416,7 @@ static inline float mavlink_msg_rosflight_ins_get_qz(const mavlink_message_t* ms
  */
 static inline float mavlink_msg_rosflight_ins_get_u(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  36);
+	return _MAV_RETURN_float(msg,  28);
 }
 
 /**
@@ -449,7 +426,7 @@ static inline float mavlink_msg_rosflight_ins_get_u(const mavlink_message_t* msg
  */
 static inline float mavlink_msg_rosflight_ins_get_v(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  40);
+	return _MAV_RETURN_float(msg,  32);
 }
 
 /**
@@ -459,7 +436,7 @@ static inline float mavlink_msg_rosflight_ins_get_v(const mavlink_message_t* msg
  */
 static inline float mavlink_msg_rosflight_ins_get_w(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  44);
+	return _MAV_RETURN_float(msg,  36);
 }
 
 /**
@@ -469,7 +446,7 @@ static inline float mavlink_msg_rosflight_ins_get_w(const mavlink_message_t* msg
  */
 static inline float mavlink_msg_rosflight_ins_get_p(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  48);
+	return _MAV_RETURN_float(msg,  40);
 }
 
 /**
@@ -479,7 +456,7 @@ static inline float mavlink_msg_rosflight_ins_get_p(const mavlink_message_t* msg
  */
 static inline float mavlink_msg_rosflight_ins_get_q(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  52);
+	return _MAV_RETURN_float(msg,  44);
 }
 
 /**
@@ -489,7 +466,7 @@ static inline float mavlink_msg_rosflight_ins_get_q(const mavlink_message_t* msg
  */
 static inline float mavlink_msg_rosflight_ins_get_r(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_float(msg,  56);
+	return _MAV_RETURN_float(msg,  48);
 }
 
 /**
@@ -501,7 +478,6 @@ static inline float mavlink_msg_rosflight_ins_get_r(const mavlink_message_t* msg
 static inline void mavlink_msg_rosflight_ins_decode(const mavlink_message_t* msg, mavlink_rosflight_ins_t* rosflight_ins)
 {
 #if MAVLINK_NEED_BYTE_SWAP
-	rosflight_ins->stamp_us = mavlink_msg_rosflight_ins_get_stamp_us(msg);
 	rosflight_ins->pos_north = mavlink_msg_rosflight_ins_get_pos_north(msg);
 	rosflight_ins->pos_east = mavlink_msg_rosflight_ins_get_pos_east(msg);
 	rosflight_ins->pos_down = mavlink_msg_rosflight_ins_get_pos_down(msg);
