@@ -181,5 +181,11 @@
             <field type="float" name="q"/>
             <field type="float" name="r"/>            
         </message>
+        <message id="195" name="ROSFLIGHT_QUATERNION">
+            <field type="float" name="qw"/>
+            <field type="float" name="qx"/>
+            <field type="float" name="qy"/>
+            <field type="float" name="qz"/>
+        </message>
     </messages>
 </mavlink>
