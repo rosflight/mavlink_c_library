@@ -1,34 +1,30 @@
 // MESSAGE ROSFLIGHT_QUATERNION PACKING
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION 196
+#define MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION 195
 
 typedef struct __mavlink_rosflight_quaternion_t
 {
- float pos_ecef_x; /*< */
- float pos_ecef_y; /*< */
- float pos_ecef_z; /*< */
- float vel_ecef_x; /*< */
- float vel_ecef_y; /*< */
- float vel_ecef_z; /*< */
+ float qw; /*< */
+ float qx; /*< */
+ float qy; /*< */
+ float qz; /*< */
 } mavlink_rosflight_quaternion_t;
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN 24
-#define MAVLINK_MSG_ID_196_LEN 24
+#define MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN 16
+#define MAVLINK_MSG_ID_195_LEN 16
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_CRC 228
-#define MAVLINK_MSG_ID_196_CRC 228
+#define MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_CRC 19
+#define MAVLINK_MSG_ID_195_CRC 19
 
 
 
 #define MAVLINK_MESSAGE_INFO_ROSFLIGHT_QUATERNION { \
 	"ROSFLIGHT_QUATERNION", \
-	6, \
-	{  { "pos_ecef_x", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_rosflight_quaternion_t, pos_ecef_x) }, \
-         { "pos_ecef_y", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_rosflight_quaternion_t, pos_ecef_y) }, \
-         { "pos_ecef_z", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_rosflight_quaternion_t, pos_ecef_z) }, \
-         { "vel_ecef_x", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_rosflight_quaternion_t, vel_ecef_x) }, \
-         { "vel_ecef_y", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_rosflight_quaternion_t, vel_ecef_y) }, \
-         { "vel_ecef_z", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_rosflight_quaternion_t, vel_ecef_z) }, \
+	4, \
+	{  { "qw", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_rosflight_quaternion_t, qw) }, \
+         { "qx", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_rosflight_quaternion_t, qx) }, \
+         { "qy", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_rosflight_quaternion_t, qy) }, \
+         { "qz", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_rosflight_quaternion_t, qz) }, \
          } \
 }
 
@@ -39,35 +35,29 @@ typedef struct __mavlink_rosflight_quaternion_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param pos_ecef_x 
- * @param pos_ecef_y 
- * @param pos_ecef_z 
- * @param vel_ecef_x 
- * @param vel_ecef_y 
- * @param vel_ecef_z 
+ * @param qw 
+ * @param qx 
+ * @param qy 
+ * @param qz 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_quaternion_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       float pos_ecef_x, float pos_ecef_y, float pos_ecef_z, float vel_ecef_x, float vel_ecef_y, float vel_ecef_z)
+						       float qw, float qx, float qy, float qz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN];
-	_mav_put_float(buf, 0, pos_ecef_x);
-	_mav_put_float(buf, 4, pos_ecef_y);
-	_mav_put_float(buf, 8, pos_ecef_z);
-	_mav_put_float(buf, 12, vel_ecef_x);
-	_mav_put_float(buf, 16, vel_ecef_y);
-	_mav_put_float(buf, 20, vel_ecef_z);
+	_mav_put_float(buf, 0, qw);
+	_mav_put_float(buf, 4, qx);
+	_mav_put_float(buf, 8, qy);
+	_mav_put_float(buf, 12, qz);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN);
 #else
 	mavlink_rosflight_quaternion_t packet;
-	packet.pos_ecef_x = pos_ecef_x;
-	packet.pos_ecef_y = pos_ecef_y;
-	packet.pos_ecef_z = pos_ecef_z;
-	packet.vel_ecef_x = vel_ecef_x;
-	packet.vel_ecef_y = vel_ecef_y;
-	packet.vel_ecef_z = vel_ecef_z;
+	packet.qw = qw;
+	packet.qx = qx;
+	packet.qy = qy;
+	packet.qz = qz;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN);
 #endif
@@ -86,36 +76,30 @@ static inline uint16_t mavlink_msg_rosflight_quaternion_pack(uint8_t system_id, 
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param pos_ecef_x 
- * @param pos_ecef_y 
- * @param pos_ecef_z 
- * @param vel_ecef_x 
- * @param vel_ecef_y 
- * @param vel_ecef_z 
+ * @param qw 
+ * @param qx 
+ * @param qy 
+ * @param qz 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_quaternion_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           float pos_ecef_x,float pos_ecef_y,float pos_ecef_z,float vel_ecef_x,float vel_ecef_y,float vel_ecef_z)
+						           float qw,float qx,float qy,float qz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN];
-	_mav_put_float(buf, 0, pos_ecef_x);
-	_mav_put_float(buf, 4, pos_ecef_y);
-	_mav_put_float(buf, 8, pos_ecef_z);
-	_mav_put_float(buf, 12, vel_ecef_x);
-	_mav_put_float(buf, 16, vel_ecef_y);
-	_mav_put_float(buf, 20, vel_ecef_z);
+	_mav_put_float(buf, 0, qw);
+	_mav_put_float(buf, 4, qx);
+	_mav_put_float(buf, 8, qy);
+	_mav_put_float(buf, 12, qz);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN);
 #else
 	mavlink_rosflight_quaternion_t packet;
-	packet.pos_ecef_x = pos_ecef_x;
-	packet.pos_ecef_y = pos_ecef_y;
-	packet.pos_ecef_z = pos_ecef_z;
-	packet.vel_ecef_x = vel_ecef_x;
-	packet.vel_ecef_y = vel_ecef_y;
-	packet.vel_ecef_z = vel_ecef_z;
+	packet.qw = qw;
+	packet.qx = qx;
+	packet.qy = qy;
+	packet.qz = qz;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN);
 #endif
@@ -138,7 +122,7 @@ static inline uint16_t mavlink_msg_rosflight_quaternion_pack_chan(uint8_t system
  */
 static inline uint16_t mavlink_msg_rosflight_quaternion_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rosflight_quaternion_t* rosflight_quaternion)
 {
-	return mavlink_msg_rosflight_quaternion_pack(system_id, component_id, msg, rosflight_quaternion->pos_ecef_x, rosflight_quaternion->pos_ecef_y, rosflight_quaternion->pos_ecef_z, rosflight_quaternion->vel_ecef_x, rosflight_quaternion->vel_ecef_y, rosflight_quaternion->vel_ecef_z);
+	return mavlink_msg_rosflight_quaternion_pack(system_id, component_id, msg, rosflight_quaternion->qw, rosflight_quaternion->qx, rosflight_quaternion->qy, rosflight_quaternion->qz);
 }
 
 /**
@@ -152,32 +136,28 @@ static inline uint16_t mavlink_msg_rosflight_quaternion_encode(uint8_t system_id
  */
 static inline uint16_t mavlink_msg_rosflight_quaternion_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rosflight_quaternion_t* rosflight_quaternion)
 {
-	return mavlink_msg_rosflight_quaternion_pack_chan(system_id, component_id, chan, msg, rosflight_quaternion->pos_ecef_x, rosflight_quaternion->pos_ecef_y, rosflight_quaternion->pos_ecef_z, rosflight_quaternion->vel_ecef_x, rosflight_quaternion->vel_ecef_y, rosflight_quaternion->vel_ecef_z);
+	return mavlink_msg_rosflight_quaternion_pack_chan(system_id, component_id, chan, msg, rosflight_quaternion->qw, rosflight_quaternion->qx, rosflight_quaternion->qy, rosflight_quaternion->qz);
 }
 
 /**
  * @brief Send a rosflight_quaternion message
  * @param chan MAVLink channel to send the message
  *
- * @param pos_ecef_x 
- * @param pos_ecef_y 
- * @param pos_ecef_z 
- * @param vel_ecef_x 
- * @param vel_ecef_y 
- * @param vel_ecef_z 
+ * @param qw 
+ * @param qx 
+ * @param qy 
+ * @param qz 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rosflight_quaternion_send(mavlink_channel_t chan, float pos_ecef_x, float pos_ecef_y, float pos_ecef_z, float vel_ecef_x, float vel_ecef_y, float vel_ecef_z)
+static inline void mavlink_msg_rosflight_quaternion_send(mavlink_channel_t chan, float qw, float qx, float qy, float qz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN];
-	_mav_put_float(buf, 0, pos_ecef_x);
-	_mav_put_float(buf, 4, pos_ecef_y);
-	_mav_put_float(buf, 8, pos_ecef_z);
-	_mav_put_float(buf, 12, vel_ecef_x);
-	_mav_put_float(buf, 16, vel_ecef_y);
-	_mav_put_float(buf, 20, vel_ecef_z);
+	_mav_put_float(buf, 0, qw);
+	_mav_put_float(buf, 4, qx);
+	_mav_put_float(buf, 8, qy);
+	_mav_put_float(buf, 12, qz);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION, buf, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_CRC);
@@ -186,12 +166,10 @@ static inline void mavlink_msg_rosflight_quaternion_send(mavlink_channel_t chan,
 #endif
 #else
 	mavlink_rosflight_quaternion_t packet;
-	packet.pos_ecef_x = pos_ecef_x;
-	packet.pos_ecef_y = pos_ecef_y;
-	packet.pos_ecef_z = pos_ecef_z;
-	packet.vel_ecef_x = vel_ecef_x;
-	packet.vel_ecef_y = vel_ecef_y;
-	packet.vel_ecef_z = vel_ecef_z;
+	packet.qw = qw;
+	packet.qx = qx;
+	packet.qy = qy;
+	packet.qz = qz;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION, (const char *)&packet, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_CRC);
@@ -209,16 +187,14 @@ static inline void mavlink_msg_rosflight_quaternion_send(mavlink_channel_t chan,
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rosflight_quaternion_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float pos_ecef_x, float pos_ecef_y, float pos_ecef_z, float vel_ecef_x, float vel_ecef_y, float vel_ecef_z)
+static inline void mavlink_msg_rosflight_quaternion_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  float qw, float qx, float qy, float qz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_float(buf, 0, pos_ecef_x);
-	_mav_put_float(buf, 4, pos_ecef_y);
-	_mav_put_float(buf, 8, pos_ecef_z);
-	_mav_put_float(buf, 12, vel_ecef_x);
-	_mav_put_float(buf, 16, vel_ecef_y);
-	_mav_put_float(buf, 20, vel_ecef_z);
+	_mav_put_float(buf, 0, qw);
+	_mav_put_float(buf, 4, qx);
+	_mav_put_float(buf, 8, qy);
+	_mav_put_float(buf, 12, qz);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION, buf, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_CRC);
@@ -227,12 +203,10 @@ static inline void mavlink_msg_rosflight_quaternion_send_buf(mavlink_message_t *
 #endif
 #else
 	mavlink_rosflight_quaternion_t *packet = (mavlink_rosflight_quaternion_t *)msgbuf;
-	packet->pos_ecef_x = pos_ecef_x;
-	packet->pos_ecef_y = pos_ecef_y;
-	packet->pos_ecef_z = pos_ecef_z;
-	packet->vel_ecef_x = vel_ecef_x;
-	packet->vel_ecef_y = vel_ecef_y;
-	packet->vel_ecef_z = vel_ecef_z;
+	packet->qw = qw;
+	packet->qx = qx;
+	packet->qy = qy;
+	packet->qz = qz;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION, (const char *)packet, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN, MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_CRC);
@@ -249,63 +223,43 @@ static inline void mavlink_msg_rosflight_quaternion_send_buf(mavlink_message_t *
 
 
 /**
- * @brief Get field pos_ecef_x from rosflight_quaternion message
+ * @brief Get field qw from rosflight_quaternion message
  *
  * @return 
  */
-static inline float mavlink_msg_rosflight_quaternion_get_pos_ecef_x(const mavlink_message_t* msg)
+static inline float mavlink_msg_rosflight_quaternion_get_qw(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  0);
 }
 
 /**
- * @brief Get field pos_ecef_y from rosflight_quaternion message
+ * @brief Get field qx from rosflight_quaternion message
  *
  * @return 
  */
-static inline float mavlink_msg_rosflight_quaternion_get_pos_ecef_y(const mavlink_message_t* msg)
+static inline float mavlink_msg_rosflight_quaternion_get_qx(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
- * @brief Get field pos_ecef_z from rosflight_quaternion message
+ * @brief Get field qy from rosflight_quaternion message
  *
  * @return 
  */
-static inline float mavlink_msg_rosflight_quaternion_get_pos_ecef_z(const mavlink_message_t* msg)
+static inline float mavlink_msg_rosflight_quaternion_get_qy(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  8);
 }
 
 /**
- * @brief Get field vel_ecef_x from rosflight_quaternion message
+ * @brief Get field qz from rosflight_quaternion message
  *
  * @return 
  */
-static inline float mavlink_msg_rosflight_quaternion_get_vel_ecef_x(const mavlink_message_t* msg)
+static inline float mavlink_msg_rosflight_quaternion_get_qz(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  12);
-}
-
-/**
- * @brief Get field vel_ecef_y from rosflight_quaternion message
- *
- * @return 
- */
-static inline float mavlink_msg_rosflight_quaternion_get_vel_ecef_y(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  16);
-}
-
-/**
- * @brief Get field vel_ecef_z from rosflight_quaternion message
- *
- * @return 
- */
-static inline float mavlink_msg_rosflight_quaternion_get_vel_ecef_z(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,  20);
 }
 
 /**
@@ -317,12 +271,10 @@ static inline float mavlink_msg_rosflight_quaternion_get_vel_ecef_z(const mavlin
 static inline void mavlink_msg_rosflight_quaternion_decode(const mavlink_message_t* msg, mavlink_rosflight_quaternion_t* rosflight_quaternion)
 {
 #if MAVLINK_NEED_BYTE_SWAP
-	rosflight_quaternion->pos_ecef_x = mavlink_msg_rosflight_quaternion_get_pos_ecef_x(msg);
-	rosflight_quaternion->pos_ecef_y = mavlink_msg_rosflight_quaternion_get_pos_ecef_y(msg);
-	rosflight_quaternion->pos_ecef_z = mavlink_msg_rosflight_quaternion_get_pos_ecef_z(msg);
-	rosflight_quaternion->vel_ecef_x = mavlink_msg_rosflight_quaternion_get_vel_ecef_x(msg);
-	rosflight_quaternion->vel_ecef_y = mavlink_msg_rosflight_quaternion_get_vel_ecef_y(msg);
-	rosflight_quaternion->vel_ecef_z = mavlink_msg_rosflight_quaternion_get_vel_ecef_z(msg);
+	rosflight_quaternion->qw = mavlink_msg_rosflight_quaternion_get_qw(msg);
+	rosflight_quaternion->qx = mavlink_msg_rosflight_quaternion_get_qx(msg);
+	rosflight_quaternion->qy = mavlink_msg_rosflight_quaternion_get_qy(msg);
+	rosflight_quaternion->qz = mavlink_msg_rosflight_quaternion_get_qz(msg);
 #else
 	memcpy(rosflight_quaternion, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_ROSFLIGHT_QUATERNION_LEN);
 #endif

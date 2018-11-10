@@ -772,15 +772,15 @@ static void mavlink_test_rosflight_quaternion(uint8_t system_id, uint8_t compone
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
-static void mavlink_test_rosflight_quaternion(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+static void mavlink_test_rosflight_gps_ecef(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 	mavlink_message_t msg;
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
-	mavlink_rosflight_quaternion_t packet_in = {
+	mavlink_rosflight_gps_ecef_t packet_in = {
 		17.0,45.0,73.0,101.0,129.0,157.0
     };
-	mavlink_rosflight_quaternion_t packet1, packet2;
+	mavlink_rosflight_gps_ecef_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         	packet1.pos_ecef_x = packet_in.pos_ecef_x;
         	packet1.pos_ecef_y = packet_in.pos_ecef_y;
@@ -792,18 +792,18 @@ static void mavlink_test_rosflight_quaternion(uint8_t system_id, uint8_t compone
         
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_quaternion_encode(system_id, component_id, &msg, &packet1);
-	mavlink_msg_rosflight_quaternion_decode(&msg, &packet2);
+	mavlink_msg_rosflight_gps_ecef_encode(system_id, component_id, &msg, &packet1);
+	mavlink_msg_rosflight_gps_ecef_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_quaternion_pack(system_id, component_id, &msg , packet1.pos_ecef_x , packet1.pos_ecef_y , packet1.pos_ecef_z , packet1.vel_ecef_x , packet1.vel_ecef_y , packet1.vel_ecef_z );
-	mavlink_msg_rosflight_quaternion_decode(&msg, &packet2);
+	mavlink_msg_rosflight_gps_ecef_pack(system_id, component_id, &msg , packet1.pos_ecef_x , packet1.pos_ecef_y , packet1.pos_ecef_z , packet1.vel_ecef_x , packet1.vel_ecef_y , packet1.vel_ecef_z );
+	mavlink_msg_rosflight_gps_ecef_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_quaternion_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.pos_ecef_x , packet1.pos_ecef_y , packet1.pos_ecef_z , packet1.vel_ecef_x , packet1.vel_ecef_y , packet1.vel_ecef_z );
-	mavlink_msg_rosflight_quaternion_decode(&msg, &packet2);
+	mavlink_msg_rosflight_gps_ecef_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.pos_ecef_x , packet1.pos_ecef_y , packet1.pos_ecef_z , packet1.vel_ecef_x , packet1.vel_ecef_y , packet1.vel_ecef_z );
+	mavlink_msg_rosflight_gps_ecef_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
@@ -811,12 +811,12 @@ static void mavlink_test_rosflight_quaternion(uint8_t system_id, uint8_t compone
         for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
         	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
         }
-	mavlink_msg_rosflight_quaternion_decode(last_msg, &packet2);
+	mavlink_msg_rosflight_gps_ecef_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_quaternion_send(MAVLINK_COMM_1 , packet1.pos_ecef_x , packet1.pos_ecef_y , packet1.pos_ecef_z , packet1.vel_ecef_x , packet1.vel_ecef_y , packet1.vel_ecef_z );
-	mavlink_msg_rosflight_quaternion_decode(last_msg, &packet2);
+	mavlink_msg_rosflight_gps_ecef_send(MAVLINK_COMM_1 , packet1.pos_ecef_x , packet1.pos_ecef_y , packet1.pos_ecef_z , packet1.vel_ecef_x , packet1.vel_ecef_y , packet1.vel_ecef_z );
+	mavlink_msg_rosflight_gps_ecef_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
@@ -891,7 +891,7 @@ static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavl
 	mavlink_test_rosflight_aux_cmd(system_id, component_id, last_msg);
 	mavlink_test_rosflight_ins(system_id, component_id, last_msg);
 	mavlink_test_rosflight_quaternion(system_id, component_id, last_msg);
-	mavlink_test_rosflight_quaternion(system_id, component_id, last_msg);
+	mavlink_test_rosflight_gps_ecef(system_id, component_id, last_msg);
 	mavlink_test_rosflight_gps(system_id, component_id, last_msg);
 }
 
