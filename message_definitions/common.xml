@@ -2803,6 +2803,7 @@
                <field type="float" name="ground_distance">Ground distance in meters. Positive value: distance known. Negative value: Unknown distance</field>
           </message>
           <message id="101" name="GLOBAL_VISION_POSITION_ESTIMATE">
+	       <description>TODO</description>
                <field type="uint64_t" name="usec">Timestamp (microseconds, synced to UNIX time or since system boot)</field>
                <field type="float" name="x">Global X position</field>
                <field type="float" name="y">Global Y position</field>
@@ -2812,6 +2813,7 @@
                <field type="float" name="yaw">Yaw angle in rad</field>
           </message>
           <message id="102" name="VISION_POSITION_ESTIMATE">
+	       <description>TODO</description>
                <field type="uint64_t" name="usec">Timestamp (microseconds, synced to UNIX time or since system boot)</field>
                <field type="float" name="x">Global X position</field>
                <field type="float" name="y">Global Y position</field>
@@ -2821,12 +2823,14 @@
                <field type="float" name="yaw">Yaw angle in rad</field>
           </message>
           <message id="103" name="VISION_SPEED_ESTIMATE">
+	       <description>TODO</description>
                <field type="uint64_t" name="usec">Timestamp (microseconds, synced to UNIX time or since system boot)</field>
                <field type="float" name="x">Global X speed</field>
                <field type="float" name="y">Global Y speed</field>
                <field type="float" name="z">Global Z speed</field>
           </message>
           <message id="104" name="VICON_POSITION_ESTIMATE">
+	       <description>TODO</description>
                <field type="uint64_t" name="usec">Timestamp (microseconds, synced to UNIX time or since system boot)</field>
                <field type="float" name="x">Global X position</field>
                <field type="float" name="y">Global Y position</field>
@@ -3126,6 +3130,7 @@
           <field type="int16_t" name="zmag">Z Magnetic field (milli tesla)</field>
         </message>
         <message id="130" name="DATA_TRANSMISSION_HANDSHAKE">
+	    <description>TODO</description>
             <field type="uint8_t" name="type">type of requested/acknowledged data (as defined in ENUM DATA_TYPES in mavlink/include/mavlink_types.h)</field>
             <field type="uint32_t" name="size">total data size in bytes (set on ACK only)</field>
             <field type="uint16_t" name="width">Width of a matrix or image</field>
@@ -3135,10 +3140,12 @@
             <field type="uint8_t" name="jpg_quality">JPEG quality out of [1,100]</field>
         </message>
         <message id="131" name="ENCAPSULATED_DATA">
+	    <description>TODO</description>
             <field type="uint16_t" name="seqnr">sequence number (starting with 0 on every transmission)</field>
             <field type="uint8_t[253]" name="data">image data bytes</field>
         </message>
         <message id="132" name="DISTANCE_SENSOR">
+	    <description>TODO</description>
             <field type="uint32_t" name="time_boot_ms">Time since system boot</field>
             <field type="uint16_t" name="min_distance">Minimum distance the sensor can measure in centimeters</field>
             <field type="uint16_t" name="max_distance">Maximum distance the sensor can measure in centimeters</field>
@@ -3318,6 +3325,7 @@
             <field name="pos_vert_accuracy" type="float">Vertical position 1-STD accuracy relative to the EKF local origin (m)</field>
         </message>
         <message id="231" name="WIND_COV">
+	    <description>TODO</description>
             <field type="uint64_t" name="time_usec">Timestamp (micros since boot or Unix epoch)</field>
             <field type="float" name="wind_x">Wind in X (NED) direction in m/s</field>
             <field type="float" name="wind_y">Wind in Y (NED) direction in m/s</field>
@@ -3407,6 +3415,7 @@
                <field type="int8_t[32]" name="value">Memory contents at specified address</field>
           </message>
           <message id="250" name="DEBUG_VECT">
+	       <description>TODO</description>
                <field type="char[10]" name="name">Name</field>
                <field type="uint64_t" name="time_usec">Timestamp</field>
                <field type="float" name="x">x</field>
