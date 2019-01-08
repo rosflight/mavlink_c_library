@@ -237,5 +237,16 @@
 	    <field type="uint32_t" name="pc"/>
 	    <field type="uint32_t" name="psr"/>
 	</message>
+        <message id="199" name="ROSFLIGHT_HARD_ERROR">
+            <description>TODO</description>
+            <field type="uint32_t" name="r0"/>
+            <field type="uint32_t" name="r1"/>
+            <field type="uint32_t" name="r2"/>
+            <field type="uint32_t" name="r3"/>
+            <field type="uint32_t" name="r12"/>
+            <field type="uint32_t" name="lr"/>
+            <field type="uint32_t" name="pc"/>
+            <field type="uint32_t" name="psr"/>
+        </message>
     </messages>
 </mavlink>
