@@ -168,7 +168,6 @@ typedef enum ROSFLIGHT_RANGE_TYPE
 #include "./mavlink_msg_rosflight_gps_ecef.h"
 #include "./mavlink_msg_rosflight_gps.h"
 #include "./mavlink_msg_rosflight_hard_error.h"
-#include "./mavlink_msg_rosflight_hard_error.h"
 
 #ifdef __cplusplus
 }
