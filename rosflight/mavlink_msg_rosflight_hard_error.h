@@ -1,38 +1,30 @@
 // MESSAGE ROSFLIGHT_HARD_ERROR PACKING
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR 199
+#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR 198
 
 typedef struct __mavlink_rosflight_hard_error_t
 {
- uint32_t r0; /*< */
- uint32_t r1; /*< */
- uint32_t r2; /*< */
- uint32_t r3; /*< */
- uint32_t r12; /*< */
- uint32_t lr; /*< */
+ uint32_t error_code; /*< */
  uint32_t pc; /*< */
- uint32_t psr; /*< */
+ uint32_t reset_count; /*< */
+ uint32_t doRearm; /*< */
 } mavlink_rosflight_hard_error_t;
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN 32
-#define MAVLINK_MSG_ID_199_LEN 32
+#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN 16
+#define MAVLINK_MSG_ID_198_LEN 16
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_CRC 86
-#define MAVLINK_MSG_ID_199_CRC 86
+#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_CRC 10
+#define MAVLINK_MSG_ID_198_CRC 10
 
 
 
 #define MAVLINK_MESSAGE_INFO_ROSFLIGHT_HARD_ERROR { \
 	"ROSFLIGHT_HARD_ERROR", \
-	8, \
-	{  { "r0", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_rosflight_hard_error_t, r0) }, \
-         { "r1", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_rosflight_hard_error_t, r1) }, \
-         { "r2", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_rosflight_hard_error_t, r2) }, \
-         { "r3", NULL, MAVLINK_TYPE_UINT32_T, 0, 12, offsetof(mavlink_rosflight_hard_error_t, r3) }, \
-         { "r12", NULL, MAVLINK_TYPE_UINT32_T, 0, 16, offsetof(mavlink_rosflight_hard_error_t, r12) }, \
-         { "lr", NULL, MAVLINK_TYPE_UINT32_T, 0, 20, offsetof(mavlink_rosflight_hard_error_t, lr) }, \
-         { "pc", NULL, MAVLINK_TYPE_UINT32_T, 0, 24, offsetof(mavlink_rosflight_hard_error_t, pc) }, \
-         { "psr", NULL, MAVLINK_TYPE_UINT32_T, 0, 28, offsetof(mavlink_rosflight_hard_error_t, psr) }, \
+	4, \
+	{  { "error_code", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_rosflight_hard_error_t, error_code) }, \
+         { "pc", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_rosflight_hard_error_t, pc) }, \
+         { "reset_count", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_rosflight_hard_error_t, reset_count) }, \
+         { "doRearm", NULL, MAVLINK_TYPE_UINT32_T, 0, 12, offsetof(mavlink_rosflight_hard_error_t, doRearm) }, \
          } \
 }
 
@@ -43,41 +35,29 @@ typedef struct __mavlink_rosflight_hard_error_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param r0 
- * @param r1 
- * @param r2 
- * @param r3 
- * @param r12 
- * @param lr 
+ * @param error_code 
  * @param pc 
- * @param psr 
+ * @param reset_count 
+ * @param doRearm 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_hard_error_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint32_t r0, uint32_t r1, uint32_t r2, uint32_t r3, uint32_t r12, uint32_t lr, uint32_t pc, uint32_t psr)
+						       uint32_t error_code, uint32_t pc, uint32_t reset_count, uint32_t doRearm)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN];
-	_mav_put_uint32_t(buf, 0, r0);
-	_mav_put_uint32_t(buf, 4, r1);
-	_mav_put_uint32_t(buf, 8, r2);
-	_mav_put_uint32_t(buf, 12, r3);
-	_mav_put_uint32_t(buf, 16, r12);
-	_mav_put_uint32_t(buf, 20, lr);
-	_mav_put_uint32_t(buf, 24, pc);
-	_mav_put_uint32_t(buf, 28, psr);
+	_mav_put_uint32_t(buf, 0, error_code);
+	_mav_put_uint32_t(buf, 4, pc);
+	_mav_put_uint32_t(buf, 8, reset_count);
+	_mav_put_uint32_t(buf, 12, doRearm);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN);
 #else
 	mavlink_rosflight_hard_error_t packet;
-	packet.r0 = r0;
-	packet.r1 = r1;
-	packet.r2 = r2;
-	packet.r3 = r3;
-	packet.r12 = r12;
-	packet.lr = lr;
+	packet.error_code = error_code;
 	packet.pc = pc;
-	packet.psr = psr;
+	packet.reset_count = reset_count;
+	packet.doRearm = doRearm;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN);
 #endif
@@ -96,42 +76,30 @@ static inline uint16_t mavlink_msg_rosflight_hard_error_pack(uint8_t system_id, 
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param r0 
- * @param r1 
- * @param r2 
- * @param r3 
- * @param r12 
- * @param lr 
+ * @param error_code 
  * @param pc 
- * @param psr 
+ * @param reset_count 
+ * @param doRearm 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_hard_error_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint32_t r0,uint32_t r1,uint32_t r2,uint32_t r3,uint32_t r12,uint32_t lr,uint32_t pc,uint32_t psr)
+						           uint32_t error_code,uint32_t pc,uint32_t reset_count,uint32_t doRearm)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN];
-	_mav_put_uint32_t(buf, 0, r0);
-	_mav_put_uint32_t(buf, 4, r1);
-	_mav_put_uint32_t(buf, 8, r2);
-	_mav_put_uint32_t(buf, 12, r3);
-	_mav_put_uint32_t(buf, 16, r12);
-	_mav_put_uint32_t(buf, 20, lr);
-	_mav_put_uint32_t(buf, 24, pc);
-	_mav_put_uint32_t(buf, 28, psr);
+	_mav_put_uint32_t(buf, 0, error_code);
+	_mav_put_uint32_t(buf, 4, pc);
+	_mav_put_uint32_t(buf, 8, reset_count);
+	_mav_put_uint32_t(buf, 12, doRearm);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN);
 #else
 	mavlink_rosflight_hard_error_t packet;
-	packet.r0 = r0;
-	packet.r1 = r1;
-	packet.r2 = r2;
-	packet.r3 = r3;
-	packet.r12 = r12;
-	packet.lr = lr;
+	packet.error_code = error_code;
 	packet.pc = pc;
-	packet.psr = psr;
+	packet.reset_count = reset_count;
+	packet.doRearm = doRearm;
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN);
 #endif
@@ -154,7 +122,7 @@ static inline uint16_t mavlink_msg_rosflight_hard_error_pack_chan(uint8_t system
  */
 static inline uint16_t mavlink_msg_rosflight_hard_error_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rosflight_hard_error_t* rosflight_hard_error)
 {
-	return mavlink_msg_rosflight_hard_error_pack(system_id, component_id, msg, rosflight_hard_error->r0, rosflight_hard_error->r1, rosflight_hard_error->r2, rosflight_hard_error->r3, rosflight_hard_error->r12, rosflight_hard_error->lr, rosflight_hard_error->pc, rosflight_hard_error->psr);
+	return mavlink_msg_rosflight_hard_error_pack(system_id, component_id, msg, rosflight_hard_error->error_code, rosflight_hard_error->pc, rosflight_hard_error->reset_count, rosflight_hard_error->doRearm);
 }
 
 /**
@@ -168,36 +136,28 @@ static inline uint16_t mavlink_msg_rosflight_hard_error_encode(uint8_t system_id
  */
 static inline uint16_t mavlink_msg_rosflight_hard_error_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rosflight_hard_error_t* rosflight_hard_error)
 {
-	return mavlink_msg_rosflight_hard_error_pack_chan(system_id, component_id, chan, msg, rosflight_hard_error->r0, rosflight_hard_error->r1, rosflight_hard_error->r2, rosflight_hard_error->r3, rosflight_hard_error->r12, rosflight_hard_error->lr, rosflight_hard_error->pc, rosflight_hard_error->psr);
+	return mavlink_msg_rosflight_hard_error_pack_chan(system_id, component_id, chan, msg, rosflight_hard_error->error_code, rosflight_hard_error->pc, rosflight_hard_error->reset_count, rosflight_hard_error->doRearm);
 }
 
 /**
  * @brief Send a rosflight_hard_error message
  * @param chan MAVLink channel to send the message
  *
- * @param r0 
- * @param r1 
- * @param r2 
- * @param r3 
- * @param r12 
- * @param lr 
+ * @param error_code 
  * @param pc 
- * @param psr 
+ * @param reset_count 
+ * @param doRearm 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rosflight_hard_error_send(mavlink_channel_t chan, uint32_t r0, uint32_t r1, uint32_t r2, uint32_t r3, uint32_t r12, uint32_t lr, uint32_t pc, uint32_t psr)
+static inline void mavlink_msg_rosflight_hard_error_send(mavlink_channel_t chan, uint32_t error_code, uint32_t pc, uint32_t reset_count, uint32_t doRearm)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN];
-	_mav_put_uint32_t(buf, 0, r0);
-	_mav_put_uint32_t(buf, 4, r1);
-	_mav_put_uint32_t(buf, 8, r2);
-	_mav_put_uint32_t(buf, 12, r3);
-	_mav_put_uint32_t(buf, 16, r12);
-	_mav_put_uint32_t(buf, 20, lr);
-	_mav_put_uint32_t(buf, 24, pc);
-	_mav_put_uint32_t(buf, 28, psr);
+	_mav_put_uint32_t(buf, 0, error_code);
+	_mav_put_uint32_t(buf, 4, pc);
+	_mav_put_uint32_t(buf, 8, reset_count);
+	_mav_put_uint32_t(buf, 12, doRearm);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR, buf, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_CRC);
@@ -206,14 +166,10 @@ static inline void mavlink_msg_rosflight_hard_error_send(mavlink_channel_t chan,
 #endif
 #else
 	mavlink_rosflight_hard_error_t packet;
-	packet.r0 = r0;
-	packet.r1 = r1;
-	packet.r2 = r2;
-	packet.r3 = r3;
-	packet.r12 = r12;
-	packet.lr = lr;
+	packet.error_code = error_code;
 	packet.pc = pc;
-	packet.psr = psr;
+	packet.reset_count = reset_count;
+	packet.doRearm = doRearm;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR, (const char *)&packet, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_CRC);
@@ -231,18 +187,14 @@ static inline void mavlink_msg_rosflight_hard_error_send(mavlink_channel_t chan,
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rosflight_hard_error_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t r0, uint32_t r1, uint32_t r2, uint32_t r3, uint32_t r12, uint32_t lr, uint32_t pc, uint32_t psr)
+static inline void mavlink_msg_rosflight_hard_error_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint32_t error_code, uint32_t pc, uint32_t reset_count, uint32_t doRearm)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_uint32_t(buf, 0, r0);
-	_mav_put_uint32_t(buf, 4, r1);
-	_mav_put_uint32_t(buf, 8, r2);
-	_mav_put_uint32_t(buf, 12, r3);
-	_mav_put_uint32_t(buf, 16, r12);
-	_mav_put_uint32_t(buf, 20, lr);
-	_mav_put_uint32_t(buf, 24, pc);
-	_mav_put_uint32_t(buf, 28, psr);
+	_mav_put_uint32_t(buf, 0, error_code);
+	_mav_put_uint32_t(buf, 4, pc);
+	_mav_put_uint32_t(buf, 8, reset_count);
+	_mav_put_uint32_t(buf, 12, doRearm);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR, buf, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_CRC);
@@ -251,14 +203,10 @@ static inline void mavlink_msg_rosflight_hard_error_send_buf(mavlink_message_t *
 #endif
 #else
 	mavlink_rosflight_hard_error_t *packet = (mavlink_rosflight_hard_error_t *)msgbuf;
-	packet->r0 = r0;
-	packet->r1 = r1;
-	packet->r2 = r2;
-	packet->r3 = r3;
-	packet->r12 = r12;
-	packet->lr = lr;
+	packet->error_code = error_code;
 	packet->pc = pc;
-	packet->psr = psr;
+	packet->reset_count = reset_count;
+	packet->doRearm = doRearm;
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR, (const char *)packet, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN, MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_CRC);
@@ -275,63 +223,13 @@ static inline void mavlink_msg_rosflight_hard_error_send_buf(mavlink_message_t *
 
 
 /**
- * @brief Get field r0 from rosflight_hard_error message
+ * @brief Get field error_code from rosflight_hard_error message
  *
  * @return 
  */
-static inline uint32_t mavlink_msg_rosflight_hard_error_get_r0(const mavlink_message_t* msg)
+static inline uint32_t mavlink_msg_rosflight_hard_error_get_error_code(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_uint32_t(msg,  0);
-}
-
-/**
- * @brief Get field r1 from rosflight_hard_error message
- *
- * @return 
- */
-static inline uint32_t mavlink_msg_rosflight_hard_error_get_r1(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint32_t(msg,  4);
-}
-
-/**
- * @brief Get field r2 from rosflight_hard_error message
- *
- * @return 
- */
-static inline uint32_t mavlink_msg_rosflight_hard_error_get_r2(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint32_t(msg,  8);
-}
-
-/**
- * @brief Get field r3 from rosflight_hard_error message
- *
- * @return 
- */
-static inline uint32_t mavlink_msg_rosflight_hard_error_get_r3(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint32_t(msg,  12);
-}
-
-/**
- * @brief Get field r12 from rosflight_hard_error message
- *
- * @return 
- */
-static inline uint32_t mavlink_msg_rosflight_hard_error_get_r12(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint32_t(msg,  16);
-}
-
-/**
- * @brief Get field lr from rosflight_hard_error message
- *
- * @return 
- */
-static inline uint32_t mavlink_msg_rosflight_hard_error_get_lr(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_uint32_t(msg,  20);
 }
 
 /**
@@ -341,17 +239,27 @@ static inline uint32_t mavlink_msg_rosflight_hard_error_get_lr(const mavlink_mes
  */
 static inline uint32_t mavlink_msg_rosflight_hard_error_get_pc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint32_t(msg,  24);
+	return _MAV_RETURN_uint32_t(msg,  4);
 }
 
 /**
- * @brief Get field psr from rosflight_hard_error message
+ * @brief Get field reset_count from rosflight_hard_error message
  *
  * @return 
  */
-static inline uint32_t mavlink_msg_rosflight_hard_error_get_psr(const mavlink_message_t* msg)
+static inline uint32_t mavlink_msg_rosflight_hard_error_get_reset_count(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint32_t(msg,  28);
+	return _MAV_RETURN_uint32_t(msg,  8);
+}
+
+/**
+ * @brief Get field doRearm from rosflight_hard_error message
+ *
+ * @return 
+ */
+static inline uint32_t mavlink_msg_rosflight_hard_error_get_doRearm(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint32_t(msg,  12);
 }
 
 /**
@@ -363,14 +271,10 @@ static inline uint32_t mavlink_msg_rosflight_hard_error_get_psr(const mavlink_me
 static inline void mavlink_msg_rosflight_hard_error_decode(const mavlink_message_t* msg, mavlink_rosflight_hard_error_t* rosflight_hard_error)
 {
 #if MAVLINK_NEED_BYTE_SWAP
-	rosflight_hard_error->r0 = mavlink_msg_rosflight_hard_error_get_r0(msg);
-	rosflight_hard_error->r1 = mavlink_msg_rosflight_hard_error_get_r1(msg);
-	rosflight_hard_error->r2 = mavlink_msg_rosflight_hard_error_get_r2(msg);
-	rosflight_hard_error->r3 = mavlink_msg_rosflight_hard_error_get_r3(msg);
-	rosflight_hard_error->r12 = mavlink_msg_rosflight_hard_error_get_r12(msg);
-	rosflight_hard_error->lr = mavlink_msg_rosflight_hard_error_get_lr(msg);
+	rosflight_hard_error->error_code = mavlink_msg_rosflight_hard_error_get_error_code(msg);
 	rosflight_hard_error->pc = mavlink_msg_rosflight_hard_error_get_pc(msg);
-	rosflight_hard_error->psr = mavlink_msg_rosflight_hard_error_get_psr(msg);
+	rosflight_hard_error->reset_count = mavlink_msg_rosflight_hard_error_get_reset_count(msg);
+	rosflight_hard_error->doRearm = mavlink_msg_rosflight_hard_error_get_doRearm(msg);
 #else
 	memcpy(rosflight_hard_error, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN);
 #endif
