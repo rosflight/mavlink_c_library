@@ -873,6 +873,52 @@ static void mavlink_test_rosflight_gps(uint8_t system_id, uint8_t component_id, 
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
 
+static void mavlink_test_rosflight_hard_error(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+	mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+	mavlink_rosflight_hard_error_t packet_in = {
+		963497464,963497672,963497880,963498088
+    };
+	mavlink_rosflight_hard_error_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        	packet1.error_code = packet_in.error_code;
+        	packet1.pc = packet_in.pc;
+        	packet1.reset_count = packet_in.reset_count;
+        	packet1.doRearm = packet_in.doRearm;
+        
+        
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_hard_error_encode(system_id, component_id, &msg, &packet1);
+	mavlink_msg_rosflight_hard_error_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_hard_error_pack(system_id, component_id, &msg , packet1.error_code , packet1.pc , packet1.reset_count , packet1.doRearm );
+	mavlink_msg_rosflight_hard_error_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_hard_error_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.error_code , packet1.pc , packet1.reset_count , packet1.doRearm );
+	mavlink_msg_rosflight_hard_error_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+        	comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+	mavlink_msg_rosflight_hard_error_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+	mavlink_msg_rosflight_hard_error_send(MAVLINK_COMM_1 , packet1.error_code , packet1.pc , packet1.reset_count , packet1.doRearm );
+	mavlink_msg_rosflight_hard_error_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+}
+
 static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 	mavlink_test_offboard_control(system_id, component_id, last_msg);
@@ -893,6 +939,7 @@ static void mavlink_test_rosflight(uint8_t system_id, uint8_t component_id, mavl
 	mavlink_test_attitude_correction(system_id, component_id, last_msg);
 	mavlink_test_rosflight_gps_ecef(system_id, component_id, last_msg);
 	mavlink_test_rosflight_gps(system_id, component_id, last_msg);
+	mavlink_test_rosflight_hard_error(system_id, component_id, last_msg);
 }
 
 #ifdef __cplusplus
