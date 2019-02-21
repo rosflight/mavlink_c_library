@@ -142,8 +142,8 @@ typedef enum UBLOX_FIX_TYPE
 {
 	NO_FIX=0, /*  | */
 	DEAD_RECKONING_ONLY=1, /*  | */
-	2D_FIX=2, /*  | */
-	3D_FIX=3, /*  | */
+	FIX_2D=2, /*  | */
+	FIX_3D=3, /*  | */
 	GNSS_AND_DEAD_RECKONING=4, /*  | */
 	TIME_ONLY=5, /*  | */
 	UBLOX_FIX_TYPE_ENUM_END=6, /*  | */
