@@ -1,6 +1,6 @@
 // MESSAGE ROSFLIGHT_GNSS_POS_ECEF PACKING
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_POS_ECEF 200
+#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_POS_ECEF 199
 
 typedef struct __mavlink_rosflight_gnss_pos_ecef_t
 {
@@ -12,10 +12,10 @@ typedef struct __mavlink_rosflight_gnss_pos_ecef_t
 } mavlink_rosflight_gnss_pos_ecef_t;
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_POS_ECEF_LEN 18
-#define MAVLINK_MSG_ID_200_LEN 18
+#define MAVLINK_MSG_ID_199_LEN 18
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_POS_ECEF_CRC 139
-#define MAVLINK_MSG_ID_200_CRC 139
+#define MAVLINK_MSG_ID_199_CRC 139
 
 
 
