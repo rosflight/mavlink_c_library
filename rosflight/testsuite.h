@@ -925,15 +925,15 @@ static void mavlink_test_rosflight_gnss_pos_ecef(uint8_t system_id, uint8_t comp
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_gnss_pos_ecef_t packet_in = {
-		963497464,963497672,963497880,963498088,18067
+		963497464,963497672,963497880,963498088,963498296
     };
 	mavlink_rosflight_gnss_pos_ecef_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        	packet1.time_of_week = packet_in.time_of_week;
         	packet1.ecef_x = packet_in.ecef_x;
         	packet1.ecef_y = packet_in.ecef_y;
         	packet1.ecef_z = packet_in.ecef_z;
         	packet1.p_acc = packet_in.p_acc;
-        	packet1.time_of_week = packet_in.time_of_week;
         
         
 
@@ -972,15 +972,15 @@ static void mavlink_test_rosflight_gnss_vel_ecef(uint8_t system_id, uint8_t comp
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_gnss_vel_ecef_t packet_in = {
-		963497464,963497672,963497880,963498088,18067
+		963497464,963497672,963497880,963498088,963498296
     };
 	mavlink_rosflight_gnss_vel_ecef_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
+        	packet1.time_of_week = packet_in.time_of_week;
         	packet1.ecef_v_x = packet_in.ecef_v_x;
         	packet1.ecef_v_y = packet_in.ecef_v_y;
         	packet1.ecef_v_z = packet_in.ecef_v_z;
         	packet1.s_acc = packet_in.s_acc;
-        	packet1.time_of_week = packet_in.time_of_week;
         
         
 
@@ -1072,7 +1072,7 @@ static void mavlink_test_rosflight_gnss_raw(uint8_t system_id, uint8_t component
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_gnss_raw_t packet_in = {
-		93372036854775807ULL,963497880,963498088,963498296,963498504,963498712,963498920,963499128,963499336,963499544,963499752,963499960,963500168,963500376,963500584,963500792,20771,20875,221,32,99,166,233,44,111,178
+		963497464,963497672,963497880,963498088,963498296,963498504,963498712,963498920,963499128,963499336,963499544,963499752,963499960,963500168,963500376,963500584,20563,20667,209,20,87,154,221,32,99,166
     };
 	mavlink_rosflight_gnss_raw_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
