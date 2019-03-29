@@ -7,6 +7,7 @@ typedef struct __mavlink_rosflight_gnss_t
  uint64_t fix_type; /*< */
  uint64_t time; /*< */
  uint64_t nanos; /*< */
+ uint64_t rosflight_timestamp; /*< */
  int32_t lat; /*< */
  int32_t lon; /*< */
  int32_t height; /*< */
@@ -17,28 +18,29 @@ typedef struct __mavlink_rosflight_gnss_t
  uint32_t v_acc; /*< */
 } mavlink_rosflight_gnss_t;
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN 56
-#define MAVLINK_MSG_ID_201_LEN 56
+#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN 64
+#define MAVLINK_MSG_ID_201_LEN 64
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_CRC 64
-#define MAVLINK_MSG_ID_201_CRC 64
+#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_CRC 12
+#define MAVLINK_MSG_ID_201_CRC 12
 
 
 
 #define MAVLINK_MESSAGE_INFO_ROSFLIGHT_GNSS { \
 	"ROSFLIGHT_GNSS", \
-	11, \
+	12, \
 	{  { "fix_type", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_rosflight_gnss_t, fix_type) }, \
          { "time", NULL, MAVLINK_TYPE_UINT64_T, 0, 8, offsetof(mavlink_rosflight_gnss_t, time) }, \
          { "nanos", NULL, MAVLINK_TYPE_UINT64_T, 0, 16, offsetof(mavlink_rosflight_gnss_t, nanos) }, \
-         { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 24, offsetof(mavlink_rosflight_gnss_t, lat) }, \
-         { "lon", NULL, MAVLINK_TYPE_INT32_T, 0, 28, offsetof(mavlink_rosflight_gnss_t, lon) }, \
-         { "height", NULL, MAVLINK_TYPE_INT32_T, 0, 32, offsetof(mavlink_rosflight_gnss_t, height) }, \
-         { "vel_n", NULL, MAVLINK_TYPE_INT32_T, 0, 36, offsetof(mavlink_rosflight_gnss_t, vel_n) }, \
-         { "vel_e", NULL, MAVLINK_TYPE_INT32_T, 0, 40, offsetof(mavlink_rosflight_gnss_t, vel_e) }, \
-         { "vel_d", NULL, MAVLINK_TYPE_INT32_T, 0, 44, offsetof(mavlink_rosflight_gnss_t, vel_d) }, \
-         { "h_acc", NULL, MAVLINK_TYPE_UINT32_T, 0, 48, offsetof(mavlink_rosflight_gnss_t, h_acc) }, \
-         { "v_acc", NULL, MAVLINK_TYPE_UINT32_T, 0, 52, offsetof(mavlink_rosflight_gnss_t, v_acc) }, \
+         { "rosflight_timestamp", NULL, MAVLINK_TYPE_UINT64_T, 0, 24, offsetof(mavlink_rosflight_gnss_t, rosflight_timestamp) }, \
+         { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 32, offsetof(mavlink_rosflight_gnss_t, lat) }, \
+         { "lon", NULL, MAVLINK_TYPE_INT32_T, 0, 36, offsetof(mavlink_rosflight_gnss_t, lon) }, \
+         { "height", NULL, MAVLINK_TYPE_INT32_T, 0, 40, offsetof(mavlink_rosflight_gnss_t, height) }, \
+         { "vel_n", NULL, MAVLINK_TYPE_INT32_T, 0, 44, offsetof(mavlink_rosflight_gnss_t, vel_n) }, \
+         { "vel_e", NULL, MAVLINK_TYPE_INT32_T, 0, 48, offsetof(mavlink_rosflight_gnss_t, vel_e) }, \
+         { "vel_d", NULL, MAVLINK_TYPE_INT32_T, 0, 52, offsetof(mavlink_rosflight_gnss_t, vel_d) }, \
+         { "h_acc", NULL, MAVLINK_TYPE_UINT32_T, 0, 56, offsetof(mavlink_rosflight_gnss_t, h_acc) }, \
+         { "v_acc", NULL, MAVLINK_TYPE_UINT32_T, 0, 60, offsetof(mavlink_rosflight_gnss_t, v_acc) }, \
          } \
 }
 
@@ -60,24 +62,26 @@ typedef struct __mavlink_rosflight_gnss_t
  * @param vel_d 
  * @param h_acc 
  * @param v_acc 
+ * @param rosflight_timestamp 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_gnss_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint64_t fix_type, uint64_t time, uint64_t nanos, int32_t lat, int32_t lon, int32_t height, int32_t vel_n, int32_t vel_e, int32_t vel_d, uint32_t h_acc, uint32_t v_acc)
+						       uint64_t fix_type, uint64_t time, uint64_t nanos, int32_t lat, int32_t lon, int32_t height, int32_t vel_n, int32_t vel_e, int32_t vel_d, uint32_t h_acc, uint32_t v_acc, uint64_t rosflight_timestamp)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN];
 	_mav_put_uint64_t(buf, 0, fix_type);
 	_mav_put_uint64_t(buf, 8, time);
 	_mav_put_uint64_t(buf, 16, nanos);
-	_mav_put_int32_t(buf, 24, lat);
-	_mav_put_int32_t(buf, 28, lon);
-	_mav_put_int32_t(buf, 32, height);
-	_mav_put_int32_t(buf, 36, vel_n);
-	_mav_put_int32_t(buf, 40, vel_e);
-	_mav_put_int32_t(buf, 44, vel_d);
-	_mav_put_uint32_t(buf, 48, h_acc);
-	_mav_put_uint32_t(buf, 52, v_acc);
+	_mav_put_uint64_t(buf, 24, rosflight_timestamp);
+	_mav_put_int32_t(buf, 32, lat);
+	_mav_put_int32_t(buf, 36, lon);
+	_mav_put_int32_t(buf, 40, height);
+	_mav_put_int32_t(buf, 44, vel_n);
+	_mav_put_int32_t(buf, 48, vel_e);
+	_mav_put_int32_t(buf, 52, vel_d);
+	_mav_put_uint32_t(buf, 56, h_acc);
+	_mav_put_uint32_t(buf, 60, v_acc);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN);
 #else
@@ -85,6 +89,7 @@ static inline uint16_t mavlink_msg_rosflight_gnss_pack(uint8_t system_id, uint8_
 	packet.fix_type = fix_type;
 	packet.time = time;
 	packet.nanos = nanos;
+	packet.rosflight_timestamp = rosflight_timestamp;
 	packet.lat = lat;
 	packet.lon = lon;
 	packet.height = height;
@@ -122,25 +127,27 @@ static inline uint16_t mavlink_msg_rosflight_gnss_pack(uint8_t system_id, uint8_
  * @param vel_d 
  * @param h_acc 
  * @param v_acc 
+ * @param rosflight_timestamp 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_gnss_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint64_t fix_type,uint64_t time,uint64_t nanos,int32_t lat,int32_t lon,int32_t height,int32_t vel_n,int32_t vel_e,int32_t vel_d,uint32_t h_acc,uint32_t v_acc)
+						           uint64_t fix_type,uint64_t time,uint64_t nanos,int32_t lat,int32_t lon,int32_t height,int32_t vel_n,int32_t vel_e,int32_t vel_d,uint32_t h_acc,uint32_t v_acc,uint64_t rosflight_timestamp)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN];
 	_mav_put_uint64_t(buf, 0, fix_type);
 	_mav_put_uint64_t(buf, 8, time);
 	_mav_put_uint64_t(buf, 16, nanos);
-	_mav_put_int32_t(buf, 24, lat);
-	_mav_put_int32_t(buf, 28, lon);
-	_mav_put_int32_t(buf, 32, height);
-	_mav_put_int32_t(buf, 36, vel_n);
-	_mav_put_int32_t(buf, 40, vel_e);
-	_mav_put_int32_t(buf, 44, vel_d);
-	_mav_put_uint32_t(buf, 48, h_acc);
-	_mav_put_uint32_t(buf, 52, v_acc);
+	_mav_put_uint64_t(buf, 24, rosflight_timestamp);
+	_mav_put_int32_t(buf, 32, lat);
+	_mav_put_int32_t(buf, 36, lon);
+	_mav_put_int32_t(buf, 40, height);
+	_mav_put_int32_t(buf, 44, vel_n);
+	_mav_put_int32_t(buf, 48, vel_e);
+	_mav_put_int32_t(buf, 52, vel_d);
+	_mav_put_uint32_t(buf, 56, h_acc);
+	_mav_put_uint32_t(buf, 60, v_acc);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN);
 #else
@@ -148,6 +155,7 @@ static inline uint16_t mavlink_msg_rosflight_gnss_pack_chan(uint8_t system_id, u
 	packet.fix_type = fix_type;
 	packet.time = time;
 	packet.nanos = nanos;
+	packet.rosflight_timestamp = rosflight_timestamp;
 	packet.lat = lat;
 	packet.lon = lon;
 	packet.height = height;
@@ -178,7 +186,7 @@ static inline uint16_t mavlink_msg_rosflight_gnss_pack_chan(uint8_t system_id, u
  */
 static inline uint16_t mavlink_msg_rosflight_gnss_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rosflight_gnss_t* rosflight_gnss)
 {
-	return mavlink_msg_rosflight_gnss_pack(system_id, component_id, msg, rosflight_gnss->fix_type, rosflight_gnss->time, rosflight_gnss->nanos, rosflight_gnss->lat, rosflight_gnss->lon, rosflight_gnss->height, rosflight_gnss->vel_n, rosflight_gnss->vel_e, rosflight_gnss->vel_d, rosflight_gnss->h_acc, rosflight_gnss->v_acc);
+	return mavlink_msg_rosflight_gnss_pack(system_id, component_id, msg, rosflight_gnss->fix_type, rosflight_gnss->time, rosflight_gnss->nanos, rosflight_gnss->lat, rosflight_gnss->lon, rosflight_gnss->height, rosflight_gnss->vel_n, rosflight_gnss->vel_e, rosflight_gnss->vel_d, rosflight_gnss->h_acc, rosflight_gnss->v_acc, rosflight_gnss->rosflight_timestamp);
 }
 
 /**
@@ -192,7 +200,7 @@ static inline uint16_t mavlink_msg_rosflight_gnss_encode(uint8_t system_id, uint
  */
 static inline uint16_t mavlink_msg_rosflight_gnss_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rosflight_gnss_t* rosflight_gnss)
 {
-	return mavlink_msg_rosflight_gnss_pack_chan(system_id, component_id, chan, msg, rosflight_gnss->fix_type, rosflight_gnss->time, rosflight_gnss->nanos, rosflight_gnss->lat, rosflight_gnss->lon, rosflight_gnss->height, rosflight_gnss->vel_n, rosflight_gnss->vel_e, rosflight_gnss->vel_d, rosflight_gnss->h_acc, rosflight_gnss->v_acc);
+	return mavlink_msg_rosflight_gnss_pack_chan(system_id, component_id, chan, msg, rosflight_gnss->fix_type, rosflight_gnss->time, rosflight_gnss->nanos, rosflight_gnss->lat, rosflight_gnss->lon, rosflight_gnss->height, rosflight_gnss->vel_n, rosflight_gnss->vel_e, rosflight_gnss->vel_d, rosflight_gnss->h_acc, rosflight_gnss->v_acc, rosflight_gnss->rosflight_timestamp);
 }
 
 /**
@@ -210,24 +218,26 @@ static inline uint16_t mavlink_msg_rosflight_gnss_encode_chan(uint8_t system_id,
  * @param vel_d 
  * @param h_acc 
  * @param v_acc 
+ * @param rosflight_timestamp 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rosflight_gnss_send(mavlink_channel_t chan, uint64_t fix_type, uint64_t time, uint64_t nanos, int32_t lat, int32_t lon, int32_t height, int32_t vel_n, int32_t vel_e, int32_t vel_d, uint32_t h_acc, uint32_t v_acc)
+static inline void mavlink_msg_rosflight_gnss_send(mavlink_channel_t chan, uint64_t fix_type, uint64_t time, uint64_t nanos, int32_t lat, int32_t lon, int32_t height, int32_t vel_n, int32_t vel_e, int32_t vel_d, uint32_t h_acc, uint32_t v_acc, uint64_t rosflight_timestamp)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN];
 	_mav_put_uint64_t(buf, 0, fix_type);
 	_mav_put_uint64_t(buf, 8, time);
 	_mav_put_uint64_t(buf, 16, nanos);
-	_mav_put_int32_t(buf, 24, lat);
-	_mav_put_int32_t(buf, 28, lon);
-	_mav_put_int32_t(buf, 32, height);
-	_mav_put_int32_t(buf, 36, vel_n);
-	_mav_put_int32_t(buf, 40, vel_e);
-	_mav_put_int32_t(buf, 44, vel_d);
-	_mav_put_uint32_t(buf, 48, h_acc);
-	_mav_put_uint32_t(buf, 52, v_acc);
+	_mav_put_uint64_t(buf, 24, rosflight_timestamp);
+	_mav_put_int32_t(buf, 32, lat);
+	_mav_put_int32_t(buf, 36, lon);
+	_mav_put_int32_t(buf, 40, height);
+	_mav_put_int32_t(buf, 44, vel_n);
+	_mav_put_int32_t(buf, 48, vel_e);
+	_mav_put_int32_t(buf, 52, vel_d);
+	_mav_put_uint32_t(buf, 56, h_acc);
+	_mav_put_uint32_t(buf, 60, v_acc);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_GNSS, buf, MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_GNSS_CRC);
@@ -239,6 +249,7 @@ static inline void mavlink_msg_rosflight_gnss_send(mavlink_channel_t chan, uint6
 	packet.fix_type = fix_type;
 	packet.time = time;
 	packet.nanos = nanos;
+	packet.rosflight_timestamp = rosflight_timestamp;
 	packet.lat = lat;
 	packet.lon = lon;
 	packet.height = height;
@@ -264,21 +275,22 @@ static inline void mavlink_msg_rosflight_gnss_send(mavlink_channel_t chan, uint6
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rosflight_gnss_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t fix_type, uint64_t time, uint64_t nanos, int32_t lat, int32_t lon, int32_t height, int32_t vel_n, int32_t vel_e, int32_t vel_d, uint32_t h_acc, uint32_t v_acc)
+static inline void mavlink_msg_rosflight_gnss_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t fix_type, uint64_t time, uint64_t nanos, int32_t lat, int32_t lon, int32_t height, int32_t vel_n, int32_t vel_e, int32_t vel_d, uint32_t h_acc, uint32_t v_acc, uint64_t rosflight_timestamp)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
 	_mav_put_uint64_t(buf, 0, fix_type);
 	_mav_put_uint64_t(buf, 8, time);
 	_mav_put_uint64_t(buf, 16, nanos);
-	_mav_put_int32_t(buf, 24, lat);
-	_mav_put_int32_t(buf, 28, lon);
-	_mav_put_int32_t(buf, 32, height);
-	_mav_put_int32_t(buf, 36, vel_n);
-	_mav_put_int32_t(buf, 40, vel_e);
-	_mav_put_int32_t(buf, 44, vel_d);
-	_mav_put_uint32_t(buf, 48, h_acc);
-	_mav_put_uint32_t(buf, 52, v_acc);
+	_mav_put_uint64_t(buf, 24, rosflight_timestamp);
+	_mav_put_int32_t(buf, 32, lat);
+	_mav_put_int32_t(buf, 36, lon);
+	_mav_put_int32_t(buf, 40, height);
+	_mav_put_int32_t(buf, 44, vel_n);
+	_mav_put_int32_t(buf, 48, vel_e);
+	_mav_put_int32_t(buf, 52, vel_d);
+	_mav_put_uint32_t(buf, 56, h_acc);
+	_mav_put_uint32_t(buf, 60, v_acc);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_GNSS, buf, MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_GNSS_CRC);
@@ -290,6 +302,7 @@ static inline void mavlink_msg_rosflight_gnss_send_buf(mavlink_message_t *msgbuf
 	packet->fix_type = fix_type;
 	packet->time = time;
 	packet->nanos = nanos;
+	packet->rosflight_timestamp = rosflight_timestamp;
 	packet->lat = lat;
 	packet->lon = lon;
 	packet->height = height;
@@ -350,7 +363,7 @@ static inline uint64_t mavlink_msg_rosflight_gnss_get_nanos(const mavlink_messag
  */
 static inline int32_t mavlink_msg_rosflight_gnss_get_lat(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  24);
+	return _MAV_RETURN_int32_t(msg,  32);
 }
 
 /**
@@ -360,7 +373,7 @@ static inline int32_t mavlink_msg_rosflight_gnss_get_lat(const mavlink_message_t
  */
 static inline int32_t mavlink_msg_rosflight_gnss_get_lon(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  28);
+	return _MAV_RETURN_int32_t(msg,  36);
 }
 
 /**
@@ -370,7 +383,7 @@ static inline int32_t mavlink_msg_rosflight_gnss_get_lon(const mavlink_message_t
  */
 static inline int32_t mavlink_msg_rosflight_gnss_get_height(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  32);
+	return _MAV_RETURN_int32_t(msg,  40);
 }
 
 /**
@@ -380,7 +393,7 @@ static inline int32_t mavlink_msg_rosflight_gnss_get_height(const mavlink_messag
  */
 static inline int32_t mavlink_msg_rosflight_gnss_get_vel_n(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  36);
+	return _MAV_RETURN_int32_t(msg,  44);
 }
 
 /**
@@ -390,7 +403,7 @@ static inline int32_t mavlink_msg_rosflight_gnss_get_vel_n(const mavlink_message
  */
 static inline int32_t mavlink_msg_rosflight_gnss_get_vel_e(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  40);
+	return _MAV_RETURN_int32_t(msg,  48);
 }
 
 /**
@@ -400,7 +413,7 @@ static inline int32_t mavlink_msg_rosflight_gnss_get_vel_e(const mavlink_message
  */
 static inline int32_t mavlink_msg_rosflight_gnss_get_vel_d(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_int32_t(msg,  44);
+	return _MAV_RETURN_int32_t(msg,  52);
 }
 
 /**
@@ -410,7 +423,7 @@ static inline int32_t mavlink_msg_rosflight_gnss_get_vel_d(const mavlink_message
  */
 static inline uint32_t mavlink_msg_rosflight_gnss_get_h_acc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint32_t(msg,  48);
+	return _MAV_RETURN_uint32_t(msg,  56);
 }
 
 /**
@@ -420,7 +433,17 @@ static inline uint32_t mavlink_msg_rosflight_gnss_get_h_acc(const mavlink_messag
  */
 static inline uint32_t mavlink_msg_rosflight_gnss_get_v_acc(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint32_t(msg,  52);
+	return _MAV_RETURN_uint32_t(msg,  60);
+}
+
+/**
+ * @brief Get field rosflight_timestamp from rosflight_gnss message
+ *
+ * @return 
+ */
+static inline uint64_t mavlink_msg_rosflight_gnss_get_rosflight_timestamp(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint64_t(msg,  24);
 }
 
 /**
@@ -435,6 +458,7 @@ static inline void mavlink_msg_rosflight_gnss_decode(const mavlink_message_t* ms
 	rosflight_gnss->fix_type = mavlink_msg_rosflight_gnss_get_fix_type(msg);
 	rosflight_gnss->time = mavlink_msg_rosflight_gnss_get_time(msg);
 	rosflight_gnss->nanos = mavlink_msg_rosflight_gnss_get_nanos(msg);
+	rosflight_gnss->rosflight_timestamp = mavlink_msg_rosflight_gnss_get_rosflight_timestamp(msg);
 	rosflight_gnss->lat = mavlink_msg_rosflight_gnss_get_lat(msg);
 	rosflight_gnss->lon = mavlink_msg_rosflight_gnss_get_lon(msg);
 	rosflight_gnss->height = mavlink_msg_rosflight_gnss_get_height(msg);
