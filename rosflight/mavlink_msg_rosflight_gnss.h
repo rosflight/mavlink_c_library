@@ -1,6 +1,6 @@
 // MESSAGE ROSFLIGHT_GNSS PACKING
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS 199
+#define MAVLINK_MSG_ID_ROSFLIGHT_GNSS 197
 
 typedef struct __mavlink_rosflight_gnss_t
 {
@@ -28,10 +28,10 @@ typedef struct __mavlink_rosflight_gnss_t
 } mavlink_rosflight_gnss_t;
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN 93
-#define MAVLINK_MSG_ID_199_LEN 93
+#define MAVLINK_MSG_ID_197_LEN 93
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_CRC 9
-#define MAVLINK_MSG_ID_199_CRC 9
+#define MAVLINK_MSG_ID_197_CRC 9
 
 
 
