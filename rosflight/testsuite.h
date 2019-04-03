@@ -925,11 +925,10 @@ static void mavlink_test_rosflight_gnss(uint8_t system_id, uint8_t component_id,
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_gnss_t packet_in = {
-		93372036854775807ULL,93372036854776311ULL,93372036854776815ULL,93372036854777319ULL,963499128,963499336,963499544,963499752,963499960,963500168,963500376,963500584,963500792,963501000,963501208,963501416,963501624,963501832,963502040,963502248,963502456
+		93372036854775807ULL,93372036854776311ULL,93372036854776815ULL,963498712,963498920,963499128,963499336,963499544,963499752,963499960,963500168,963500376,963500584,963500792,963501000,963501208,963501416,963501624,963501832,963502040,25
     };
 	mavlink_rosflight_gnss_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        	packet1.fix_type = packet_in.fix_type;
         	packet1.time = packet_in.time;
         	packet1.nanos = packet_in.nanos;
         	packet1.rosflight_timestamp = packet_in.rosflight_timestamp;
@@ -950,6 +949,7 @@ static void mavlink_test_rosflight_gnss(uint8_t system_id, uint8_t component_id,
         	packet1.ecef_v_y = packet_in.ecef_v_y;
         	packet1.ecef_v_z = packet_in.ecef_v_z;
         	packet1.s_acc = packet_in.s_acc;
+        	packet1.fix_type = packet_in.fix_type;
         
         
 
