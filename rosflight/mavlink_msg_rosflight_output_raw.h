@@ -5,22 +5,22 @@
 typedef struct __mavlink_rosflight_output_raw_t
 {
  uint64_t stamp; /*< */
- float values[8]; /*< */
+ float values[14]; /*< */
 } mavlink_rosflight_output_raw_t;
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN 40
-#define MAVLINK_MSG_ID_190_LEN 40
+#define MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN 64
+#define MAVLINK_MSG_ID_190_LEN 64
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_CRC 230
-#define MAVLINK_MSG_ID_190_CRC 230
+#define MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_CRC 181
+#define MAVLINK_MSG_ID_190_CRC 181
 
-#define MAVLINK_MSG_ROSFLIGHT_OUTPUT_RAW_FIELD_VALUES_LEN 8
+#define MAVLINK_MSG_ROSFLIGHT_OUTPUT_RAW_FIELD_VALUES_LEN 14
 
 #define MAVLINK_MESSAGE_INFO_ROSFLIGHT_OUTPUT_RAW { \
 	"ROSFLIGHT_OUTPUT_RAW", \
 	2, \
 	{  { "stamp", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_rosflight_output_raw_t, stamp) }, \
-         { "values", NULL, MAVLINK_TYPE_FLOAT, 8, 8, offsetof(mavlink_rosflight_output_raw_t, values) }, \
+         { "values", NULL, MAVLINK_TYPE_FLOAT, 14, 8, offsetof(mavlink_rosflight_output_raw_t, values) }, \
          } \
 }
 
@@ -41,12 +41,12 @@ static inline uint16_t mavlink_msg_rosflight_output_raw_pack(uint8_t system_id, 
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN];
 	_mav_put_uint64_t(buf, 0, stamp);
-	_mav_put_float_array(buf, 8, values, 8);
+	_mav_put_float_array(buf, 8, values, 14);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN);
 #else
 	mavlink_rosflight_output_raw_t packet;
 	packet.stamp = stamp;
-	mav_array_memcpy(packet.values, values, sizeof(float)*8);
+	mav_array_memcpy(packet.values, values, sizeof(float)*14);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN);
 #endif
 
@@ -75,12 +75,12 @@ static inline uint16_t mavlink_msg_rosflight_output_raw_pack_chan(uint8_t system
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN];
 	_mav_put_uint64_t(buf, 0, stamp);
-	_mav_put_float_array(buf, 8, values, 8);
+	_mav_put_float_array(buf, 8, values, 14);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN);
 #else
 	mavlink_rosflight_output_raw_t packet;
 	packet.stamp = stamp;
-	mav_array_memcpy(packet.values, values, sizeof(float)*8);
+	mav_array_memcpy(packet.values, values, sizeof(float)*14);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN);
 #endif
 
@@ -133,7 +133,7 @@ static inline void mavlink_msg_rosflight_output_raw_send(mavlink_channel_t chan,
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN];
 	_mav_put_uint64_t(buf, 0, stamp);
-	_mav_put_float_array(buf, 8, values, 8);
+	_mav_put_float_array(buf, 8, values, 14);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW, buf, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_CRC);
 #else
@@ -142,7 +142,7 @@ static inline void mavlink_msg_rosflight_output_raw_send(mavlink_channel_t chan,
 #else
 	mavlink_rosflight_output_raw_t packet;
 	packet.stamp = stamp;
-	mav_array_memcpy(packet.values, values, sizeof(float)*8);
+	mav_array_memcpy(packet.values, values, sizeof(float)*14);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW, (const char *)&packet, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_CRC);
 #else
@@ -164,7 +164,7 @@ static inline void mavlink_msg_rosflight_output_raw_send_buf(mavlink_message_t *
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
 	_mav_put_uint64_t(buf, 0, stamp);
-	_mav_put_float_array(buf, 8, values, 8);
+	_mav_put_float_array(buf, 8, values, 14);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW, buf, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_CRC);
 #else
@@ -173,7 +173,7 @@ static inline void mavlink_msg_rosflight_output_raw_send_buf(mavlink_message_t *
 #else
 	mavlink_rosflight_output_raw_t *packet = (mavlink_rosflight_output_raw_t *)msgbuf;
 	packet->stamp = stamp;
-	mav_array_memcpy(packet->values, values, sizeof(float)*8);
+	mav_array_memcpy(packet->values, values, sizeof(float)*14);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW, (const char *)packet, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_LEN, MAVLINK_MSG_ID_ROSFLIGHT_OUTPUT_RAW_CRC);
 #else
@@ -205,7 +205,7 @@ static inline uint64_t mavlink_msg_rosflight_output_raw_get_stamp(const mavlink_
  */
 static inline uint16_t mavlink_msg_rosflight_output_raw_get_values(const mavlink_message_t* msg, float *values)
 {
-	return _MAV_RETURN_float_array(msg, values, 8,  8);
+	return _MAV_RETURN_float_array(msg, values, 14,  8);
 }
 
 /**

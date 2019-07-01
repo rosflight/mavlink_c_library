@@ -496,13 +496,13 @@ static void mavlink_test_rosflight_output_raw(uint8_t system_id, uint8_t compone
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_output_raw_t packet_in = {
-		93372036854775807ULL,{ 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0 }
+		93372036854775807ULL,{ 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0 }
     };
 	mavlink_rosflight_output_raw_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         	packet1.stamp = packet_in.stamp;
         
-        	mav_array_memcpy(packet1.values, packet_in.values, sizeof(float)*8);
+        	mav_array_memcpy(packet1.values, packet_in.values, sizeof(float)*14);
         
 
         memset(&packet2, 0, sizeof(packet2));
