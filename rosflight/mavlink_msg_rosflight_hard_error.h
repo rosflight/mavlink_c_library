@@ -1,6 +1,6 @@
 // MESSAGE ROSFLIGHT_HARD_ERROR PACKING
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR 198
+#define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR 196
 
 typedef struct __mavlink_rosflight_hard_error_t
 {
@@ -11,10 +11,10 @@ typedef struct __mavlink_rosflight_hard_error_t
 } mavlink_rosflight_hard_error_t;
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_LEN 16
-#define MAVLINK_MSG_ID_198_LEN 16
+#define MAVLINK_MSG_ID_196_LEN 16
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_HARD_ERROR_CRC 10
-#define MAVLINK_MSG_ID_198_CRC 10
+#define MAVLINK_MSG_ID_196_CRC 10
 
 
 
