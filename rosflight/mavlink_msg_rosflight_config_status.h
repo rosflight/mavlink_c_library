@@ -6,23 +6,25 @@ typedef struct __mavlink_rosflight_config_status_t
 {
  uint8_t device; /*< */
  uint8_t success; /*< */
+ uint8_t reboot_required; /*< */
  uint8_t error_message[50]; /*< */
 } mavlink_rosflight_config_status_t;
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN 52
-#define MAVLINK_MSG_ID_203_LEN 52
+#define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN 53
+#define MAVLINK_MSG_ID_203_LEN 53
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_CRC 5
-#define MAVLINK_MSG_ID_203_CRC 5
+#define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_CRC 116
+#define MAVLINK_MSG_ID_203_CRC 116
 
 #define MAVLINK_MSG_ROSFLIGHT_CONFIG_STATUS_FIELD_ERROR_MESSAGE_LEN 50
 
 #define MAVLINK_MESSAGE_INFO_ROSFLIGHT_CONFIG_STATUS { \
 	"ROSFLIGHT_CONFIG_STATUS", \
-	3, \
+	4, \
 	{  { "device", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_rosflight_config_status_t, device) }, \
          { "success", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_rosflight_config_status_t, success) }, \
-         { "error_message", NULL, MAVLINK_TYPE_UINT8_T, 50, 2, offsetof(mavlink_rosflight_config_status_t, error_message) }, \
+         { "reboot_required", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_rosflight_config_status_t, reboot_required) }, \
+         { "error_message", NULL, MAVLINK_TYPE_UINT8_T, 50, 3, offsetof(mavlink_rosflight_config_status_t, error_message) }, \
          } \
 }
 
@@ -35,22 +37,25 @@ typedef struct __mavlink_rosflight_config_status_t
  *
  * @param device 
  * @param success 
+ * @param reboot_required 
  * @param error_message 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_config_status_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t device, uint8_t success, const uint8_t *error_message)
+						       uint8_t device, uint8_t success, uint8_t reboot_required, const uint8_t *error_message)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN];
 	_mav_put_uint8_t(buf, 0, device);
 	_mav_put_uint8_t(buf, 1, success);
-	_mav_put_uint8_t_array(buf, 2, error_message, 50);
+	_mav_put_uint8_t(buf, 2, reboot_required);
+	_mav_put_uint8_t_array(buf, 3, error_message, 50);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN);
 #else
 	mavlink_rosflight_config_status_t packet;
 	packet.device = device;
 	packet.success = success;
+	packet.reboot_required = reboot_required;
 	mav_array_memcpy(packet.error_message, error_message, sizeof(uint8_t)*50);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN);
 #endif
@@ -71,23 +76,26 @@ static inline uint16_t mavlink_msg_rosflight_config_status_pack(uint8_t system_i
  * @param msg The MAVLink message to compress the data into
  * @param device 
  * @param success 
+ * @param reboot_required 
  * @param error_message 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_config_status_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t device,uint8_t success,const uint8_t *error_message)
+						           uint8_t device,uint8_t success,uint8_t reboot_required,const uint8_t *error_message)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN];
 	_mav_put_uint8_t(buf, 0, device);
 	_mav_put_uint8_t(buf, 1, success);
-	_mav_put_uint8_t_array(buf, 2, error_message, 50);
+	_mav_put_uint8_t(buf, 2, reboot_required);
+	_mav_put_uint8_t_array(buf, 3, error_message, 50);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN);
 #else
 	mavlink_rosflight_config_status_t packet;
 	packet.device = device;
 	packet.success = success;
+	packet.reboot_required = reboot_required;
 	mav_array_memcpy(packet.error_message, error_message, sizeof(uint8_t)*50);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN);
 #endif
@@ -110,7 +118,7 @@ static inline uint16_t mavlink_msg_rosflight_config_status_pack_chan(uint8_t sys
  */
 static inline uint16_t mavlink_msg_rosflight_config_status_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rosflight_config_status_t* rosflight_config_status)
 {
-	return mavlink_msg_rosflight_config_status_pack(system_id, component_id, msg, rosflight_config_status->device, rosflight_config_status->success, rosflight_config_status->error_message);
+	return mavlink_msg_rosflight_config_status_pack(system_id, component_id, msg, rosflight_config_status->device, rosflight_config_status->success, rosflight_config_status->reboot_required, rosflight_config_status->error_message);
 }
 
 /**
@@ -124,7 +132,7 @@ static inline uint16_t mavlink_msg_rosflight_config_status_encode(uint8_t system
  */
 static inline uint16_t mavlink_msg_rosflight_config_status_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rosflight_config_status_t* rosflight_config_status)
 {
-	return mavlink_msg_rosflight_config_status_pack_chan(system_id, component_id, chan, msg, rosflight_config_status->device, rosflight_config_status->success, rosflight_config_status->error_message);
+	return mavlink_msg_rosflight_config_status_pack_chan(system_id, component_id, chan, msg, rosflight_config_status->device, rosflight_config_status->success, rosflight_config_status->reboot_required, rosflight_config_status->error_message);
 }
 
 /**
@@ -133,17 +141,19 @@ static inline uint16_t mavlink_msg_rosflight_config_status_encode_chan(uint8_t s
  *
  * @param device 
  * @param success 
+ * @param reboot_required 
  * @param error_message 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rosflight_config_status_send(mavlink_channel_t chan, uint8_t device, uint8_t success, const uint8_t *error_message)
+static inline void mavlink_msg_rosflight_config_status_send(mavlink_channel_t chan, uint8_t device, uint8_t success, uint8_t reboot_required, const uint8_t *error_message)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN];
 	_mav_put_uint8_t(buf, 0, device);
 	_mav_put_uint8_t(buf, 1, success);
-	_mav_put_uint8_t_array(buf, 2, error_message, 50);
+	_mav_put_uint8_t(buf, 2, reboot_required);
+	_mav_put_uint8_t_array(buf, 3, error_message, 50);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS, buf, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_CRC);
 #else
@@ -153,6 +163,7 @@ static inline void mavlink_msg_rosflight_config_status_send(mavlink_channel_t ch
 	mavlink_rosflight_config_status_t packet;
 	packet.device = device;
 	packet.success = success;
+	packet.reboot_required = reboot_required;
 	mav_array_memcpy(packet.error_message, error_message, sizeof(uint8_t)*50);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS, (const char *)&packet, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_CRC);
@@ -170,13 +181,14 @@ static inline void mavlink_msg_rosflight_config_status_send(mavlink_channel_t ch
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rosflight_config_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t device, uint8_t success, const uint8_t *error_message)
+static inline void mavlink_msg_rosflight_config_status_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t device, uint8_t success, uint8_t reboot_required, const uint8_t *error_message)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
 	_mav_put_uint8_t(buf, 0, device);
 	_mav_put_uint8_t(buf, 1, success);
-	_mav_put_uint8_t_array(buf, 2, error_message, 50);
+	_mav_put_uint8_t(buf, 2, reboot_required);
+	_mav_put_uint8_t_array(buf, 3, error_message, 50);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS, buf, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_CRC);
 #else
@@ -186,6 +198,7 @@ static inline void mavlink_msg_rosflight_config_status_send_buf(mavlink_message_
 	mavlink_rosflight_config_status_t *packet = (mavlink_rosflight_config_status_t *)msgbuf;
 	packet->device = device;
 	packet->success = success;
+	packet->reboot_required = reboot_required;
 	mav_array_memcpy(packet->error_message, error_message, sizeof(uint8_t)*50);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS, (const char *)packet, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN, MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_CRC);
@@ -222,13 +235,23 @@ static inline uint8_t mavlink_msg_rosflight_config_status_get_success(const mavl
 }
 
 /**
+ * @brief Get field reboot_required from rosflight_config_status message
+ *
+ * @return 
+ */
+static inline uint8_t mavlink_msg_rosflight_config_status_get_reboot_required(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_uint8_t(msg,  2);
+}
+
+/**
  * @brief Get field error_message from rosflight_config_status message
  *
  * @return 
  */
 static inline uint16_t mavlink_msg_rosflight_config_status_get_error_message(const mavlink_message_t* msg, uint8_t *error_message)
 {
-	return _MAV_RETURN_uint8_t_array(msg, error_message, 50,  2);
+	return _MAV_RETURN_uint8_t_array(msg, error_message, 50,  3);
 }
 
 /**
@@ -242,6 +265,7 @@ static inline void mavlink_msg_rosflight_config_status_decode(const mavlink_mess
 #if MAVLINK_NEED_BYTE_SWAP
 	rosflight_config_status->device = mavlink_msg_rosflight_config_status_get_device(msg);
 	rosflight_config_status->success = mavlink_msg_rosflight_config_status_get_success(msg);
+	rosflight_config_status->reboot_required = mavlink_msg_rosflight_config_status_get_reboot_required(msg);
 	mavlink_msg_rosflight_config_status_get_error_message(msg, rosflight_config_status->error_message);
 #else
 	memcpy(rosflight_config_status, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN);
