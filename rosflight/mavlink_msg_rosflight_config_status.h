@@ -1,6 +1,6 @@
 // MESSAGE ROSFLIGHT_CONFIG_STATUS PACKING
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS 203
+#define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS 204
 
 typedef struct __mavlink_rosflight_config_status_t
 {
@@ -11,10 +11,10 @@ typedef struct __mavlink_rosflight_config_status_t
 } mavlink_rosflight_config_status_t;
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_LEN 53
-#define MAVLINK_MSG_ID_203_LEN 53
+#define MAVLINK_MSG_ID_204_LEN 53
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_CONFIG_STATUS_CRC 116
-#define MAVLINK_MSG_ID_203_CRC 116
+#define MAVLINK_MSG_ID_204_CRC 116
 
 #define MAVLINK_MSG_ROSFLIGHT_CONFIG_STATUS_FIELD_ERROR_MESSAGE_LEN 50
 
