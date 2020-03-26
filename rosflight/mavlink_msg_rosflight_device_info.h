@@ -5,7 +5,7 @@
 typedef struct __mavlink_rosflight_device_info_t
 {
  uint8_t device; /*< */
- uint8_t max_value; /*< */
+ uint8_t max_config; /*< */
  uint8_t name[20]; /*< */
  uint8_t num_devices; /*< */
 } mavlink_rosflight_device_info_t;
@@ -13,8 +13,8 @@ typedef struct __mavlink_rosflight_device_info_t
 #define MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN 23
 #define MAVLINK_MSG_ID_202_LEN 23
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_CRC 18
-#define MAVLINK_MSG_ID_202_CRC 18
+#define MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_CRC 236
+#define MAVLINK_MSG_ID_202_CRC 236
 
 #define MAVLINK_MSG_ROSFLIGHT_DEVICE_INFO_FIELD_NAME_LEN 20
 
@@ -22,7 +22,7 @@ typedef struct __mavlink_rosflight_device_info_t
 	"ROSFLIGHT_DEVICE_INFO", \
 	4, \
 	{  { "device", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_rosflight_device_info_t, device) }, \
-         { "max_value", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_rosflight_device_info_t, max_value) }, \
+         { "max_config", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_rosflight_device_info_t, max_config) }, \
          { "name", NULL, MAVLINK_TYPE_UINT8_T, 20, 2, offsetof(mavlink_rosflight_device_info_t, name) }, \
          { "num_devices", NULL, MAVLINK_TYPE_UINT8_T, 0, 22, offsetof(mavlink_rosflight_device_info_t, num_devices) }, \
          } \
@@ -36,25 +36,25 @@ typedef struct __mavlink_rosflight_device_info_t
  * @param msg The MAVLink message to compress the data into
  *
  * @param device 
- * @param max_value 
+ * @param max_config 
  * @param name 
  * @param num_devices 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_device_info_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t device, uint8_t max_value, const uint8_t *name, uint8_t num_devices)
+						       uint8_t device, uint8_t max_config, const uint8_t *name, uint8_t num_devices)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN];
 	_mav_put_uint8_t(buf, 0, device);
-	_mav_put_uint8_t(buf, 1, max_value);
+	_mav_put_uint8_t(buf, 1, max_config);
 	_mav_put_uint8_t(buf, 22, num_devices);
 	_mav_put_uint8_t_array(buf, 2, name, 20);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN);
 #else
 	mavlink_rosflight_device_info_t packet;
 	packet.device = device;
-	packet.max_value = max_value;
+	packet.max_config = max_config;
 	packet.num_devices = num_devices;
 	mav_array_memcpy(packet.name, name, sizeof(uint8_t)*20);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN);
@@ -75,26 +75,26 @@ static inline uint16_t mavlink_msg_rosflight_device_info_pack(uint8_t system_id,
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
  * @param device 
- * @param max_value 
+ * @param max_config 
  * @param name 
  * @param num_devices 
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_device_info_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t device,uint8_t max_value,const uint8_t *name,uint8_t num_devices)
+						           uint8_t device,uint8_t max_config,const uint8_t *name,uint8_t num_devices)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN];
 	_mav_put_uint8_t(buf, 0, device);
-	_mav_put_uint8_t(buf, 1, max_value);
+	_mav_put_uint8_t(buf, 1, max_config);
 	_mav_put_uint8_t(buf, 22, num_devices);
 	_mav_put_uint8_t_array(buf, 2, name, 20);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN);
 #else
 	mavlink_rosflight_device_info_t packet;
 	packet.device = device;
-	packet.max_value = max_value;
+	packet.max_config = max_config;
 	packet.num_devices = num_devices;
 	mav_array_memcpy(packet.name, name, sizeof(uint8_t)*20);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN);
@@ -118,7 +118,7 @@ static inline uint16_t mavlink_msg_rosflight_device_info_pack_chan(uint8_t syste
  */
 static inline uint16_t mavlink_msg_rosflight_device_info_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_rosflight_device_info_t* rosflight_device_info)
 {
-	return mavlink_msg_rosflight_device_info_pack(system_id, component_id, msg, rosflight_device_info->device, rosflight_device_info->max_value, rosflight_device_info->name, rosflight_device_info->num_devices);
+	return mavlink_msg_rosflight_device_info_pack(system_id, component_id, msg, rosflight_device_info->device, rosflight_device_info->max_config, rosflight_device_info->name, rosflight_device_info->num_devices);
 }
 
 /**
@@ -132,7 +132,7 @@ static inline uint16_t mavlink_msg_rosflight_device_info_encode(uint8_t system_i
  */
 static inline uint16_t mavlink_msg_rosflight_device_info_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_rosflight_device_info_t* rosflight_device_info)
 {
-	return mavlink_msg_rosflight_device_info_pack_chan(system_id, component_id, chan, msg, rosflight_device_info->device, rosflight_device_info->max_value, rosflight_device_info->name, rosflight_device_info->num_devices);
+	return mavlink_msg_rosflight_device_info_pack_chan(system_id, component_id, chan, msg, rosflight_device_info->device, rosflight_device_info->max_config, rosflight_device_info->name, rosflight_device_info->num_devices);
 }
 
 /**
@@ -140,18 +140,18 @@ static inline uint16_t mavlink_msg_rosflight_device_info_encode_chan(uint8_t sys
  * @param chan MAVLink channel to send the message
  *
  * @param device 
- * @param max_value 
+ * @param max_config 
  * @param name 
  * @param num_devices 
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_rosflight_device_info_send(mavlink_channel_t chan, uint8_t device, uint8_t max_value, const uint8_t *name, uint8_t num_devices)
+static inline void mavlink_msg_rosflight_device_info_send(mavlink_channel_t chan, uint8_t device, uint8_t max_config, const uint8_t *name, uint8_t num_devices)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ROSFLIGHT_DEVICE_INFO_LEN];
 	_mav_put_uint8_t(buf, 0, device);
-	_mav_put_uint8_t(buf, 1, max_value);
+	_mav_put_uint8_t(buf, 1, max_config);
 	_mav_put_uint8_t(buf, 22, num_devices);
 	_mav_put_uint8_t_array(buf, 2, name, 20);
 #if MAVLINK_CRC_EXTRA
@@ -162,7 +162,7 @@ static inline void mavlink_msg_rosflight_device_info_send(mavlink_channel_t chan
 #else
 	mavlink_rosflight_device_info_t packet;
 	packet.device = device;
-	packet.max_value = max_value;
+	packet.max_config = max_config;
 	packet.num_devices = num_devices;
 	mav_array_memcpy(packet.name, name, sizeof(uint8_t)*20);
 #if MAVLINK_CRC_EXTRA
@@ -181,12 +181,12 @@ static inline void mavlink_msg_rosflight_device_info_send(mavlink_channel_t chan
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_rosflight_device_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t device, uint8_t max_value, const uint8_t *name, uint8_t num_devices)
+static inline void mavlink_msg_rosflight_device_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t device, uint8_t max_config, const uint8_t *name, uint8_t num_devices)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
 	_mav_put_uint8_t(buf, 0, device);
-	_mav_put_uint8_t(buf, 1, max_value);
+	_mav_put_uint8_t(buf, 1, max_config);
 	_mav_put_uint8_t(buf, 22, num_devices);
 	_mav_put_uint8_t_array(buf, 2, name, 20);
 #if MAVLINK_CRC_EXTRA
@@ -197,7 +197,7 @@ static inline void mavlink_msg_rosflight_device_info_send_buf(mavlink_message_t 
 #else
 	mavlink_rosflight_device_info_t *packet = (mavlink_rosflight_device_info_t *)msgbuf;
 	packet->device = device;
-	packet->max_value = max_value;
+	packet->max_config = max_config;
 	packet->num_devices = num_devices;
 	mav_array_memcpy(packet->name, name, sizeof(uint8_t)*20);
 #if MAVLINK_CRC_EXTRA
@@ -225,11 +225,11 @@ static inline uint8_t mavlink_msg_rosflight_device_info_get_device(const mavlink
 }
 
 /**
- * @brief Get field max_value from rosflight_device_info message
+ * @brief Get field max_config from rosflight_device_info message
  *
  * @return 
  */
-static inline uint8_t mavlink_msg_rosflight_device_info_get_max_value(const mavlink_message_t* msg)
+static inline uint8_t mavlink_msg_rosflight_device_info_get_max_config(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_uint8_t(msg,  1);
 }
@@ -264,7 +264,7 @@ static inline void mavlink_msg_rosflight_device_info_decode(const mavlink_messag
 {
 #if MAVLINK_NEED_BYTE_SWAP
 	rosflight_device_info->device = mavlink_msg_rosflight_device_info_get_device(msg);
-	rosflight_device_info->max_value = mavlink_msg_rosflight_device_info_get_max_value(msg);
+	rosflight_device_info->max_config = mavlink_msg_rosflight_device_info_get_max_config(msg);
 	mavlink_msg_rosflight_device_info_get_name(msg, rosflight_device_info->name);
 	rosflight_device_info->num_devices = mavlink_msg_rosflight_device_info_get_num_devices(msg);
 #else
