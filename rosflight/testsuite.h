@@ -1087,11 +1087,12 @@ static void mavlink_test_rosflight_device_info(uint8_t system_id, uint8_t compon
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_device_info_t packet_in = {
-		5,{ 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91 },132
+		5,72,{ 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158 },199
     };
 	mavlink_rosflight_device_info_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         	packet1.device = packet_in.device;
+        	packet1.max_config = packet_in.max_config;
         	packet1.num_devices = packet_in.num_devices;
         
         	mav_array_memcpy(packet1.name, packet_in.name, sizeof(uint8_t)*20);
@@ -1103,12 +1104,12 @@ static void mavlink_test_rosflight_device_info(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_device_info_pack(system_id, component_id, &msg , packet1.device , packet1.name , packet1.num_devices );
+	mavlink_msg_rosflight_device_info_pack(system_id, component_id, &msg , packet1.device , packet1.max_config , packet1.name , packet1.num_devices );
 	mavlink_msg_rosflight_device_info_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_device_info_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.device , packet1.name , packet1.num_devices );
+	mavlink_msg_rosflight_device_info_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.device , packet1.max_config , packet1.name , packet1.num_devices );
 	mavlink_msg_rosflight_device_info_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -1121,7 +1122,7 @@ static void mavlink_test_rosflight_device_info(uint8_t system_id, uint8_t compon
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_device_info_send(MAVLINK_COMM_1 , packet1.device , packet1.name , packet1.num_devices );
+	mavlink_msg_rosflight_device_info_send(MAVLINK_COMM_1 , packet1.device , packet1.max_config , packet1.name , packet1.num_devices );
 	mavlink_msg_rosflight_device_info_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
