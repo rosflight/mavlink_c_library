@@ -141,10 +141,10 @@ typedef enum ROSFLIGHT_RANGE_TYPE
 #define HAVE_ENUM_GNSS_FIX_TYPE
 typedef enum GNSS_FIX_TYPE
 {
-	NO_FIX=0, /*  | */
-	FIX=1, /*  | */
-	FIX_RTK_FLOAT=2, /*  | */
-	FIX_RTK_FIXED=3, /*  | */
+	GNSS_FIX_NO_FIX=0, /*  | */
+	GNSS_FIX_FIX=1, /*  | */
+	GNSS_FIX_RTK_FLOAT=2, /*  | */
+	GNSS_FIX_RTK_FIXED=3, /*  | */
 	GNSS_FIX_TYPE_ENUM_END=4, /*  | */
 } GNSS_FIX_TYPE;
 #endif
