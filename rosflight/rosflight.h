@@ -137,18 +137,16 @@ typedef enum ROSFLIGHT_RANGE_TYPE
 #endif
 
 /** @brief  */
-#ifndef HAVE_ENUM_UBLOX_FIX_TYPE
-#define HAVE_ENUM_UBLOX_FIX_TYPE
-typedef enum UBLOX_FIX_TYPE
+#ifndef HAVE_ENUM_GNSS_FIX_TYPE
+#define HAVE_ENUM_GNSS_FIX_TYPE
+typedef enum GNSS_FIX_TYPE
 {
-	NO_FIX=0, /*  | */
-	DEAD_RECKONING_ONLY=1, /*  | */
-	FIX_2D=2, /*  | */
-	FIX_3D=3, /*  | */
-	GNSS_AND_DEAD_RECKONING=4, /*  | */
-	TIME_ONLY=5, /*  | */
-	UBLOX_FIX_TYPE_ENUM_END=6, /*  | */
-} UBLOX_FIX_TYPE;
+	GNSS_FIX_NO_FIX=0, /*  | */
+	GNSS_FIX_FIX=1, /*  | */
+	GNSS_FIX_RTK_FLOAT=2, /*  | */
+	GNSS_FIX_RTK_FIXED=3, /*  | */
+	GNSS_FIX_TYPE_ENUM_END=4, /*  | */
+} GNSS_FIX_TYPE;
 #endif
 
 #include "../common/common.h"
