@@ -104,7 +104,9 @@ typedef enum OFFBOARD_CONTROL_IGNORE
 	IGNORE_VALUE2=2, /* Field value2 should be ignored | */
 	IGNORE_VALUE3=4, /* Field value3 should be ignored | */
 	IGNORE_VALUE4=8, /* Field value4 should be ignored | */
-	OFFBOARD_CONTROL_IGNORE_ENUM_END=9, /*  | */
+	IGNORE_VALUE5=16, /* Field value4 should be ignored | */
+	IGNORE_VALUE6=32, /* Field value4 should be ignored | */
+	OFFBOARD_CONTROL_IGNORE_ENUM_END=33, /*  | */
 } OFFBOARD_CONTROL_IGNORE;
 #endif
 

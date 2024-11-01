@@ -30,14 +30,16 @@ static void mavlink_test_offboard_control(uint8_t system_id, uint8_t component_i
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_offboard_control_t packet_in = {
-		17.0,45.0,73.0,101.0,53,120
+		17.0,45.0,73.0,45.0,88.0,101.0,53,120
     };
 	mavlink_offboard_control_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
-        	packet1.x = packet_in.x;
-        	packet1.y = packet_in.y;
-        	packet1.z = packet_in.z;
-        	packet1.F = packet_in.F;
+        	packet1.Qx = packet_in.Qx;
+        	packet1.Qy = packet_in.Qy;
+        	packet1.Qz = packet_in.Qz;
+        	packet1.Fx = packet_in.Fx;
+        	packet1.Fy = packet_in.Fy;
+        	packet1.Fz = packet_in.Fz;
         	packet1.mode = packet_in.mode;
         	packet1.ignore = packet_in.ignore;
         
