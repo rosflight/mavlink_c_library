@@ -1,6 +1,6 @@
 // MESSAGE ROSFLIGHT_VERSION PACKING
 
-#define MAVLINK_MSG_ID_ROSFLIGHT_VERSION 192
+#define MAVLINK_MSG_ID_ROSFLIGHT_VERSION 205
 
 typedef struct __mavlink_rosflight_version_t
 {
@@ -8,10 +8,10 @@ typedef struct __mavlink_rosflight_version_t
 } mavlink_rosflight_version_t;
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_VERSION_LEN 50
-#define MAVLINK_MSG_ID_192_LEN 50
+#define MAVLINK_MSG_ID_205_LEN 50
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_VERSION_CRC 134
-#define MAVLINK_MSG_ID_192_CRC 134
+#define MAVLINK_MSG_ID_205_CRC 134
 
 #define MAVLINK_MSG_ROSFLIGHT_VERSION_FIELD_VERSION_LEN 50
 
