@@ -4,33 +4,37 @@
 
 typedef struct __mavlink_named_command_struct_t
 {
- float x; /*< x value in the command struct*/
- float y; /*< y value in the command struct*/
- float z; /*< z value in the command struct*/
- float F; /*< F value in the command struct*/
+ float qx; /*< Qx value in the command struct*/
+ float qy; /*< Qy value in the command struct*/
+ float qz; /*< Qz value in the command struct*/
+ float Fx; /*< Fx value in the command struct*/
+ float Fy; /*< Fy value in the command struct*/
+ float Fz; /*< Fz value in the command struct*/
  char name[10]; /*< Name of the command struct*/
  uint8_t type; /*< Type of command struct*/
  uint8_t ignore; /*< Type of command struct*/
 } mavlink_named_command_struct_t;
 
-#define MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN 28
-#define MAVLINK_MSG_ID_186_LEN 28
+#define MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN 36
+#define MAVLINK_MSG_ID_186_LEN 36
 
-#define MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_CRC 169
-#define MAVLINK_MSG_ID_186_CRC 169
+#define MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_CRC 221
+#define MAVLINK_MSG_ID_186_CRC 221
 
 #define MAVLINK_MSG_NAMED_COMMAND_STRUCT_FIELD_NAME_LEN 10
 
 #define MAVLINK_MESSAGE_INFO_NAMED_COMMAND_STRUCT { \
 	"NAMED_COMMAND_STRUCT", \
-	7, \
-	{  { "x", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_named_command_struct_t, x) }, \
-         { "y", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_named_command_struct_t, y) }, \
-         { "z", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_named_command_struct_t, z) }, \
-         { "F", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_named_command_struct_t, F) }, \
-         { "name", NULL, MAVLINK_TYPE_CHAR, 10, 16, offsetof(mavlink_named_command_struct_t, name) }, \
-         { "type", NULL, MAVLINK_TYPE_UINT8_T, 0, 26, offsetof(mavlink_named_command_struct_t, type) }, \
-         { "ignore", NULL, MAVLINK_TYPE_UINT8_T, 0, 27, offsetof(mavlink_named_command_struct_t, ignore) }, \
+	9, \
+	{  { "qx", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_named_command_struct_t, qx) }, \
+         { "qy", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_named_command_struct_t, qy) }, \
+         { "qz", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_named_command_struct_t, qz) }, \
+         { "Fx", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_named_command_struct_t, Fx) }, \
+         { "Fy", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_named_command_struct_t, Fy) }, \
+         { "Fz", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_named_command_struct_t, Fz) }, \
+         { "name", NULL, MAVLINK_TYPE_CHAR, 10, 24, offsetof(mavlink_named_command_struct_t, name) }, \
+         { "type", NULL, MAVLINK_TYPE_UINT8_T, 0, 34, offsetof(mavlink_named_command_struct_t, type) }, \
+         { "ignore", NULL, MAVLINK_TYPE_UINT8_T, 0, 35, offsetof(mavlink_named_command_struct_t, ignore) }, \
          } \
 }
 
@@ -44,31 +48,37 @@ typedef struct __mavlink_named_command_struct_t
  * @param name Name of the command struct
  * @param type Type of command struct
  * @param ignore Type of command struct
- * @param x x value in the command struct
- * @param y y value in the command struct
- * @param z z value in the command struct
- * @param F F value in the command struct
+ * @param qx Qx value in the command struct
+ * @param qy Qy value in the command struct
+ * @param qz Qz value in the command struct
+ * @param Fx Fx value in the command struct
+ * @param Fy Fy value in the command struct
+ * @param Fz Fz value in the command struct
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_named_command_struct_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       const char *name, uint8_t type, uint8_t ignore, float x, float y, float z, float F)
+						       const char *name, uint8_t type, uint8_t ignore, float qx, float qy, float qz, float Fx, float Fy, float Fz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN];
-	_mav_put_float(buf, 0, x);
-	_mav_put_float(buf, 4, y);
-	_mav_put_float(buf, 8, z);
-	_mav_put_float(buf, 12, F);
-	_mav_put_uint8_t(buf, 26, type);
-	_mav_put_uint8_t(buf, 27, ignore);
-	_mav_put_char_array(buf, 16, name, 10);
+	_mav_put_float(buf, 0, qx);
+	_mav_put_float(buf, 4, qy);
+	_mav_put_float(buf, 8, qz);
+	_mav_put_float(buf, 12, Fx);
+	_mav_put_float(buf, 16, Fy);
+	_mav_put_float(buf, 20, Fz);
+	_mav_put_uint8_t(buf, 34, type);
+	_mav_put_uint8_t(buf, 35, ignore);
+	_mav_put_char_array(buf, 24, name, 10);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN);
 #else
 	mavlink_named_command_struct_t packet;
-	packet.x = x;
-	packet.y = y;
-	packet.z = z;
-	packet.F = F;
+	packet.qx = qx;
+	packet.qy = qy;
+	packet.qz = qz;
+	packet.Fx = Fx;
+	packet.Fy = Fy;
+	packet.Fz = Fz;
 	packet.type = type;
 	packet.ignore = ignore;
 	mav_array_memcpy(packet.name, name, sizeof(char)*10);
@@ -92,32 +102,38 @@ static inline uint16_t mavlink_msg_named_command_struct_pack(uint8_t system_id, 
  * @param name Name of the command struct
  * @param type Type of command struct
  * @param ignore Type of command struct
- * @param x x value in the command struct
- * @param y y value in the command struct
- * @param z z value in the command struct
- * @param F F value in the command struct
+ * @param qx Qx value in the command struct
+ * @param qy Qy value in the command struct
+ * @param qz Qz value in the command struct
+ * @param Fx Fx value in the command struct
+ * @param Fy Fy value in the command struct
+ * @param Fz Fz value in the command struct
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_named_command_struct_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           const char *name,uint8_t type,uint8_t ignore,float x,float y,float z,float F)
+						           const char *name,uint8_t type,uint8_t ignore,float qx,float qy,float qz,float Fx,float Fy,float Fz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN];
-	_mav_put_float(buf, 0, x);
-	_mav_put_float(buf, 4, y);
-	_mav_put_float(buf, 8, z);
-	_mav_put_float(buf, 12, F);
-	_mav_put_uint8_t(buf, 26, type);
-	_mav_put_uint8_t(buf, 27, ignore);
-	_mav_put_char_array(buf, 16, name, 10);
+	_mav_put_float(buf, 0, qx);
+	_mav_put_float(buf, 4, qy);
+	_mav_put_float(buf, 8, qz);
+	_mav_put_float(buf, 12, Fx);
+	_mav_put_float(buf, 16, Fy);
+	_mav_put_float(buf, 20, Fz);
+	_mav_put_uint8_t(buf, 34, type);
+	_mav_put_uint8_t(buf, 35, ignore);
+	_mav_put_char_array(buf, 24, name, 10);
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN);
 #else
 	mavlink_named_command_struct_t packet;
-	packet.x = x;
-	packet.y = y;
-	packet.z = z;
-	packet.F = F;
+	packet.qx = qx;
+	packet.qy = qy;
+	packet.qz = qz;
+	packet.Fx = Fx;
+	packet.Fy = Fy;
+	packet.Fz = Fz;
 	packet.type = type;
 	packet.ignore = ignore;
 	mav_array_memcpy(packet.name, name, sizeof(char)*10);
@@ -142,7 +158,7 @@ static inline uint16_t mavlink_msg_named_command_struct_pack_chan(uint8_t system
  */
 static inline uint16_t mavlink_msg_named_command_struct_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_named_command_struct_t* named_command_struct)
 {
-	return mavlink_msg_named_command_struct_pack(system_id, component_id, msg, named_command_struct->name, named_command_struct->type, named_command_struct->ignore, named_command_struct->x, named_command_struct->y, named_command_struct->z, named_command_struct->F);
+	return mavlink_msg_named_command_struct_pack(system_id, component_id, msg, named_command_struct->name, named_command_struct->type, named_command_struct->ignore, named_command_struct->qx, named_command_struct->qy, named_command_struct->qz, named_command_struct->Fx, named_command_struct->Fy, named_command_struct->Fz);
 }
 
 /**
@@ -156,7 +172,7 @@ static inline uint16_t mavlink_msg_named_command_struct_encode(uint8_t system_id
  */
 static inline uint16_t mavlink_msg_named_command_struct_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_named_command_struct_t* named_command_struct)
 {
-	return mavlink_msg_named_command_struct_pack_chan(system_id, component_id, chan, msg, named_command_struct->name, named_command_struct->type, named_command_struct->ignore, named_command_struct->x, named_command_struct->y, named_command_struct->z, named_command_struct->F);
+	return mavlink_msg_named_command_struct_pack_chan(system_id, component_id, chan, msg, named_command_struct->name, named_command_struct->type, named_command_struct->ignore, named_command_struct->qx, named_command_struct->qy, named_command_struct->qz, named_command_struct->Fx, named_command_struct->Fy, named_command_struct->Fz);
 }
 
 /**
@@ -166,24 +182,28 @@ static inline uint16_t mavlink_msg_named_command_struct_encode_chan(uint8_t syst
  * @param name Name of the command struct
  * @param type Type of command struct
  * @param ignore Type of command struct
- * @param x x value in the command struct
- * @param y y value in the command struct
- * @param z z value in the command struct
- * @param F F value in the command struct
+ * @param qx Qx value in the command struct
+ * @param qy Qy value in the command struct
+ * @param qz Qz value in the command struct
+ * @param Fx Fx value in the command struct
+ * @param Fy Fy value in the command struct
+ * @param Fz Fz value in the command struct
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_named_command_struct_send(mavlink_channel_t chan, const char *name, uint8_t type, uint8_t ignore, float x, float y, float z, float F)
+static inline void mavlink_msg_named_command_struct_send(mavlink_channel_t chan, const char *name, uint8_t type, uint8_t ignore, float qx, float qy, float qz, float Fx, float Fy, float Fz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN];
-	_mav_put_float(buf, 0, x);
-	_mav_put_float(buf, 4, y);
-	_mav_put_float(buf, 8, z);
-	_mav_put_float(buf, 12, F);
-	_mav_put_uint8_t(buf, 26, type);
-	_mav_put_uint8_t(buf, 27, ignore);
-	_mav_put_char_array(buf, 16, name, 10);
+	_mav_put_float(buf, 0, qx);
+	_mav_put_float(buf, 4, qy);
+	_mav_put_float(buf, 8, qz);
+	_mav_put_float(buf, 12, Fx);
+	_mav_put_float(buf, 16, Fy);
+	_mav_put_float(buf, 20, Fz);
+	_mav_put_uint8_t(buf, 34, type);
+	_mav_put_uint8_t(buf, 35, ignore);
+	_mav_put_char_array(buf, 24, name, 10);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT, buf, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_CRC);
 #else
@@ -191,10 +211,12 @@ static inline void mavlink_msg_named_command_struct_send(mavlink_channel_t chan,
 #endif
 #else
 	mavlink_named_command_struct_t packet;
-	packet.x = x;
-	packet.y = y;
-	packet.z = z;
-	packet.F = F;
+	packet.qx = qx;
+	packet.qy = qy;
+	packet.qz = qz;
+	packet.Fx = Fx;
+	packet.Fy = Fy;
+	packet.Fz = Fz;
 	packet.type = type;
 	packet.ignore = ignore;
 	mav_array_memcpy(packet.name, name, sizeof(char)*10);
@@ -214,17 +236,19 @@ static inline void mavlink_msg_named_command_struct_send(mavlink_channel_t chan,
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_named_command_struct_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  const char *name, uint8_t type, uint8_t ignore, float x, float y, float z, float F)
+static inline void mavlink_msg_named_command_struct_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  const char *name, uint8_t type, uint8_t ignore, float qx, float qy, float qz, float Fx, float Fy, float Fz)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
-	_mav_put_float(buf, 0, x);
-	_mav_put_float(buf, 4, y);
-	_mav_put_float(buf, 8, z);
-	_mav_put_float(buf, 12, F);
-	_mav_put_uint8_t(buf, 26, type);
-	_mav_put_uint8_t(buf, 27, ignore);
-	_mav_put_char_array(buf, 16, name, 10);
+	_mav_put_float(buf, 0, qx);
+	_mav_put_float(buf, 4, qy);
+	_mav_put_float(buf, 8, qz);
+	_mav_put_float(buf, 12, Fx);
+	_mav_put_float(buf, 16, Fy);
+	_mav_put_float(buf, 20, Fz);
+	_mav_put_uint8_t(buf, 34, type);
+	_mav_put_uint8_t(buf, 35, ignore);
+	_mav_put_char_array(buf, 24, name, 10);
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT, buf, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_LEN, MAVLINK_MSG_ID_NAMED_COMMAND_STRUCT_CRC);
 #else
@@ -232,10 +256,12 @@ static inline void mavlink_msg_named_command_struct_send_buf(mavlink_message_t *
 #endif
 #else
 	mavlink_named_command_struct_t *packet = (mavlink_named_command_struct_t *)msgbuf;
-	packet->x = x;
-	packet->y = y;
-	packet->z = z;
-	packet->F = F;
+	packet->qx = qx;
+	packet->qy = qy;
+	packet->qz = qz;
+	packet->Fx = Fx;
+	packet->Fy = Fy;
+	packet->Fz = Fz;
 	packet->type = type;
 	packet->ignore = ignore;
 	mav_array_memcpy(packet->name, name, sizeof(char)*10);
@@ -260,7 +286,7 @@ static inline void mavlink_msg_named_command_struct_send_buf(mavlink_message_t *
  */
 static inline uint16_t mavlink_msg_named_command_struct_get_name(const mavlink_message_t* msg, char *name)
 {
-	return _MAV_RETURN_char_array(msg, name, 10,  16);
+	return _MAV_RETURN_char_array(msg, name, 10,  24);
 }
 
 /**
@@ -270,7 +296,7 @@ static inline uint16_t mavlink_msg_named_command_struct_get_name(const mavlink_m
  */
 static inline uint8_t mavlink_msg_named_command_struct_get_type(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  26);
+	return _MAV_RETURN_uint8_t(msg,  34);
 }
 
 /**
@@ -280,47 +306,67 @@ static inline uint8_t mavlink_msg_named_command_struct_get_type(const mavlink_me
  */
 static inline uint8_t mavlink_msg_named_command_struct_get_ignore(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  27);
+	return _MAV_RETURN_uint8_t(msg,  35);
 }
 
 /**
- * @brief Get field x from named_command_struct message
+ * @brief Get field qx from named_command_struct message
  *
- * @return x value in the command struct
+ * @return Qx value in the command struct
  */
-static inline float mavlink_msg_named_command_struct_get_x(const mavlink_message_t* msg)
+static inline float mavlink_msg_named_command_struct_get_qx(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  0);
 }
 
 /**
- * @brief Get field y from named_command_struct message
+ * @brief Get field qy from named_command_struct message
  *
- * @return y value in the command struct
+ * @return Qy value in the command struct
  */
-static inline float mavlink_msg_named_command_struct_get_y(const mavlink_message_t* msg)
+static inline float mavlink_msg_named_command_struct_get_qy(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  4);
 }
 
 /**
- * @brief Get field z from named_command_struct message
+ * @brief Get field qz from named_command_struct message
  *
- * @return z value in the command struct
+ * @return Qz value in the command struct
  */
-static inline float mavlink_msg_named_command_struct_get_z(const mavlink_message_t* msg)
+static inline float mavlink_msg_named_command_struct_get_qz(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  8);
 }
 
 /**
- * @brief Get field F from named_command_struct message
+ * @brief Get field Fx from named_command_struct message
  *
- * @return F value in the command struct
+ * @return Fx value in the command struct
  */
-static inline float mavlink_msg_named_command_struct_get_F(const mavlink_message_t* msg)
+static inline float mavlink_msg_named_command_struct_get_Fx(const mavlink_message_t* msg)
 {
 	return _MAV_RETURN_float(msg,  12);
+}
+
+/**
+ * @brief Get field Fy from named_command_struct message
+ *
+ * @return Fy value in the command struct
+ */
+static inline float mavlink_msg_named_command_struct_get_Fy(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_float(msg,  16);
+}
+
+/**
+ * @brief Get field Fz from named_command_struct message
+ *
+ * @return Fz value in the command struct
+ */
+static inline float mavlink_msg_named_command_struct_get_Fz(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_float(msg,  20);
 }
 
 /**
@@ -332,10 +378,12 @@ static inline float mavlink_msg_named_command_struct_get_F(const mavlink_message
 static inline void mavlink_msg_named_command_struct_decode(const mavlink_message_t* msg, mavlink_named_command_struct_t* named_command_struct)
 {
 #if MAVLINK_NEED_BYTE_SWAP
-	named_command_struct->x = mavlink_msg_named_command_struct_get_x(msg);
-	named_command_struct->y = mavlink_msg_named_command_struct_get_y(msg);
-	named_command_struct->z = mavlink_msg_named_command_struct_get_z(msg);
-	named_command_struct->F = mavlink_msg_named_command_struct_get_F(msg);
+	named_command_struct->qx = mavlink_msg_named_command_struct_get_qx(msg);
+	named_command_struct->qy = mavlink_msg_named_command_struct_get_qy(msg);
+	named_command_struct->qz = mavlink_msg_named_command_struct_get_qz(msg);
+	named_command_struct->Fx = mavlink_msg_named_command_struct_get_Fx(msg);
+	named_command_struct->Fy = mavlink_msg_named_command_struct_get_Fy(msg);
+	named_command_struct->Fz = mavlink_msg_named_command_struct_get_Fz(msg);
 	mavlink_msg_named_command_struct_get_name(msg, named_command_struct->name);
 	named_command_struct->type = mavlink_msg_named_command_struct_get_type(msg);
 	named_command_struct->ignore = mavlink_msg_named_command_struct_get_ignore(msg);
