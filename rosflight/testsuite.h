@@ -828,7 +828,7 @@ static void mavlink_test_rosflight_gnss(uint8_t system_id, uint8_t component_id,
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_gnss_t packet_in = {
-		93372036854775807ULL,93372036854776311ULL,129.0,157.0,185.0,213.0,241.0,269.0,297.0,325.0,353.0,19939,39,106,173,240,51,118,185
+		93372036854775807ULL,93372036854776311ULL,235.0,291.0,241.0,269.0,297.0,325.0,353.0,381.0,409.0,20355,63,130,197,8,75,142,209
     };
 	mavlink_rosflight_gnss_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
