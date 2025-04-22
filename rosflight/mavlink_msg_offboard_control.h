@@ -7,7 +7,7 @@ typedef struct __mavlink_offboard_control_t
  float Qx; /*< Qx control channel interpreted according to mode*/
  float Qy; /*< Qy control channel, interpreted according to mode*/
  float Qz; /*< Qz control channel, interpreted according to mode*/
- float Fx; /*< Fx control channel, interpreted according to mode*/
+ float Fx; /*< Fx control channel interpreted according to mode*/
  float Fy; /*< Fy control channel, interpreted according to mode*/
  float Fz; /*< Fz control channel, interpreted according to mode*/
  uint8_t mode; /*< Offboard control mode, see OFFBOARD_CONTROL_MODE*/
@@ -48,7 +48,7 @@ typedef struct __mavlink_offboard_control_t
  * @param Qx Qx control channel interpreted according to mode
  * @param Qy Qy control channel, interpreted according to mode
  * @param Qz Qz control channel, interpreted according to mode
- * @param Fx Fx control channel, interpreted according to mode
+ * @param Fx Fx control channel interpreted according to mode
  * @param Fy Fy control channel, interpreted according to mode
  * @param Fz Fz control channel, interpreted according to mode
  * @return length of the message in bytes (excluding serial stream start sign)
@@ -101,7 +101,7 @@ static inline uint16_t mavlink_msg_offboard_control_pack(uint8_t system_id, uint
  * @param Qx Qx control channel interpreted according to mode
  * @param Qy Qy control channel, interpreted according to mode
  * @param Qz Qz control channel, interpreted according to mode
- * @param Fx Fx control channel, interpreted according to mode
+ * @param Fx Fx control channel interpreted according to mode
  * @param Fy Fy control channel, interpreted according to mode
  * @param Fz Fz control channel, interpreted according to mode
  * @return length of the message in bytes (excluding serial stream start sign)
@@ -180,7 +180,7 @@ static inline uint16_t mavlink_msg_offboard_control_encode_chan(uint8_t system_i
  * @param Qx Qx control channel interpreted according to mode
  * @param Qy Qy control channel, interpreted according to mode
  * @param Qz Qz control channel, interpreted according to mode
- * @param Fx Fx control channel, interpreted according to mode
+ * @param Fx Fx control channel interpreted according to mode
  * @param Fy Fy control channel, interpreted according to mode
  * @param Fz Fz control channel, interpreted according to mode
  */
@@ -327,7 +327,7 @@ static inline float mavlink_msg_offboard_control_get_Qz(const mavlink_message_t*
 /**
  * @brief Get field Fx from offboard_control message
  *
- * @return Fx control channel, interpreted according to mode
+ * @return Fx control channel interpreted according to mode
  */
 static inline float mavlink_msg_offboard_control_get_Fx(const mavlink_message_t* msg)
 {
