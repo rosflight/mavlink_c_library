@@ -176,32 +176,7 @@ typedef enum MAV_TYPE
 	MAV_TYPE_GENERIC=0, /*  | */
 	MAV_TYPE_FIXED_WING=1, /* Fixed wing aircraft. | */
 	MAV_TYPE_QUADROTOR=2, /* Quadrotor | */
-	MAV_TYPE_COAXIAL=3, /* Coaxial helicopter | */
-	MAV_TYPE_HELICOPTER=4, /* Normal helicopter with tail rotor. | */
-	MAV_TYPE_ANTENNA_TRACKER=5, /* Ground installation | */
-	MAV_TYPE_GCS=6, /* Operator control unit / ground control station | */
-	MAV_TYPE_AIRSHIP=7, /* Airship, controlled | */
-	MAV_TYPE_FREE_BALLOON=8, /* Free balloon, uncontrolled | */
-	MAV_TYPE_ROCKET=9, /* Rocket | */
-	MAV_TYPE_GROUND_ROVER=10, /* Ground rover | */
-	MAV_TYPE_SURFACE_BOAT=11, /* Surface vessel, boat, ship | */
-	MAV_TYPE_SUBMARINE=12, /* Submarine | */
-	MAV_TYPE_HEXAROTOR=13, /* Hexarotor | */
-	MAV_TYPE_OCTOROTOR=14, /* Octorotor | */
-	MAV_TYPE_TRICOPTER=15, /* Octorotor | */
-	MAV_TYPE_FLAPPING_WING=16, /* Flapping wing | */
-	MAV_TYPE_KITE=17, /* Flapping wing | */
-	MAV_TYPE_ONBOARD_CONTROLLER=18, /* Onboard companion controller | */
-	MAV_TYPE_VTOL_DUOROTOR=19, /* Two-rotor VTOL using control surfaces in vertical operation in addition. Tailsitter. | */
-	MAV_TYPE_VTOL_QUADROTOR=20, /* Quad-rotor VTOL using a V-shaped quad config in vertical operation. Tailsitter. | */
-	MAV_TYPE_VTOL_TILTROTOR=21, /* Tiltrotor VTOL | */
-	MAV_TYPE_VTOL_RESERVED2=22, /* VTOL reserved 2 | */
-	MAV_TYPE_VTOL_RESERVED3=23, /* VTOL reserved 3 | */
-	MAV_TYPE_VTOL_RESERVED4=24, /* VTOL reserved 4 | */
-	MAV_TYPE_VTOL_RESERVED5=25, /* VTOL reserved 5 | */
-	MAV_TYPE_GIMBAL=26, /* Onboard gimbal | */
-	MAV_TYPE_ADSB=27, /* Onboard ADSB peripheral | */
-	MAV_TYPE_ENUM_END=28, /*  | */
+	MAV_TYPE_ENUM_END=3, /*  | */
 } MAV_TYPE;
 #endif
 
