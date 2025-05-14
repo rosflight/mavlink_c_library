@@ -671,14 +671,15 @@ static void mavlink_test_rosflight_gnss(uint8_t system_id, uint8_t component_id,
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         uint16_t i;
 	mavlink_rosflight_gnss_t packet_in = {
-		93372036854775807ULL,93372036854776311ULL,235.0,291.0,241.0,269.0,297.0,325.0,353.0,381.0,409.0,20355,63,130,197,8,75,142,209
+		93372036854775807ULL,179.0,235.0,93372036854777319ULL,963499128,269.0,297.0,325.0,353.0,381.0,409.0,437.0,197,8
     };
 	mavlink_rosflight_gnss_t packet1, packet2;
         memset(&packet1, 0, sizeof(packet1));
         	packet1.seconds = packet_in.seconds;
-        	packet1.nanos = packet_in.nanos;
         	packet1.lat = packet_in.lat;
         	packet1.lon = packet_in.lon;
+        	packet1.rosflight_timestamp = packet_in.rosflight_timestamp;
+        	packet1.nanos = packet_in.nanos;
         	packet1.height = packet_in.height;
         	packet1.vel_n = packet_in.vel_n;
         	packet1.vel_e = packet_in.vel_e;
@@ -686,13 +687,7 @@ static void mavlink_test_rosflight_gnss(uint8_t system_id, uint8_t component_id,
         	packet1.h_acc = packet_in.h_acc;
         	packet1.v_acc = packet_in.v_acc;
         	packet1.s_acc = packet_in.s_acc;
-        	packet1.year = packet_in.year;
         	packet1.fix_type = packet_in.fix_type;
-        	packet1.month = packet_in.month;
-        	packet1.day = packet_in.day;
-        	packet1.hour = packet_in.hour;
-        	packet1.min = packet_in.min;
-        	packet1.sec = packet_in.sec;
         	packet1.num_sat = packet_in.num_sat;
         
         
@@ -703,12 +698,12 @@ static void mavlink_test_rosflight_gnss(uint8_t system_id, uint8_t component_id,
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_gnss_pack(system_id, component_id, &msg , packet1.seconds , packet1.nanos , packet1.fix_type , packet1.year , packet1.month , packet1.day , packet1.hour , packet1.min , packet1.sec , packet1.num_sat , packet1.lat , packet1.lon , packet1.height , packet1.vel_n , packet1.vel_e , packet1.vel_d , packet1.h_acc , packet1.v_acc , packet1.s_acc );
+	mavlink_msg_rosflight_gnss_pack(system_id, component_id, &msg , packet1.seconds , packet1.nanos , packet1.fix_type , packet1.num_sat , packet1.lat , packet1.lon , packet1.height , packet1.vel_n , packet1.vel_e , packet1.vel_d , packet1.h_acc , packet1.v_acc , packet1.s_acc , packet1.rosflight_timestamp );
 	mavlink_msg_rosflight_gnss_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_gnss_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.seconds , packet1.nanos , packet1.fix_type , packet1.year , packet1.month , packet1.day , packet1.hour , packet1.min , packet1.sec , packet1.num_sat , packet1.lat , packet1.lon , packet1.height , packet1.vel_n , packet1.vel_e , packet1.vel_d , packet1.h_acc , packet1.v_acc , packet1.s_acc );
+	mavlink_msg_rosflight_gnss_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.seconds , packet1.nanos , packet1.fix_type , packet1.num_sat , packet1.lat , packet1.lon , packet1.height , packet1.vel_n , packet1.vel_e , packet1.vel_d , packet1.h_acc , packet1.v_acc , packet1.s_acc , packet1.rosflight_timestamp );
 	mavlink_msg_rosflight_gnss_decode(&msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 
@@ -721,7 +716,7 @@ static void mavlink_test_rosflight_gnss(uint8_t system_id, uint8_t component_id,
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
         
         memset(&packet2, 0, sizeof(packet2));
-	mavlink_msg_rosflight_gnss_send(MAVLINK_COMM_1 , packet1.seconds , packet1.nanos , packet1.fix_type , packet1.year , packet1.month , packet1.day , packet1.hour , packet1.min , packet1.sec , packet1.num_sat , packet1.lat , packet1.lon , packet1.height , packet1.vel_n , packet1.vel_e , packet1.vel_d , packet1.h_acc , packet1.v_acc , packet1.s_acc );
+	mavlink_msg_rosflight_gnss_send(MAVLINK_COMM_1 , packet1.seconds , packet1.nanos , packet1.fix_type , packet1.num_sat , packet1.lat , packet1.lon , packet1.height , packet1.vel_n , packet1.vel_e , packet1.vel_d , packet1.h_acc , packet1.v_acc , packet1.s_acc , packet1.rosflight_timestamp );
 	mavlink_msg_rosflight_gnss_decode(last_msg, &packet2);
         MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
 }
