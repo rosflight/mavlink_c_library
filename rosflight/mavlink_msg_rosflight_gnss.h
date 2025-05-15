@@ -4,20 +4,20 @@
 
 typedef struct __mavlink_rosflight_gnss_t
 {
- uint64_t seconds; /*< */
- double lat; /*< */
- double lon; /*< */
- uint64_t rosflight_timestamp; /*< */
- uint32_t nanos; /*< */
- float height; /*< */
- float vel_n; /*< */
- float vel_e; /*< */
- float vel_d; /*< */
- float h_acc; /*< */
- float v_acc; /*< */
- float s_acc; /*< */
- uint8_t fix_type; /*< */
- uint8_t num_sat; /*< */
+ uint64_t seconds; /*< Unix time, in seconds*/
+ double lat; /*< In deg DDS format*/
+ double lon; /*< In deg DDs format*/
+ uint64_t rosflight_timestamp; /*< microseconds, estimated firmware timestamp for the time of validity of the gnss data*/
+ uint32_t nanos; /*< Fractional Unix time*/
+ float height; /*< meters*/
+ float vel_n; /*< meters per second*/
+ float vel_e; /*< meters per second*/
+ float vel_d; /*< meters per second*/
+ float h_acc; /*< meters*/
+ float v_acc; /*< meters*/
+ float s_acc; /*< meters*/
+ uint8_t fix_type; /*< GNSS fix type*/
+ uint8_t num_sat; /*< Number of satellites seen*/
 } mavlink_rosflight_gnss_t;
 
 #define MAVLINK_MSG_ID_ROSFLIGHT_GNSS_LEN 66
@@ -55,20 +55,20 @@ typedef struct __mavlink_rosflight_gnss_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param seconds 
- * @param nanos 
- * @param fix_type 
- * @param num_sat 
- * @param lat 
- * @param lon 
- * @param height 
- * @param vel_n 
- * @param vel_e 
- * @param vel_d 
- * @param h_acc 
- * @param v_acc 
- * @param s_acc 
- * @param rosflight_timestamp 
+ * @param seconds Unix time, in seconds
+ * @param nanos Fractional Unix time
+ * @param fix_type GNSS fix type
+ * @param num_sat Number of satellites seen
+ * @param lat In deg DDS format
+ * @param lon In deg DDs format
+ * @param height meters
+ * @param vel_n meters per second
+ * @param vel_e meters per second
+ * @param vel_d meters per second
+ * @param h_acc meters
+ * @param v_acc meters
+ * @param s_acc meters
+ * @param rosflight_timestamp microseconds, estimated firmware timestamp for the time of validity of the gnss data
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_gnss_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
@@ -126,20 +126,20 @@ static inline uint16_t mavlink_msg_rosflight_gnss_pack(uint8_t system_id, uint8_
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param chan The MAVLink channel this message will be sent over
  * @param msg The MAVLink message to compress the data into
- * @param seconds 
- * @param nanos 
- * @param fix_type 
- * @param num_sat 
- * @param lat 
- * @param lon 
- * @param height 
- * @param vel_n 
- * @param vel_e 
- * @param vel_d 
- * @param h_acc 
- * @param v_acc 
- * @param s_acc 
- * @param rosflight_timestamp 
+ * @param seconds Unix time, in seconds
+ * @param nanos Fractional Unix time
+ * @param fix_type GNSS fix type
+ * @param num_sat Number of satellites seen
+ * @param lat In deg DDS format
+ * @param lon In deg DDs format
+ * @param height meters
+ * @param vel_n meters per second
+ * @param vel_e meters per second
+ * @param vel_d meters per second
+ * @param h_acc meters
+ * @param v_acc meters
+ * @param s_acc meters
+ * @param rosflight_timestamp microseconds, estimated firmware timestamp for the time of validity of the gnss data
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_rosflight_gnss_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
@@ -223,20 +223,20 @@ static inline uint16_t mavlink_msg_rosflight_gnss_encode_chan(uint8_t system_id,
  * @brief Send a rosflight_gnss message
  * @param chan MAVLink channel to send the message
  *
- * @param seconds 
- * @param nanos 
- * @param fix_type 
- * @param num_sat 
- * @param lat 
- * @param lon 
- * @param height 
- * @param vel_n 
- * @param vel_e 
- * @param vel_d 
- * @param h_acc 
- * @param v_acc 
- * @param s_acc 
- * @param rosflight_timestamp 
+ * @param seconds Unix time, in seconds
+ * @param nanos Fractional Unix time
+ * @param fix_type GNSS fix type
+ * @param num_sat Number of satellites seen
+ * @param lat In deg DDS format
+ * @param lon In deg DDs format
+ * @param height meters
+ * @param vel_n meters per second
+ * @param vel_e meters per second
+ * @param vel_d meters per second
+ * @param h_acc meters
+ * @param v_acc meters
+ * @param s_acc meters
+ * @param rosflight_timestamp microseconds, estimated firmware timestamp for the time of validity of the gnss data
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
@@ -355,7 +355,7 @@ static inline void mavlink_msg_rosflight_gnss_send_buf(mavlink_message_t *msgbuf
 /**
  * @brief Get field seconds from rosflight_gnss message
  *
- * @return 
+ * @return Unix time, in seconds
  */
 static inline uint64_t mavlink_msg_rosflight_gnss_get_seconds(const mavlink_message_t* msg)
 {
@@ -365,7 +365,7 @@ static inline uint64_t mavlink_msg_rosflight_gnss_get_seconds(const mavlink_mess
 /**
  * @brief Get field nanos from rosflight_gnss message
  *
- * @return 
+ * @return Fractional Unix time
  */
 static inline uint32_t mavlink_msg_rosflight_gnss_get_nanos(const mavlink_message_t* msg)
 {
@@ -375,7 +375,7 @@ static inline uint32_t mavlink_msg_rosflight_gnss_get_nanos(const mavlink_messag
 /**
  * @brief Get field fix_type from rosflight_gnss message
  *
- * @return 
+ * @return GNSS fix type
  */
 static inline uint8_t mavlink_msg_rosflight_gnss_get_fix_type(const mavlink_message_t* msg)
 {
@@ -385,7 +385,7 @@ static inline uint8_t mavlink_msg_rosflight_gnss_get_fix_type(const mavlink_mess
 /**
  * @brief Get field num_sat from rosflight_gnss message
  *
- * @return 
+ * @return Number of satellites seen
  */
 static inline uint8_t mavlink_msg_rosflight_gnss_get_num_sat(const mavlink_message_t* msg)
 {
@@ -395,7 +395,7 @@ static inline uint8_t mavlink_msg_rosflight_gnss_get_num_sat(const mavlink_messa
 /**
  * @brief Get field lat from rosflight_gnss message
  *
- * @return 
+ * @return In deg DDS format
  */
 static inline double mavlink_msg_rosflight_gnss_get_lat(const mavlink_message_t* msg)
 {
@@ -405,7 +405,7 @@ static inline double mavlink_msg_rosflight_gnss_get_lat(const mavlink_message_t*
 /**
  * @brief Get field lon from rosflight_gnss message
  *
- * @return 
+ * @return In deg DDs format
  */
 static inline double mavlink_msg_rosflight_gnss_get_lon(const mavlink_message_t* msg)
 {
@@ -415,7 +415,7 @@ static inline double mavlink_msg_rosflight_gnss_get_lon(const mavlink_message_t*
 /**
  * @brief Get field height from rosflight_gnss message
  *
- * @return 
+ * @return meters
  */
 static inline float mavlink_msg_rosflight_gnss_get_height(const mavlink_message_t* msg)
 {
@@ -425,7 +425,7 @@ static inline float mavlink_msg_rosflight_gnss_get_height(const mavlink_message_
 /**
  * @brief Get field vel_n from rosflight_gnss message
  *
- * @return 
+ * @return meters per second
  */
 static inline float mavlink_msg_rosflight_gnss_get_vel_n(const mavlink_message_t* msg)
 {
@@ -435,7 +435,7 @@ static inline float mavlink_msg_rosflight_gnss_get_vel_n(const mavlink_message_t
 /**
  * @brief Get field vel_e from rosflight_gnss message
  *
- * @return 
+ * @return meters per second
  */
 static inline float mavlink_msg_rosflight_gnss_get_vel_e(const mavlink_message_t* msg)
 {
@@ -445,7 +445,7 @@ static inline float mavlink_msg_rosflight_gnss_get_vel_e(const mavlink_message_t
 /**
  * @brief Get field vel_d from rosflight_gnss message
  *
- * @return 
+ * @return meters per second
  */
 static inline float mavlink_msg_rosflight_gnss_get_vel_d(const mavlink_message_t* msg)
 {
@@ -455,7 +455,7 @@ static inline float mavlink_msg_rosflight_gnss_get_vel_d(const mavlink_message_t
 /**
  * @brief Get field h_acc from rosflight_gnss message
  *
- * @return 
+ * @return meters
  */
 static inline float mavlink_msg_rosflight_gnss_get_h_acc(const mavlink_message_t* msg)
 {
@@ -465,7 +465,7 @@ static inline float mavlink_msg_rosflight_gnss_get_h_acc(const mavlink_message_t
 /**
  * @brief Get field v_acc from rosflight_gnss message
  *
- * @return 
+ * @return meters
  */
 static inline float mavlink_msg_rosflight_gnss_get_v_acc(const mavlink_message_t* msg)
 {
@@ -475,7 +475,7 @@ static inline float mavlink_msg_rosflight_gnss_get_v_acc(const mavlink_message_t
 /**
  * @brief Get field s_acc from rosflight_gnss message
  *
- * @return 
+ * @return meters
  */
 static inline float mavlink_msg_rosflight_gnss_get_s_acc(const mavlink_message_t* msg)
 {
@@ -485,7 +485,7 @@ static inline float mavlink_msg_rosflight_gnss_get_s_acc(const mavlink_message_t
 /**
  * @brief Get field rosflight_timestamp from rosflight_gnss message
  *
- * @return 
+ * @return microseconds, estimated firmware timestamp for the time of validity of the gnss data
  */
 static inline uint64_t mavlink_msg_rosflight_gnss_get_rosflight_timestamp(const mavlink_message_t* msg)
 {
